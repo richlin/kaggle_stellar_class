@@ -25,3 +25,17 @@ Check items off in the **same commit** as the code change. Full detail in [`plan
 ## Phase 4: Hyperparameter tuning + polish
 - [x] Task 5: `scripts/03_tune.py` — tune LightGBM params on CV, re-tune thresholds, feature importance review → `submissions/03_final.csv`
 - [x] **Checkpoint C:** final OOF documented, `PROGRESS.md` + `DECISIONS.md` updated, ready for review
+
+## Phase 5: Cross-library ensemble + continuous thresholds (target public > 0.97)
+Full detail in [`docs/superpowers/plans/2026-06-04-score-over-097-improvement.md`](../docs/superpowers/plans/2026-06-04-score-over-097-improvement.md) (revised 2026-06-04 with 4 modifications). Worktree: `phase5-ensemble`.
+- [x] Pre-work: OOF confusion analysis — leak is GALAXY→STAR (11,497) + GALAXY→QSO (4,747), a low-redshift boundary (recorded in plan)
+- [x] Pre-work: install + verify `xgboost`, `catboost`, `scipy` in `.venv`
+- [x] Task 6: record official `0.96691` in `experiments/leaderboard.md` + `PROGRESS.md`
+- [x] Task 7: `tests/test_ensemble.py` (RED) — weighted blend, blend-weight search, continuous threshold search, submission id-order
+- [x] Task 8: `scripts/04_ensemble.py` — blend helpers + `search_continuous_multipliers` (Nelder-Mead, stability-guarded) → GREEN
+- [x] Task 9: train **XGBoost** (primary diversity) + **`lgbm_dart`** on identical 5-fold splits; save OOF/test probs
+- [x] Task 10: train **CatBoost** (native categoricals); graceful fallback if install/runtime fails
+- [x] Task 11: grid-search blend weights across families, then continuous threshold tuning on blended OOF → `submissions/04_ensemble.csv`
+- [x] **Checkpoint D:** OOF beats `0.965925`, recalls stay within guardrails, submission valid (`pytest -q`, `ruff check .`, `src.validate`), review with user before Kaggle submit
+- [ ] Task 12 (only if ensemble < 0.97): error-margin analysis → low-redshift GALAXY/STAR boundary features (`feature_set="boundary_v1"`)
+- [ ] Task 13 (last resort): high-confidence pseudo-labeling

@@ -31,10 +31,17 @@
   - New target: exceed `0.97` public balanced accuracy.
   - Required public lift: approximately `+0.0031`.
   - Improvement plan saved in `docs/superpowers/plans/2026-06-04-score-over-097-improvement.md`.
+- 2026-06-04: Implemented Phase 5 cross-library ensemble in `scripts/04_ensemble.py`.
+  - Added tested helpers for weighted probability blending, blend-weight search, continuous threshold tuning, and submission generation.
+  - Trained 5-fold XGBoost, CatBoost, and LightGBM DART candidates on the same fold protocol as the reference model.
+  - Best local blend: `lgbm_seed_average_final=0.7`, `xgboost=0.3`, `catboost=0.0`, `lgbm_dart=0.0`.
+  - Final Phase 5 tuned OOF balanced accuracy: `0.9660551711148327`.
+  - Chosen Phase 5 multipliers: `[0.750997062181838, 0.7959641054598435, 0.8981824050203887]`.
+  - Generated `submissions/04_ensemble.csv`, `experiments/04_ensemble.json`, and candidate OOF/test probability arrays.
 
 ## In Progress
 
-- Score improvement planning for a `>0.97` public result.
+- Phase 5 public-score review for `submissions/04_ensemble.csv`.
 
 ## Blockers
 
@@ -42,4 +49,5 @@
 
 ## Next Steps
 
-- Execute the improvement plan, starting with an ensemble harness and diverse LightGBM/CatBoost candidates.
+- Submit `submissions/04_ensemble.csv` if the local OOF lift is worth one leaderboard attempt, then record the public score in `experiments/leaderboard.md`.
+- If public score is still below `0.97`, continue with Task 12 targeted low-redshift GALAXY/STAR boundary features.

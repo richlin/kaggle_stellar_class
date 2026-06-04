@@ -41,3 +41,15 @@
 - **Decision:** Do not remove feature families for the final model despite some 3-fold ablations showing tiny positive deltas when dropped.
 - **Why:** The positive ablation deltas for dropping raw magnitudes, magnitude summaries, and redshift interactions were small 3-fold screening effects, while coordinate features were clearly required and color/categorical interaction drops were neutral-to-negative. Keeping the full baseline feature set is the conservative choice for repeated-seed final validation.
 - **Applies until:** Repeated 5-fold ablation evidence shows a feature-family removal improves OOF without destabilizing per-class recall.
+
+## 2026-06-04 — Phase 5 Blend Keeps Only Useful Diversity
+
+- **Decision:** Use the Phase 5 blend `0.7 * lgbm_seed_average_final + 0.3 * xgboost`, with CatBoost and LightGBM DART retained as audited zero-weight candidates.
+- **Why:** XGBoost was weaker standalone (`0.965349` tuned OOF) but improved the blend to `0.9660551711148327`. CatBoost (`0.962913`) and DART (`0.963829`) were lower standalone and did not improve the best OOF blend, so the weight search rejected them.
+- **Applies until:** A public leaderboard result or targeted boundary-feature experiment shows a different blend improves balanced accuracy without breaching the fold/class recall guardrails.
+
+## 2026-06-04 — Continuous Threshold Search Must Preserve Stable Grid Baseline
+
+- **Decision:** Seed Phase 5 continuous multiplier optimization from the exhaustive stable threshold grid before running Nelder-Mead.
+- **Why:** Coordinate-ascent seeding regressed the reference-only model toward argmax. The stable grid reproduces the Phase 4 guardrail semantics, and continuous optimization then adds a small local gain without weakening fold or class recall constraints.
+- **Applies until:** A faster optimizer can prove equal or better guarded OOF scores against the same saved probability arrays.

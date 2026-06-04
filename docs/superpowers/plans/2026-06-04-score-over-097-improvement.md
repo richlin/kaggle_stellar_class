@@ -6,7 +6,18 @@
 
 **Architecture:** Keep the current LightGBM CV/threshold pipeline as the reference model, then add score-improving diversity through probability blending, targeted error analysis, and constrained threshold search. Every candidate must produce OOF probabilities, test probabilities, a tracked experiment record, and a valid submission before it is considered for public submission.
 
-**Tech Stack:** Python, pandas, numpy, scikit-learn, LightGBM, optional CatBoost only if it installs cleanly through the project environment, pytest, ruff.
+**Tech Stack:** Python, pandas, numpy, scikit-learn, LightGBM, **XGBoost and CatBoost as cross-library base learners** (installed via `uv pip install xgboost catboost scipy`; fall back to LightGBM-only blend if either fails), `scipy.optimize` for continuous threshold search, pytest, ruff.
+
+---
+
+## Plan Revisions — 2026-06-04 (post-confusion-analysis)
+
+After running the OOF confusion analysis (see "Current Baseline → Error Analysis" below), four modifications were agreed before implementation:
+
+1. **Lead with cross-library diversity (XGBoost + CatBoost), not LightGBM variants.** LightGBM-variant blends (dart/extra_trees/deep) are weakly decorrelated — same library, same histogram split algorithm — so their blend gain is small. Real decorrelation at the GALAXY↔STAR boundary comes from different families. XGBoost (different split/regularization) and CatBoost (ordered target encoding on the soft categoricals) become first-class base learners; the LightGBM variants collapse to **one optional candidate (`lgbm_dart`)**.
+2. **Add a continuous threshold optimizer.** Replace reliance on the coarse 6-value multiplier grid with a `scipy.optimize` (Nelder-Mead) search over the 3 class multipliers on blended OOF, **keeping the existing fold- and class-recall stability guards** so we do not overfit OOF. Near-free expected gain of +0.001–0.002.
+3. **Reuse the completed error analysis.** Task 5's confusion/recall step is already done (results below); do not re-derive it. Any boundary features (Task 6) must target **low-redshift GALAXY/STAR separation specifically**, not generic expansion.
+4. **Extend graceful dependency fallback to XGBoost** (same posture the plan already had for CatBoost — attempt install, do not fight dependency issues).
 
 ---
 
@@ -17,9 +28,27 @@
 - Current final model: 3-seed LightGBM probability average with stable class multipliers `[0.9, 0.8, 1.15]`.
 - Target gap: approximately `+0.0031` public score.
 
+### Error Analysis (completed 2026-06-04 — Task 5 Step 1)
+
+OOF confusion on the 3-seed final model (`experiments/03_final_oof_probabilities.npy`, multipliers `[0.9, 0.8, 1.15]`), rows = true, cols = pred:
+
+|        | GALAXY | QSO    | STAR  |
+|--------|--------|--------|-------|
+| GALAXY | 361236 | 4747   | 11497 |
+| QSO    | 2029   | 113854 | 1260  |
+| STAR   | 2251   | 323    | 80150 |
+
+Per-class recall: GALAXY `0.957`, QSO `0.972`, STAR `0.969`. Balanced accuracy `0.96592`.
+
+Key findings driving the strategy:
+
+- **GALAXY is the bottleneck class** (lowest recall) *and* the majority class. Because balanced accuracy is macro-recall, lifting GALAXY recall has outsized leverage.
+- **~84% of the error budget is in the GALAXY row:** GALAXY→STAR (`11,497`) and GALAXY→QSO (`4,747`) dominate.
+- The leak is a **low-redshift boundary problem**: STAR redshift is tightly ≈0 (75th pct `0.10`), and low-redshift GALAXYs overlap it; the categorical columns (`spectral_type`, `galaxy_population`) are *soft* signals, not deterministic separators.
+
 ## Strategy
 
-The highest-probability route is model diversity, not another small single-LightGBM parameter tweak. The current model is already close to the local/public ceiling for one LightGBM family. The next work should test whether different learners or sufficiently different LightGBM configurations make complementary errors, then blend OOF probabilities and re-tune class multipliers.
+The highest-probability route is **cross-library model diversity** plus a **continuous balanced-accuracy threshold optimizer**, not another small single-LightGBM parameter tweak. The current model is already close to the ceiling for one LightGBM family, and LightGBM-variant blends are weakly decorrelated. Train XGBoost and CatBoost on the identical fold splits, blend OOF probabilities with grid-searched weights, then optimize the class multipliers continuously (with stability guards) on the blended OOF. Boundary feature work is reserved for *after* the ensemble and must target the low-redshift GALAXY/STAR boundary identified above.
 
 ## Task 1: Record Official Score And Reproduce Current Best
 
@@ -104,6 +133,13 @@ def test_make_ensemble_submission_preserves_id_order():
     # and preserve sample_submission id order.
 ```
 
+```python
+def test_continuous_threshold_search_beats_or_matches_coarse_grid():
+    # On toy OOF probabilities the continuous (Nelder-Mead) multiplier search must return
+    # a balanced accuracy >= the coarse-grid search, and must respect the same
+    # fold/class-recall stability guards (no guarded regression beyond the limits).
+```
+
 - [ ] **Step 2: Run tests to verify RED**
 
 Run:
@@ -135,8 +171,20 @@ def search_blend_weights(y_true, probability_sets, fold_ids, class_labels):
     # Search small grids first:
     # - two-model grid: 0.0, 0.1, ..., 1.0
     # - three-model grid: all weights in 0.1 increments summing to 1.0
-    # For every blend, run stable multiplier search.
+    # For every blend, run the threshold multiplier search.
     # Return best weights, multipliers, OOF score, and per-class recall.
+```
+
+Also implement the continuous threshold optimizer (Modification 2). It wraps the existing
+stability logic so OOF is not overfit:
+
+```python
+def search_continuous_multipliers(y_true, probabilities, fold_ids, class_labels):
+    # Use scipy.optimize.minimize (Nelder-Mead) over the 3 class multipliers to MAXIMIZE
+    # balanced accuracy on OOF (minimize the negative). Seed from the coarse-grid optimum
+    # so we never do worse than the grid. Reject any optimum that violates the existing
+    # MATERIAL_FOLD_REGRESSION / MATERIAL_CLASS_RECALL_REGRESSION stability guards,
+    # falling back to the coarse-grid result. Return multipliers, score, per-class recall.
 ```
 
 - [ ] **Step 4: Run tests to verify GREEN**
@@ -149,11 +197,13 @@ uv run pytest tests/test_ensemble.py -q
 
 Expected: pass.
 
-## Task 3: Add Diverse LightGBM Candidates
+## Task 3: Add Cross-Library Base Learners (XGBoost + one LightGBM variant)
+
+> **Modification 1:** Lead with cross-library diversity. XGBoost is the primary new learner; `lgbm_dart` is the only retained LightGBM variant (extra_trees / deep_regularized are dropped — too correlated with the existing LightGBM to earn their compute). CatBoost follows in Task 4.
 
 **Files:**
 - Modify: `scripts/04_ensemble.py`
-- Output: `experiments/04_lgbm_*.npy` probability arrays
+- Output: `experiments/04_*_oof_probabilities.npy`, `experiments/04_*_test_probabilities.npy`
 - Output: appended records in `experiments/runs.jsonl`
 
 - [ ] **Step 1: Reuse existing final probabilities**
@@ -165,66 +215,60 @@ experiments/03_final_oof_probabilities.npy
 experiments/03_final_test_probabilities.npy
 ```
 
-Treat them as model `lgbm_seed_average_final`.
+Treat them as model `lgbm_seed_average_final` (the reference base learner — do not retrain).
 
-- [ ] **Step 2: Train diverse LightGBM configs**
+- [ ] **Step 2: Train XGBoost on the identical fold splits**
 
-Add at least three genuinely different LightGBM probability producers:
+XGBoost is the primary diversity source (different split-finding and regularization than LightGBM).
+Note: XGBoost has no native pandas-category handling here, so one-hot or integer-encode the
+categorical columns inside the harness (keep the encoding deterministic and shared train/test).
 
 ```python
-LGBM_DIVERSE_CANDIDATES = [
-    {
-        "name": "lgbm_dart",
-        "params": {
-            "boosting_type": "dart",
-            "objective": "multiclass",
-            "class_weight": "balanced",
-            "n_estimators": 900,
-            "learning_rate": 0.035,
-            "num_leaves": 47,
-            "min_child_samples": 40,
-            "feature_fraction": 0.85,
-            "bagging_fraction": 0.9,
-            "lambda_l1": 0.05,
-            "lambda_l2": 0.2,
-        },
-    },
-    {
-        "name": "lgbm_extra_trees",
-        "params": {
-            "objective": "multiclass",
-            "class_weight": "balanced",
-            "extra_trees": True,
-            "n_estimators": 900,
-            "learning_rate": 0.035,
-            "num_leaves": 63,
-            "min_child_samples": 30,
-            "feature_fraction": 0.75,
-            "bagging_fraction": 0.8,
-            "lambda_l2": 0.5,
-        },
-    },
-    {
-        "name": "lgbm_deep_regularized",
-        "params": {
-            "objective": "multiclass",
-            "class_weight": "balanced",
-            "n_estimators": 800,
-            "learning_rate": 0.03,
-            "num_leaves": 95,
-            "min_child_samples": 80,
-            "feature_fraction": 0.8,
-            "bagging_fraction": 0.8,
-            "lambda_l1": 0.1,
-            "lambda_l2": 1.0,
-        },
-    },
-]
+XGB_PARAMS = {
+    "objective": "multi:softprob",
+    "num_class": 3,
+    "eval_metric": "mlogloss",
+    "n_estimators": 1200,
+    "learning_rate": 0.04,
+    "max_depth": 8,
+    "min_child_weight": 5,
+    "subsample": 0.85,
+    "colsample_bytree": 0.85,
+    "reg_lambda": 1.0,
+    "reg_alpha": 0.1,
+    "tree_method": "hist",
+    "n_jobs": -1,
+}
+# Apply per-sample class weights (balanced) since XGBoost has no class_weight arg.
 ```
 
-- [ ] **Step 3: Train with the same fold protocol**
+- [ ] **Step 3: Train one diverse LightGBM variant (`lgbm_dart`)**
 
-For each candidate:
+Retain a single LightGBM variant for cheap intra-library diversity:
+
+```python
+LGBM_DART = {
+    "name": "lgbm_dart",
+    "params": {
+        "boosting_type": "dart",
+        "objective": "multiclass",
+        "class_weight": "balanced",
+        "n_estimators": 900,
+        "learning_rate": 0.035,
+        "num_leaves": 47,
+        "min_child_samples": 40,
+        "feature_fraction": 0.85,
+        "bagging_fraction": 0.9,
+        "lambda_l1": 0.05,
+        "lambda_l2": 0.2,
+    },
+}
+```
+
+- [ ] **Step 4: Train with the same fold protocol**
+
+For each candidate (same `StratifiedKFold(n_splits=5, shuffle=True, random_state=42)` as the
+reference model so OOF rows align for blending):
 
 ```bash
 uv run python scripts/04_ensemble.py --train-candidate <candidate-name>
@@ -239,35 +283,38 @@ experiments/04_<candidate>_test_probabilities.npy
 
 And append candidate score details to `experiments/runs.jsonl`.
 
-- [ ] **Step 4: Accept or reject each LightGBM candidate**
+- [ ] **Step 5: Accept or reject each candidate**
 
 Keep a candidate for blending if either:
 
-- Its OOF score is competitive with current final, or
-- Its predictions are diverse enough to improve blend OOF even if standalone score is lower.
+- Its OOF score is competitive with the current final, or
+- Its predictions are diverse enough to improve blend OOF even if standalone score is lower
+  (check pairwise prediction-disagreement against the reference model).
 
 Reject candidates that are both lower-scoring and do not improve any tested blend.
 
-## Task 4: Try CatBoost If Dependency Install Is Clean
+## Task 4: Add CatBoost (Modification 4: graceful fallback, same as XGBoost)
 
 **Files:**
-- Modify: `requirements.txt` only if CatBoost installation is approved and succeeds
+- Modify: `requirements.txt` to pin `xgboost`, `catboost`, `scipy` once installs succeed
 - Modify: `scripts/04_ensemble.py`
 - Output: `experiments/04_catboost_*.npy`
 
-- [ ] **Step 1: Check install feasibility**
+- [ ] **Step 1: Confirm install feasibility (both libraries)**
 
-Run:
+Installed via:
 
 ```bash
-uv add catboost
+VIRTUAL_ENV=.venv uv pip install xgboost catboost scipy
 ```
 
-If installation fails or significantly disrupts the environment, stop CatBoost work and continue with LightGBM-only ensemble. Do not spend time fighting dependency issues.
+If either install fails or disrupts the environment, drop that learner and continue with whatever
+base learners are available (down to LightGBM-only). Do not fight dependency issues.
 
-- [ ] **Step 2: Add CatBoost CV candidate if installed**
+- [ ] **Step 2: Add CatBoost CV candidate**
 
-Use native categorical columns:
+CatBoost uses the soft categoricals natively (ordered target encoding — its main source of
+diversity here):
 
 ```python
 CatBoostClassifier(
@@ -277,6 +324,7 @@ CatBoostClassifier(
     depth=8,
     l2_leaf_reg=5,
     random_seed=seed,
+    auto_class_weights="Balanced",
     verbose=False,
     allow_writing_files=False,
 )
@@ -284,16 +332,17 @@ CatBoostClassifier(
 
 Train with the same 5-fold split discipline and save OOF/test probabilities.
 
-- [ ] **Step 3: Blend CatBoost with LightGBM**
+- [ ] **Step 3: Blend across families**
 
 Search weights for:
 
-- current final LightGBM only
-- LightGBM diverse candidates
-- CatBoost
-- CatBoost + best LightGBM blend
+- reference LightGBM only
+- + XGBoost
+- + CatBoost
+- + `lgbm_dart`
+- best 3- and 4-model combination
 
-Keep CatBoost only if OOF blend improves over the LightGBM-only blend.
+Keep each learner only if it improves the OOF blend over the best blend without it.
 
 ## Task 5: Run Targeted Error Analysis
 
@@ -301,22 +350,17 @@ Keep CatBoost only if OOF blend improves over the LightGBM-only blend.
 - Create: `scripts/05_error_analysis.py`
 - Output: `experiments/05_error_analysis.json`
 
-- [ ] **Step 1: Analyze OOF confusion and confidence**
+- [x] **Step 1: Analyze OOF confusion and confidence** — *partially complete (Modification 3)*
 
-Load:
+The confusion matrix, per-class recall, and dominant error directions are already recorded under
+"Current Baseline → Error Analysis": the leak is **GALAXY→STAR (`11,497`) and GALAXY→QSO (`4,747`)**,
+a low-redshift boundary. `scripts/05_error_analysis.py` only needs to add, on top of that:
 
-```text
-experiments/03_final_oof_probabilities.npy
-experiments/03_tune.json
-```
-
-Compute:
-
-- Confusion matrix.
-- Per-class recall.
-- Error counts for `GALAXY -> STAR`, `GALAXY -> QSO`, `QSO -> GALAXY`, `STAR -> GALAXY`.
 - Confidence margin for correct vs incorrect predictions.
-- Feature summaries for the lowest-margin errors.
+- Feature summaries for the lowest-margin GALAXY errors (focus on `redshift`, colors, and the
+  `spectral_type` / `galaxy_population` categoricals at low redshift).
+
+Skip re-deriving the confusion matrix — reuse the table above.
 
 - [ ] **Step 2: Identify boundary-specific feature candidates**
 
@@ -396,13 +440,16 @@ Search:
 - all 3-model blends
 - best 4-model blend if three-model blend improves
 
-- [ ] **Step 2: Re-tune stable class multipliers**
+- [ ] **Step 2: Re-tune class multipliers (continuous — Modification 2)**
 
 For the best blend:
 
-- tune multipliers on blended OOF probabilities
-- enforce fold and class recall stability
-- record argmax score, tuned score, per-class recall, and chosen multipliers
+- run `search_continuous_multipliers` (Nelder-Mead, seeded from the coarse-grid optimum) on the
+  blended OOF probabilities
+- enforce the existing fold and class-recall stability guards; fall back to the coarse-grid result
+  if the continuous optimum violates them
+- record argmax score, coarse-grid score, continuous-tuned score, per-class recall, and chosen
+  multipliers (so the continuous gain over the grid is auditable)
 
 - [ ] **Step 3: Write `submissions/04_ensemble.csv`**
 
@@ -472,10 +519,10 @@ Every score-producing run must have:
 ## Recommended Execution Order
 
 1. Record current official score.
-2. Build and test ensemble helpers.
-3. Add diverse LightGBM candidates.
-4. Add CatBoost only if installation succeeds cleanly.
-5. Blend probabilities and submit the best evidence-backed ensemble.
-6. Run targeted error analysis if ensemble does not clear `0.97`.
-7. Add focused boundary features only when error analysis justifies them.
+2. Build and test ensemble helpers (blend + **continuous threshold optimizer**).
+3. Train cross-library learners: **XGBoost** (primary) and **`lgbm_dart`** on identical fold splits.
+4. Add **CatBoost** (graceful fallback applies to both XGBoost and CatBoost).
+5. Blend probabilities, run the continuous threshold optimizer, and submit the best evidence-backed ensemble.
+6. If the ensemble does not clear `0.97`, extend error analysis (margins on the already-known GALAXY→STAR/QSO leak).
+7. Add focused **low-redshift GALAXY/STAR boundary** features only when that analysis justifies them.
 8. Use pseudo-labeling only as a final, carefully constrained experiment.
