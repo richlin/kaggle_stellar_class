@@ -1,0 +1,43 @@
+tests/test_validation.py
+  s_b04763d02104f8::t_472850d2ac8338 1-75
+experiments/02_cv_threshold.json
+  s_b04763d02104f8::t_b4d74ec7f6b96e 1-12,16,18-125,136-138,161-273,275,277-278
+  s_b04763d02104f8::t_21b117980e7ef7 13-15,17,126-135,139-160,274,276
+DECISIONS.md
+  s_b04763d02104f8::t_74cad086a80258 26-31
+.gitignore
+  s_b04763d02104f8::t_c5e62db85c42d7 17-19
+tasks/todo.md
+  s_b04763d02104f8::t_74cad086a80258 16,19,22
+experiments/leaderboard.md
+  s_b04763d02104f8::t_74cad086a80258 1-6
+tests/test_cv_threshold.py
+  s_b04763d02104f8::t_b0637b2121dff0 50-64,66-79
+  s_b04763d02104f8::t_45d1b8a28e5293 1-49
+  s_b04763d02104f8::t_14f8e64c65afee 65
+scripts/02_cv_threshold.py
+  s_b04763d02104f8::t_0a1a92538b1c26 145
+  s_b04763d02104f8::t_c5e62db85c42d7 1-4,6-81,150-261,263-268,274-292,296-315,318-319,325-338
+  s_b04763d02104f8::t_a5ca6e1e6cc934 5,82-144,146-149,262,269-273,293-295,316-317,320-324
+src/validation.py
+  s_b04763d02104f8::t_3080e21ea2cb7a 1-4,6,8-81
+  s_b04763d02104f8::t_302798ef002328 5,7
+PROGRESS.md
+  s_b04763d02104f8::t_74cad086a80258 16-21,25,33-34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "4dc78ef4fa559279f1b06b73fa72a1b668813f4e",
+  "prompts": {},
+  "sessions": {
+    "s_b04763d02104f8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e903c-667b-7a82-86fb-3460d93675f9",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    }
+  }
+}
