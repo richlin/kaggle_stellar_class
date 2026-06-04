@@ -13,13 +13,13 @@ Check items off in the **same commit** as the code change. Full detail in [`plan
 ## Phase 1: End-to-end baseline (first scoreable submission)
 - [x] Task 1: `src/data.py` — load + features (color indices, categorical dtype), label encoding
 - [x] Task 2: `scripts/01_baseline.py` — stratified holdout, class-weighted LightGBM, write `submissions/01_baseline.csv`
-- [ ] **Checkpoint A:** submission valid (`pytest -q`), baseline balanced accuracy recorded, review with user
+- [x] **Checkpoint A:** submission valid (`pytest -q`), baseline balanced accuracy recorded, review with user
 
 ## Phase 2: Cross-validated training
-- [ ] Task 3: `scripts/02_cv_threshold.py` (CV part) — 5-fold OOF probabilities + bagged test probs
+- [x] Task 3: `scripts/02_cv_threshold.py` (CV part) — 5-fold OOF probabilities + bagged test probs
 
 ## Phase 3: Threshold / prior tuning
-- [ ] Task 4: extend `scripts/02_cv_threshold.py` — tune per-class multipliers on OOF to maximize balanced accuracy → `submissions/02_cv_tuned.csv`
+- [x] Task 4: extend `scripts/02_cv_threshold.py` — tune per-class multipliers on OOF to maximize balanced accuracy → `submissions/02_cv_tuned.csv`
 - [ ] **Checkpoint B:** tuned OOF beats baseline, submission valid, review with user
 
 ## Phase 4: Hyperparameter tuning + polish
