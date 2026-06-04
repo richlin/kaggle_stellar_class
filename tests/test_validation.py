@@ -8,6 +8,7 @@ import numpy as np
 from sklearn.metrics import balanced_accuracy_score
 
 from src.validation import (
+    append_jsonl,
     apply_class_multipliers,
     balanced_accuracy,
     per_class_recall,
@@ -73,3 +74,16 @@ def test_write_json_creates_parent_and_round_trips(tmp_path: Path) -> None:
     write_json(output_path, {"score": 0.97, "weights": [1.0, 0.9, 1.1]})
 
     assert json.loads(output_path.read_text()) == {"score": 0.97, "weights": [1.0, 0.9, 1.1]}
+
+
+def test_append_jsonl_appends_one_json_record_per_line(tmp_path: Path) -> None:
+    output_path = tmp_path / "experiments" / "runs.jsonl"
+
+    append_jsonl(output_path, {"name": "candidate_a", "score": 0.96})
+    append_jsonl(output_path, {"name": "candidate_b", "score": 0.97})
+
+    rows = [json.loads(line) for line in output_path.read_text().splitlines()]
+    assert rows == [
+        {"name": "candidate_a", "score": 0.96},
+        {"name": "candidate_b", "score": 0.97},
+    ]

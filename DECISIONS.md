@@ -29,3 +29,15 @@
 - **Decision:** Record the unconstrained per-class multiplier optimum but choose the best multiplier vector that respects class-recall and fold-score regression limits for `submissions/02_cv_tuned.csv`.
 - **Why:** The unconstrained vector improved OOF balanced accuracy but dropped GALAXY recall by about `0.0076`; the chosen vector `[0.75, 0.75, 0.9]` still improves OOF while keeping the worst class recall delta around `-0.00292` and worst fold delta around `-0.00006`.
 - **Applies until:** A later repeated-seed or public leaderboard comparison shows that a different stability threshold is justified.
+
+## 2026-06-04 — Repeated-Seed Averaging Beats Extra Parameter Complexity
+
+- **Decision:** Keep the Phase 3-like LightGBM parameters for `submissions/03_final.csv`, but average OOF/test probabilities across seeds `42`, `43`, and `44`, then re-tune stable class multipliers to `[0.9, 0.8, 1.15]`.
+- **Why:** Manual parameter screening found `phase3_like` best (`0.9655647551693756` single-seed OOF). The repeated-seed average improved to `0.9659249816190973`, beating the Phase 3 reference without increasing model complexity.
+- **Applies until:** A later ensemble or public leaderboard result provides stronger evidence for a different model family or parameter set.
+
+## 2026-06-04 — Keep Baseline Feature Set After Ablation
+
+- **Decision:** Do not remove feature families for the final model despite some 3-fold ablations showing tiny positive deltas when dropped.
+- **Why:** The positive ablation deltas for dropping raw magnitudes, magnitude summaries, and redshift interactions were small 3-fold screening effects, while coordinate features were clearly required and color/categorical interaction drops were neutral-to-negative. Keeping the full baseline feature set is the conservative choice for repeated-seed final validation.
+- **Applies until:** Repeated 5-fold ablation evidence shows a feature-family removal improves OOF without destabilizing per-class recall.

@@ -79,3 +79,11 @@ def write_json(path: str | Path, record: dict[str, Any]) -> None:
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
+
+
+def append_jsonl(path: str | Path, record: dict[str, Any]) -> None:
+    """Append one JSON record to a JSONL experiment ledger."""
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("a") as file:
+        file.write(json.dumps(record, sort_keys=True) + "\n")

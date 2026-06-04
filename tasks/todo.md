@@ -20,8 +20,8 @@ Check items off in the **same commit** as the code change. Full detail in [`plan
 
 ## Phase 3: Threshold / prior tuning
 - [x] Task 4: extend `scripts/02_cv_threshold.py` — tune per-class multipliers on OOF to maximize balanced accuracy → `submissions/02_cv_tuned.csv`
-- [ ] **Checkpoint B:** tuned OOF beats baseline, submission valid, review with user
+- [x] **Checkpoint B:** tuned OOF beats baseline, submission valid, review with user
 
 ## Phase 4: Hyperparameter tuning + polish
-- [ ] Task 5: `scripts/03_tune.py` — tune LightGBM params on CV, re-tune thresholds, feature importance review → `submissions/03_final.csv`
-- [ ] **Checkpoint C:** final OOF documented, `PROGRESS.md` + `DECISIONS.md` updated, ready for review
+- [x] Task 5: `scripts/03_tune.py` — tune LightGBM params on CV, re-tune thresholds, feature importance review → `submissions/03_final.csv`
+- [x] **Checkpoint C:** final OOF documented, `PROGRESS.md` + `DECISIONS.md` updated, ready for review

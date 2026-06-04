@@ -19,10 +19,18 @@
   - Stable chosen tuned balanced accuracy: `0.9651028582582045`.
   - Chosen multipliers: `[0.75, 0.75, 0.9]`.
   - Generated `submissions/02_cv_tuned.csv` (gitignored), `experiments/02_cv_threshold.json`, and local probability arrays.
+- 2026-06-04: Implemented Phase 4 tuning/polish in `scripts/03_tune.py`.
+  - Screened three manual LightGBM parameter candidates; `phase3_like` remained best on single-seed CV.
+  - Ran six feature-family ablations; coordinate features were clearly required, while no feature removal justified changing the final feature set.
+  - Repeated the selected candidate over seeds `42`, `43`, and `44`, averaged probabilities, and re-tuned stable class multipliers.
+  - Final repeated-seed OOF balanced accuracy: `0.9659249816190973`.
+  - Chosen final multipliers: `[0.9, 0.8, 1.15]`.
+  - Mean train-vs-validation overfit gap across repeated final runs: `0.0185067713843499`.
+  - Generated `submissions/03_final.csv` (gitignored), `experiments/03_tune.json`, `experiments/runs.jsonl`, and local probability arrays.
 
 ## In Progress
 
-- Checkpoint B: user review of the valid Phase 2/3 tuned CV submission before starting Phase 4 hyperparameter tuning.
+- Final review before any Kaggle submission or optional Phase 5 ensemble work.
 
 ## Blockers
 
@@ -30,5 +38,5 @@
 
 ## Next Steps
 
-- Review Phase 2/3 tuned CV results and optionally submit `submissions/02_cv_tuned.csv` to Kaggle.
-- After Checkpoint B review, implement Phase 4: hyperparameter tuning and feature-family ablations in `scripts/03_tune.py`.
+- Review `submissions/03_final.csv` and optionally submit to Kaggle.
+- Optional Phase 5: model diversity / ensemble only if the final single-model submission needs a high-score push.
