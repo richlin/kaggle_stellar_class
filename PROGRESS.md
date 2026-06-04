@@ -27,10 +27,14 @@
   - Chosen final multipliers: `[0.9, 0.8, 1.15]`.
   - Mean train-vs-validation overfit gap across repeated final runs: `0.0185067713843499`.
   - Generated `submissions/03_final.csv` (gitignored), `experiments/03_tune.json`, `experiments/runs.jsonl`, and local probability arrays.
+- 2026-06-04: `submissions/03_final.csv` official public score: `0.96691`.
+  - New target: exceed `0.97` public balanced accuracy.
+  - Required public lift: approximately `+0.0031`.
+  - Improvement plan saved in `docs/superpowers/plans/2026-06-04-score-over-097-improvement.md`.
 
 ## In Progress
 
-- Final review before any Kaggle submission or optional Phase 5 ensemble work.
+- Score improvement planning for a `>0.97` public result.
 
 ## Blockers
 
@@ -38,5 +42,4 @@
 
 ## Next Steps
 
-- Review `submissions/03_final.csv` and optionally submit to Kaggle.
-- Optional Phase 5: model diversity / ensemble only if the final single-model submission needs a high-score push.
+- Execute the improvement plan, starting with an ensemble harness and diverse LightGBM/CatBoost candidates.

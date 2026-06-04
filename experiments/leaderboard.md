@@ -4,4 +4,4 @@
 | --- | --- | --- | ---: | ---: | ---: | --- |
 | 2026-06-04 | `submissions/01_baseline.csv` | Holdout balanced accuracy | 0.964833 | n/a | n/a | Phase 1 baseline; not recorded as submitted. |
 | 2026-06-04 | `submissions/02_cv_tuned.csv` | Stable tuned OOF balanced accuracy | 0.965103 | n/a | n/a | Phase 2/3 CV threshold candidate; not recorded as submitted. |
-| 2026-06-04 | `submissions/03_final.csv` | Repeated-seed tuned OOF balanced accuracy | 0.965925 | n/a | n/a | Phase 4 final candidate; not recorded as submitted. |
+| 2026-06-04 | `submissions/03_final.csv` | Repeated-seed tuned OOF balanced accuracy | 0.965925 | 0.96691 | 0.000985 | Phase 4 final candidate; official public score from Kaggle. |
