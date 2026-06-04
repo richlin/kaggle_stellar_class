@@ -1,0 +1,40 @@
+experiments/leaderboard.md
+  s_b04763d02104f8::t_2b0a0b15093fc0 7
+PROGRESS.md
+  s_b04763d02104f8::t_2b0a0b15093fc0 22-29,33,41-42
+experiments/runs.jsonl
+  s_b04763d02104f8::t_02df42f440fbcd 9-10
+  s_b04763d02104f8::t_aec1a8a21f8cd2 8
+experiments/03_tune.json
+  s_b04763d02104f8::t_02df42f440fbcd 1-828
+scripts/03_tune.py
+  s_b04763d02104f8::t_5470f796977d69 44,153-172,182,334,338-342,422,427-432,473,485,504
+  s_b04763d02104f8::t_b63db6607a01d8 1-43,45-152,173-181,183-333,335-337,343-421,423-426,433-472,474-484,486-503,505-568
+tests/test_tune.py
+  s_b04763d02104f8::t_d87ab67f18ae5d 62-73
+  s_b04763d02104f8::t_2e9418d17b4fd5 1-61
+DECISIONS.md
+  s_b04763d02104f8::t_2b0a0b15093fc0 32-43
+tests/test_validation.py
+  s_b04763d02104f8::t_2e9418d17b4fd5 11,77-89
+tasks/todo.md
+  s_b04763d02104f8::t_2b0a0b15093fc0 23,26-27
+src/validation.py
+  s_b04763d02104f8::t_70e4c1fea0d271 82-89
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "6a77005a7fc240d05f6ddd07b3ca6495c64ab004",
+  "prompts": {},
+  "sessions": {
+    "s_b04763d02104f8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e903c-667b-7a82-86fb-3460d93675f9",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    }
+  }
+}
