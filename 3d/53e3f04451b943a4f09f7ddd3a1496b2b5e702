@@ -1,0 +1,23 @@
+experiments/leaderboard.md
+  s_b04763d02104f8::t_53dd7c25213749 7
+docs/superpowers/plans/2026-06-04-score-over-097-improvement.md
+  s_b04763d02104f8::t_53dd7c25213749 1-481
+PROGRESS.md
+  s_b04763d02104f8::t_53dd7c25213749 30-33,37,45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "3d53e3f04451b943a4f09f7ddd3a1496b2b5e702",
+  "prompts": {},
+  "sessions": {
+    "s_b04763d02104f8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e903c-667b-7a82-86fb-3460d93675f9",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    }
+  }
+}
