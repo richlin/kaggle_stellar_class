@@ -1,0 +1,3 @@
+I am working on kaggle competition.                                                                               
+                                                                                                                    
+Your Goal: Predict the stellar class.   how to tackle this? Submissions are evaluated on balanced accuracy between the predicted class and observed target.                      

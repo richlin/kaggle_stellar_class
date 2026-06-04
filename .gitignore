@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+
+# Raw data — large (~137MB) and downloadable from Kaggle; keep out of git
+raw_data/
+
+# Generated submissions (regenerable from scripts)
+submissions/
+
+# Trained model artifacts
+*.pkl
+*.joblib
+*.txt.model
+
+# OS / editor
+.DS_Store
+
+# APM (managed; deployed skill files under .claude/.github are committed)
+apm_modules/

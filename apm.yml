@@ -1,0 +1,12 @@
+name: predicting_stellar_class
+version: 1.0.0
+description: Kaggle stellar-class prediction (GALAXY/QSO/STAR), balanced-accuracy metric
+author: Rich Lin
+targets:
+- claude
+dependencies:
+  apm:
+  - github/awesome-copilot/skills/review-and-refactor#776d8414
+  mcp: []
+includes: auto
+scripts: {}

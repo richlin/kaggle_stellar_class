@@ -1,0 +1,14 @@
+lockfile_version: '1'
+generated_at: '2026-06-04T01:29:12.011826+00:00'
+apm_version: 0.16.0
+dependencies:
+- repo_url: github/awesome-copilot
+  host: github.com
+  resolved_commit: 776d84143238cb91f7242665f188887b9e8d2aa9
+  resolved_ref: 776d8414
+  virtual_path: skills/review-and-refactor
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .claude/skills/review-and-refactor
+  content_hash: sha256:9236d06a1500089ddb46975b866e9a63478e502afe7095b1980c618678a7c7fe

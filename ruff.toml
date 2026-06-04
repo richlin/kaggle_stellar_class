@@ -1,0 +1,17 @@
+# Advisory lint config for a data-science / Kaggle project.
+# Run: ruff check .   (not enforced via git hooks)
+
+line-length = 100
+target-version = "py313"
+
+[lint]
+# Pragmatic rule set for ML scripts: pyflakes (F), pycodestyle (E/W),
+# isort (I), bugbear (B), comprehensions (C4), pyupgrade (UP).
+select = ["E", "W", "F", "I", "B", "C4", "UP"]
+ignore = [
+    "E501",  # line length handled by formatter; don't fail builds on it
+    "B905",  # zip() without strict= — noisy for numpy/pandas idioms
+]
+
+[lint.per-file-ignores]
+"tests/*" = ["B011"]

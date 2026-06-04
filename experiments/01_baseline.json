@@ -1,0 +1,79 @@
+{
+  "categorical_columns": [
+    "spectral_type",
+    "galaxy_population",
+    "spectral_population"
+  ],
+  "confusion_matrix": [
+    [
+      72136,
+      1108,
+      2252
+    ],
+    [
+      369,
+      22817,
+      243
+    ],
+    [
+      488,
+      89,
+      15968
+    ]
+  ],
+  "feature_columns": [
+    "alpha",
+    "delta",
+    "u",
+    "g",
+    "r",
+    "i",
+    "z",
+    "redshift",
+    "spectral_type",
+    "galaxy_population",
+    "u_g",
+    "g_r",
+    "r_i",
+    "i_z",
+    "u_r",
+    "u_i",
+    "u_z",
+    "g_i",
+    "g_z",
+    "r_z",
+    "mag_mean",
+    "mag_std",
+    "mag_min",
+    "mag_max",
+    "mag_range",
+    "alpha_sin",
+    "alpha_cos",
+    "redshift_x_u_g",
+    "redshift_x_g_r",
+    "redshift_x_r_i",
+    "redshift_x_i_z",
+    "spectral_population"
+  ],
+  "holdout_balanced_accuracy": 0.964832757657062,
+  "params": {
+    "class_weight": "balanced",
+    "colsample_bytree": 0.9,
+    "learning_rate": 0.05,
+    "n_estimators": 300,
+    "n_jobs": -1,
+    "num_leaves": 63,
+    "objective": "multiclass",
+    "random_state": 42,
+    "subsample": 0.9,
+    "verbosity": -1
+  },
+  "per_class_recall": {
+    "GALAXY": 0.9554943308254742,
+    "QSO": 0.9738785266123181,
+    "STAR": 0.9651254155333938
+  },
+  "seed": 42,
+  "submission_path": "submissions/01_baseline.csv",
+  "timestamp_utc": "2026-06-04T01:35:29Z"
+}
