@@ -11,7 +11,7 @@
     0.72,
     1.0
   ],
-  "public_score": null,
+  "public_score": 0.96956,
   "rationale": "LOO XGBoost final candidate calibrated back near the public-best 19 class mix after 22 showed lower-GALAXY multiplier movement regressed.",
   "source_probabilities": "experiments/25_loo_spatial_xgb_blend_test_probabilities.npy",
   "submission_path": "submissions/26_loo_spatial_xgb_calibrated.csv",

@@ -131,6 +131,10 @@
   - Added `scripts/25_loo_spatial_xgb_final.py` to train the XGBoost side on full-data LOO spatial features, mirroring the successful LOO LightGBM idea.
   - Raw `25_loo_spatial_xgb_final.csv` is too GALAXY-heavy (`GALAXY=157536`, `+806` vs `16`), so it is not the next submission.
   - Generated calibrated `submissions/26_loo_spatial_xgb_calibrated.csv`: multipliers `[0.34,0.72,1.0]`, class counts close to public-best `19`, 779 rows changed vs `16`.
+- 2026-06-05: `submissions/26_loo_spatial_xgb_calibrated.csv` public score: `0.96956`.
+  - This regressed from `19`/`23` at `0.96970`; current public incumbent remains `19_loo_spatial_final.csv` / `23_loo_spatial_star_tilt.csv`.
+  - Stop multiplier-only probing from the current `19` and `25` probability caches.
+  - Future plan saved in `docs/superpowers/plans/2026-06-05-score-over-097-revisit-plan.md` for the next session.
 
 ## In Progress
 
@@ -142,5 +146,5 @@
 
 ## Next Steps
 
-- If Kaggle submission slots are available, submit `submissions/26_loo_spatial_xgb_calibrated.csv` next.
-- Record public scores in `experiments/leaderboard.md`, `PROGRESS.md`, and `DECISIONS.md` before starting another modeling task.
+- Revisit tomorrow from `docs/superpowers/plans/2026-06-05-score-over-097-revisit-plan.md`.
+- Public incumbent to beat: `0.96970`; remaining lift to exceed `0.97`: `+0.00030`.

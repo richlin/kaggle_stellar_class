@@ -85,3 +85,10 @@ Full detail in [`docs/superpowers/plans/2026-06-04-transductive-spatial-task24.m
   - `19_loo_spatial_final.csv`: final-only LOO spatial train/test mismatch candidate; no honest OOF, changed 461 rows vs `16` and reduced GALAXY count, so keep as secondary.
   - `20_loo_spatial_neutral.csv`: LOO final variant, 441 rows changed vs `16`, GALAXY count `+38`; first public-risk probe if submission slots are available.
   - `21_loo_spatial_galaxy_lean.csv`: LOO final variant, 890 rows changed vs `16`, GALAXY count `+835`; higher-upside/higher-risk public probe.
+
+## Phase 10: Revisit score over 0.97
+Full detail in [`docs/superpowers/plans/2026-06-05-score-over-097-revisit-plan.md`](../docs/superpowers/plans/2026-06-05-score-over-097-revisit-plan.md).
+- [ ] Task 25: graph label propagation over train+test spatial nodes with validation labels hidden for OOF.
+- [ ] Task 26: local photometric-neighbour features combining spatial position with colours/magnitudes.
+- [ ] Task 27: small final-only LOO LightGBM family with class-count guardrails.
+- [ ] Task 28: next-submission report before any public upload.

@@ -153,3 +153,9 @@
 - **Decision:** Do not submit `24_loo_spatial_stronger_nongal.csv`. Submit `26_loo_spatial_xgb_calibrated.csv` next if a slot is available.
 - **Why:** `22_loo_spatial_mild_nongal.csv` scored `0.96944`, below `19`/`23` at `0.96970`, so the lower-GALAXY multiplier direction is now disproven. The next independent axis is training the XGBoost blend component on LOO spatial features as well. Raw `25` was too GALAXY-heavy, so `26` calibrates its class counts back near the public-best `19` distribution while changing a different set of rows.
 - **Applies until:** Public score for `26_loo_spatial_xgb_calibrated.csv` is known.
+
+## 2026-06-05 — Cache-Level Probing Is Saturated; Revisit With New Signal
+
+- **Decision:** Keep `19_loo_spatial_final.csv` / `23_loo_spatial_star_tilt.csv` as the public incumbent at `0.96970` and stop submitting variants derived only from the current `19` or `25` cached probability files.
+- **Why:** The latest public result, `26_loo_spatial_xgb_calibrated.csv = 0.96956`, regressed despite matching the `19` class mix more closely. The submission history has bracketed the easy axes: GALAXY-neutral (`20`) is slightly worse, lower-GALAXY (`22`) is worse, STAR tilt (`23`) ties, and LOO-XGBoost (`26`) is worse. The remaining `+0.00030` likely requires a new spatial signal, a better final-feature validation proxy, or a materially different model component.
+- **Applies until:** A new plan produces a candidate not reducible to class-multiplier movement on existing cached probabilities.
