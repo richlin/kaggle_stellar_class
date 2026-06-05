@@ -13,6 +13,7 @@
     0.75,
     1.0
   ],
+  "public_score": 0.9697,
   "params": {
     "bagging_fraction": 0.9,
     "bagging_freq": 1,

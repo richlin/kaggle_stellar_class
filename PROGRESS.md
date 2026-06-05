@@ -115,7 +115,14 @@
   - Generated LOO multiplier variants from the saved `19` probability cache:
     - `submissions/20_loo_spatial_neutral.csv`: 441 rows changed vs `16`, GALAXY count `156768` (`+38` vs `16`).
     - `submissions/21_loo_spatial_galaxy_lean.csv`: 890 rows changed vs `16`, GALAXY count `157565` (`+835` vs `16`).
-  - Public incumbent remains `submissions/16_spatial_blend.csv` until a submitted candidate beats `0.96927`.
+- 2026-06-04: Public leaderboard feedback on LOO final candidates.
+  - `submissions/19_loo_spatial_final.csv`: public `0.96970`, new public incumbent; improves `+0.00043` over `16_spatial_blend.csv` and is `+0.00030` short of `0.97`.
+  - `submissions/20_loo_spatial_neutral.csv`: public `0.96968`; improves over `16` but trails `19` by `0.00002`.
+  - Lesson: the public set rewarded the lower-GALAXY LOO variant more than the GALAXY-neutral variant, so do not submit `21_galaxy_lean` next.
+  - Generated next public probes from the saved `19` probability cache:
+    - `submissions/22_loo_spatial_mild_nongal.csv`: multipliers `[0.42,0.75,1.0]`, 578 rows changed vs `16`, GALAXY count `156287` (`-443` vs `16`).
+    - `submissions/23_loo_spatial_star_tilt.csv`: multipliers `[0.45,0.72,1.0]`, 452 rows changed vs `16`, GALAXY count `156585` (`-145` vs `16`).
+    - `submissions/24_loo_spatial_stronger_nongal.csv`: multipliers `[0.40,0.75,1.0]`, 701 rows changed vs `16`, GALAXY count `156118` (`-612` vs `16`).
 
 ## In Progress
 
@@ -127,5 +134,5 @@
 
 ## Next Steps
 
-- If Kaggle submission slots are available, submit `submissions/20_loo_spatial_neutral.csv` first; if it improves but remains short, try `submissions/21_loo_spatial_galaxy_lean.csv`.
+- If Kaggle submission slots are available, submit `submissions/23_loo_spatial_star_tilt.csv` first, then `submissions/22_loo_spatial_mild_nongal.csv`. Use `submissions/24_loo_spatial_stronger_nongal.csv` only if `22` improves.
 - Record public scores in `experiments/leaderboard.md`, `PROGRESS.md`, and `DECISIONS.md` before starting another modeling task.

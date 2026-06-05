@@ -11,6 +11,7 @@
     0.75,
     1.0
   ],
+  "public_score": 0.96968,
   "rationale": "LOO spatial final candidate multiplier variant; public-risk because no honest OOF exists for full-data LOO final training.",
   "source_probabilities": "experiments/19_loo_spatial_blend_test_probabilities.npy",
   "submission_path": "submissions/20_loo_spatial_neutral.csv",

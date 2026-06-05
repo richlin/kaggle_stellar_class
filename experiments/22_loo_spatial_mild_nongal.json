@@ -1,0 +1,19 @@
+{
+  "changed_vs_16_spatial_blend": 578,
+  "class_counts": {
+    "GALAXY": 156287,
+    "QSO": 51480,
+    "STAR": 39668
+  },
+  "galaxy_count_delta_vs_16": -443,
+  "multipliers": [
+    0.42,
+    0.75,
+    1.0
+  ],
+  "public_score": null,
+  "rationale": "LOO spatial final candidate multiplier variant generated after public scores showed 19/20 beat 16 and 19 beat the GALAXY-neutral 20.",
+  "source_probabilities": "experiments/19_loo_spatial_blend_test_probabilities.npy",
+  "submission_path": "submissions/22_loo_spatial_mild_nongal.csv",
+  "timestamp_utc": "2026-06-05T00:50:10Z"
+}

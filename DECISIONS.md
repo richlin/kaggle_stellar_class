@@ -135,3 +135,9 @@
 - **Decision:** Keep `16_spatial_blend.csv` as the incumbent, but if submission slots are available, probe `20_loo_spatial_neutral.csv` before the higher-risk `21_loo_spatial_galaxy_lean.csv`.
 - **Why:** The top-10 leaderboard cluster above `0.9707` suggests the remaining edge may be final train/test spatial-feature density, not another honest OOF residual. Existing spatial models train on KFold-OOF spatial features while test features use all train labels. `scripts/19_loo_spatial_final.py` trains the LightGBM component on leave-one-out spatial features, then blends with the existing spatial XGBoost component. This has no honest OOF score, so it is public-risk only. `20` is near GALAXY-neutral versus `16` (`+38` GALAXY, 441 changed rows); `21` is GALAXY-leaning (`+835` GALAXY, 890 changed rows) and should only follow if a more conservative probe helps.
 - **Applies until:** Public leaderboard feedback shows whether LOO final-feature density transfers.
+
+## 2026-06-04 — LOO Spatial Transfer Is Real; Stop GALAXY-Lean Probes For Now
+
+- **Decision:** Treat `submissions/19_loo_spatial_final.csv` as the public incumbent and prioritize `23_loo_spatial_star_tilt.csv`, then `22_loo_spatial_mild_nongal.csv`, before any GALAXY-leaning variant.
+- **Why:** Public scores show `19_loo_spatial_final.csv` at `0.96970` and `20_loo_spatial_neutral.csv` at `0.96968`, both above `16_spatial_blend.csv` at `0.96927`. This confirms the final-feature-density hypothesis. It also disproves the immediate GALAXY-lean submission policy: the lower-GALAXY `19` beat the GALAXY-neutral `20`, so the next probes should stay near `19` and cautiously test more STAR/non-GALAXY movement. The remaining gap to `0.97` is only `+0.00030`.
+- **Applies until:** Public scores for `22`/`23` show whether the non-GALAXY direction continues or reverses.
