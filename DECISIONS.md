@@ -123,3 +123,15 @@
 - **Decision:** Treat `submissions/16_spatial_blend.csv` as the new public-best submission.
 - **Why:** Kaggle public score is `0.96927`, improving `+0.00216` over the prior public incumbent `12_multi_blend.csv` (`0.96711`). This confirms the spatial-neighbour feature transfer and narrows the remaining gap to the target `>0.97` to about `+0.00073`.
 - **Applies until:** A later public submission beats `0.96927`.
+
+## 2026-06-04 — Reject Broad Graph/Cluster Residuals Unless Public Evidence Contradicts OOF
+
+- **Decision:** Do not submit `submissions/17_transductive_spatial.csv` or `submissions/18_galaxy_residual.csv`.
+- **Why:** `17_transductive_spatial.csv` added graph probabilities, multi-resolution cluster rates, and probability meta-features, but its residual model tuned OOF was only `0.968377`; blend search assigned residual weight `0.0`, leaving the exact `16_spatial_blend` predictions. `18_galaxy_residual.csv` trained binary GALAXY residual models inside incumbent STAR/QSO regions, but threshold search selected no flips and OOF remained `0.969071`. The residual top precision was below the balanced-accuracy break-even point for flipping STAR/QSO predictions to GALAXY.
+- **Applies until:** A new residual feature source proves it can flip GALAXY misses with enough precision to beat `16` on OOF or public leaderboard.
+
+## 2026-06-04 — Use LOO Spatial Final Variants As Public-Risk Probes
+
+- **Decision:** Keep `16_spatial_blend.csv` as the incumbent, but if submission slots are available, probe `20_loo_spatial_neutral.csv` before the higher-risk `21_loo_spatial_galaxy_lean.csv`.
+- **Why:** The top-10 leaderboard cluster above `0.9707` suggests the remaining edge may be final train/test spatial-feature density, not another honest OOF residual. Existing spatial models train on KFold-OOF spatial features while test features use all train labels. `scripts/19_loo_spatial_final.py` trains the LightGBM component on leave-one-out spatial features, then blends with the existing spatial XGBoost component. This has no honest OOF score, so it is public-risk only. `20` is near GALAXY-neutral versus `16` (`+38` GALAXY, 441 changed rows); `21` is GALAXY-leaning (`+835` GALAXY, 890 changed rows) and should only follow if a more conservative probe helps.
+- **Applies until:** Public leaderboard feedback shows whether LOO final-feature density transfers.

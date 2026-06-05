@@ -72,4 +72,16 @@ Leaderboard proves 0.97+ is real (top 0.97127). Found: class is clustered in sky
 - [x] Task 23: spatial-aware XGBoost (`scripts/16_spatial_xgb.py`) + blend → `submissions/16_spatial_blend.csv`, tuned OOF **0.969071** (best). Redshift-augmented neighbours rejected (hurt).
 - [x] **Checkpoint G:** OOF 0.969071 >> 0.9663; leakage audit passes; `pytest -q` (67), `ruff check .`, `src.validate` all green.
 - [x] **Checkpoint H (real gate):** `submissions/16_spatial_blend.csv` public score `0.96927`; accepted as new public incumbent over `12_multi_blend` (`0.96711`).
-- [ ] Task 24 (toward leader cluster ~0.9708): GALAXY recall (0.958) is the wall — try finer/position-cell target encoding; remaining public gap is ~0.00073 to `>0.97` and ~0.0015 to the `~0.9708` leader cluster.
+- [x] Task 24 (toward leader cluster ~0.9708): GALAXY recall (0.958) is the wall — try graph/cluster target encodings, GALAXY residual correction, and LOO final spatial training.
+
+## Phase 9: Task 24 transductive spatial graph + GALAXY residual correction
+Full detail in [`docs/superpowers/plans/2026-06-04-transductive-spatial-task24.md`](../docs/superpowers/plans/2026-06-04-transductive-spatial-task24.md).
+- [x] Task 24a: tests first for transductive graph probability features, OOF cluster class rates, meta features, LOO spatial features, and submission id order.
+- [x] Task 24b: implement `src/transductive_spatial.py` reusable feature builders with leakage controls.
+- [x] Task 24c: implement `scripts/17_transductive_spatial.py` residual LightGBM calibrator and blend search.
+- [x] Task 24d: run candidate gates and record results:
+  - `17_transductive_spatial.csv`: residual OOF `0.968377`; blend search assigned residual weight `0.0`, so it is identical to `16`.
+  - `18_galaxy_residual.csv`: binary GALAXY residual correction selected no flips; OOF unchanged at `0.969071`.
+  - `19_loo_spatial_final.csv`: final-only LOO spatial train/test mismatch candidate; no honest OOF, changed 461 rows vs `16` and reduced GALAXY count, so keep as secondary.
+  - `20_loo_spatial_neutral.csv`: LOO final variant, 441 rows changed vs `16`, GALAXY count `+38`; first public-risk probe if submission slots are available.
+  - `21_loo_spatial_galaxy_lean.csv`: LOO final variant, 890 rows changed vs `16`, GALAXY count `+835`; higher-upside/higher-risk public probe.

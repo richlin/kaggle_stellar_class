@@ -105,6 +105,17 @@
 - 2026-06-04: `submissions/16_spatial_blend.csv` official public score: `0.96927`.
   - New public incumbent over `12_multi_blend.csv` (`0.96711`) by `+0.00216`.
   - Remaining lift required to exceed `0.97`: about `+0.00073`.
+- 2026-06-04: Implemented Task 24 graph/cluster and residual-correction push.
+  - Added `src/transductive_spatial.py` plus `tests/test_transductive_spatial.py` for graph probability features, OOF-safe cluster rates, probability meta-features, and submission id order.
+  - Added `loo_neighbour_features()` in `src/spatial.py` plus a leakage test proving a row's own label does not affect its LOO feature.
+  - `scripts/17_transductive_spatial.py`: graph features (`k=10,25,50,100,250`), cluster rates (`512,2048,8192`), and residual LightGBM. Residual tuned OOF `0.968377`; best blend retained residual weight `0.0`, so `17` is identical to `16` and is not a public candidate.
+  - `scripts/18_galaxy_residual.py`: binary GALAXY residual correction inside incumbent STAR/QSO prediction regions. Threshold search selected no flips; OOF unchanged at `0.969071`, so `18` is not a public candidate.
+  - Diagnostic: top residual STAR→GALAXY precision reached only about `0.78`; balanced accuracy needs roughly `>0.82` precision for STAR→GALAXY flips to pay off, so direct GALAXY overrides are not locally justified.
+  - `scripts/19_loo_spatial_final.py`: trained full-data LightGBM on leave-one-out spatial features to reduce train/test spatial-feature mismatch; generated `submissions/19_loo_spatial_final.csv`. This is final-only and has no honest OOF score.
+  - Generated LOO multiplier variants from the saved `19` probability cache:
+    - `submissions/20_loo_spatial_neutral.csv`: 441 rows changed vs `16`, GALAXY count `156768` (`+38` vs `16`).
+    - `submissions/21_loo_spatial_galaxy_lean.csv`: 890 rows changed vs `16`, GALAXY count `157565` (`+835` vs `16`).
+  - Public incumbent remains `submissions/16_spatial_blend.csv` until a submitted candidate beats `0.96927`.
 
 ## In Progress
 
@@ -116,4 +127,5 @@
 
 ## Next Steps
 
-- Since `16_spatial_blend.csv` is still short of the target `>0.97`, continue with Task 24: GALAXY recall (`0.958`) is the binding constraint — try finer / position-cell target encoding for the remaining gap.
+- If Kaggle submission slots are available, submit `submissions/20_loo_spatial_neutral.csv` first; if it improves but remains short, try `submissions/21_loo_spatial_galaxy_lean.csv`.
+- Record public scores in `experiments/leaderboard.md`, `PROGRESS.md`, and `DECISIONS.md` before starting another modeling task.

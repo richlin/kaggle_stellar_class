@@ -114,3 +114,33 @@ def oof_neighbour_features(
         out[va] = feats
     assert out is not None
     return out, names
+
+
+def loo_neighbour_features(
+    xyz: np.ndarray,
+    y: np.ndarray,
+    ks: list[int],
+    n_classes: int,
+    priors: np.ndarray,
+    smoothing: float,
+    max_k: int,
+) -> tuple[np.ndarray, list[str]]:
+    """Leave-one-out spatial features using all other training rows.
+
+    This mirrors the final test-time setup more closely than KFold-OOF features:
+    every training row may use all labelled neighbours except itself, while test
+    rows may use all training labels.
+    """
+    nn = NearestNeighbors(n_neighbors=max_k + 1, n_jobs=-1).fit(xyz)
+    dist, idx = nn.kneighbors(xyz)
+    row_ids = np.arange(len(xyz))
+    if np.array_equal(idx[:, 0], row_ids):
+        return _features_from_neighbours(dist[:, 1:], y[idx[:, 1:]], ks, n_classes, priors, smoothing)
+
+    filtered_dist = np.empty((len(xyz), max_k), dtype=dist.dtype)
+    filtered_labels = np.empty((len(xyz), max_k), dtype=y.dtype)
+    for row in range(len(xyz)):
+        keep = idx[row] != row
+        filtered_dist[row] = dist[row, keep][:max_k]
+        filtered_labels[row] = y[idx[row, keep][:max_k]]
+    return _features_from_neighbours(filtered_dist, filtered_labels, ks, n_classes, priors, smoothing)

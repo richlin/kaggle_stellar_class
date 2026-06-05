@@ -1,0 +1,48 @@
+{
+  "confusion_matrix": [
+    [
+      361770,
+      5322,
+      10388
+    ],
+    [
+      1754,
+      114233,
+      1156
+    ],
+    [
+      1851,
+      327,
+      80546
+    ]
+  ],
+  "galaxy_residual_oof": 0.9690706512708674,
+  "incumbent_oof": 0.9690706512708674,
+  "n_qso_to_galaxy_oof": 0,
+  "n_qso_to_galaxy_test": 0,
+  "n_star_to_galaxy_oof": 0,
+  "n_star_to_galaxy_test": 0,
+  "params": {
+    "bagging_fraction": 0.88,
+    "bagging_freq": 1,
+    "class_weight": "balanced",
+    "feature_fraction": 0.82,
+    "lambda_l2": 2.0,
+    "learning_rate": 0.04,
+    "min_child_samples": 30,
+    "n_estimators": 500,
+    "n_jobs": -1,
+    "num_leaves": 31,
+    "objective": "binary",
+    "verbosity": -1
+  },
+  "per_class_recall": {
+    "GALAXY": 0.958381901027869,
+    "QSO": 0.9751585668797965,
+    "STAR": 0.9736714859049369
+  },
+  "qso_threshold": 1.01,
+  "star_threshold": 1.01,
+  "submission_path": "/Users/linrichuang/Github/predicting_stellar_class/submissions/18_galaxy_residual.csv",
+  "timestamp_utc": "2026-06-05T00:36:23Z"
+}

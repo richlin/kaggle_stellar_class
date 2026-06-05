@@ -1,0 +1,18 @@
+{
+  "changed_vs_16_spatial_blend": 890,
+  "class_counts": {
+    "GALAXY": 157565,
+    "QSO": 51063,
+    "STAR": 38807
+  },
+  "galaxy_count_delta_vs_16": 835,
+  "multipliers": [
+    0.6,
+    0.75,
+    1.0
+  ],
+  "rationale": "LOO spatial final candidate multiplier variant; public-risk because no honest OOF exists for full-data LOO final training.",
+  "source_probabilities": "experiments/19_loo_spatial_blend_test_probabilities.npy",
+  "submission_path": "submissions/21_loo_spatial_galaxy_lean.csv",
+  "timestamp_utc": "2026-06-05T00:43:28Z"
+}
