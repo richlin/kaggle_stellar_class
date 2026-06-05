@@ -1,0 +1,36 @@
+{
+  "candidate": "multi_blend",
+  "chosen_oof_balanced_accuracy": 0.9662824834818386,
+  "delta_vs_reference": 0.00035750186274130513,
+  "multipliers": [
+    0.74,
+    0.94,
+    1.05
+  ],
+  "oof_probability_path": "experiments/12_multi_blend_oof_probabilities.npy",
+  "per_class_recall": {
+    "GALAXY": 0.9555128748542969,
+    "QSO": 0.9745951529327403,
+    "STAR": 0.9687394226584788
+  },
+  "per_class_recall_delta": {
+    "GALAXY": -0.0014543816890960626,
+    "QSO": 0.0026719479610390895,
+    "STAR": -0.00014506068371933356
+  },
+  "reference_oof_balanced_accuracy": 0.9659249816190973,
+  "reference_per_class_recall": {
+    "GALAXY": 0.956967256543393,
+    "QSO": 0.9719232049717013,
+    "STAR": 0.9688844833421981
+  },
+  "submission_path": "submissions/12_multi_blend.csv",
+  "test_probability_path": "experiments/12_multi_blend_test_probabilities.npy",
+  "timestamp_utc": "2026-06-04T21:31:56Z",
+  "weights": {
+    "boundary_v1": 0.05,
+    "extended_seed_average": 0.28,
+    "lgbm_seed_average_final": 0.23,
+    "xgboost": 0.44
+  }
+}

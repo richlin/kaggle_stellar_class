@@ -1,0 +1,288 @@
+{
+  "candidate": "extended_seed_average",
+  "candidate_selection": {
+    "accepted": true,
+    "candidate_score": 0.966006054665383,
+    "delta": 8.107304628568457e-05,
+    "reference_score": 0.9659249816190973
+  },
+  "chosen_multipliers": [
+    1.0,
+    1.1,
+    1.15
+  ],
+  "chosen_oof_balanced_accuracy": 0.966006054665383,
+  "existing_run_count": 3,
+  "new_runs": [
+    {
+      "argmax_oof_balanced_accuracy": 0.9655109367908944,
+      "chosen_multipliers": [
+        1.0,
+        1.15,
+        1.15
+      ],
+      "chosen_oof_balanced_accuracy": 0.9656991554731519,
+      "folds": [
+        {
+          "best_iteration": 700,
+          "fold": 1,
+          "overfit_gap": 0.018540952367759767,
+          "per_class_recall": {
+            "GALAXY": 0.9594415598177387,
+            "QSO": 0.9742626659268429,
+            "STAR": 0.9618615896041101
+          },
+          "train_balanced_accuracy": 0.9837295574839903,
+          "valid_balanced_accuracy": 0.9651886051162305
+        },
+        {
+          "best_iteration": 700,
+          "fold": 2,
+          "overfit_gap": 0.01853348233094254,
+          "per_class_recall": {
+            "GALAXY": 0.9606866588958355,
+            "QSO": 0.9740492551965513,
+            "STAR": 0.9616198247204594
+          },
+          "train_balanced_accuracy": 0.983985395268558,
+          "valid_balanced_accuracy": 0.9654519129376155
+        },
+        {
+          "best_iteration": 700,
+          "fold": 3,
+          "overfit_gap": 0.01844566560376082,
+          "per_class_recall": {
+            "GALAXY": 0.9598256861290665,
+            "QSO": 0.9734517051517351,
+            "STAR": 0.9629472920696325
+          },
+          "train_balanced_accuracy": 0.9838538933872388,
+          "valid_balanced_accuracy": 0.965408227783478
+        },
+        {
+          "best_iteration": 700,
+          "fold": 4,
+          "overfit_gap": 0.017460306330605135,
+          "per_class_recall": {
+            "GALAXY": 0.960024372152167,
+            "QSO": 0.9746457230664163,
+            "STAR": 0.9640374735569659
+          },
+          "train_balanced_accuracy": 0.9836961625891215,
+          "valid_balanced_accuracy": 0.9662358562585164
+        },
+        {
+          "best_iteration": 700,
+          "fold": 5,
+          "overfit_gap": 0.01841378635284996,
+          "per_class_recall": {
+            "GALAXY": 0.9591898908551446,
+            "QSO": 0.973066416254055,
+            "STAR": 0.9635539437896645
+          },
+          "train_balanced_accuracy": 0.9836838699858047,
+          "valid_balanced_accuracy": 0.9652700836329547
+        }
+      ],
+      "mean_overfit_gap": 0.018278838597183645,
+      "n_splits": 5,
+      "params": {
+        "bagging_fraction": 0.9,
+        "bagging_freq": 1,
+        "class_weight": "balanced",
+        "feature_fraction": 0.9,
+        "lambda_l1": 0.0,
+        "lambda_l2": 0.0,
+        "learning_rate": 0.04,
+        "min_child_samples": 20,
+        "n_estimators": 700,
+        "n_jobs": -1,
+        "num_leaves": 63,
+        "objective": "multiclass",
+        "random_state": 45,
+        "verbosity": -1
+      },
+      "per_class_recall_chosen": {
+        "GALAXY": 0.9570387835117092,
+        "QSO": 0.9747402747069821,
+        "STAR": 0.965318408200764
+      },
+      "seed": 45,
+      "stable_threshold": {
+        "accepted": true,
+        "baseline_score": 0.9655109367908944,
+        "class_recall_deltas": {
+          "GALAXY": -0.002794850058281173,
+          "QSO": 0.000845120920584308,
+          "STAR": 0.0025143851844687815
+        },
+        "fold_score_deltas": {
+          "1": 0.0002950034658110168,
+          "2": 0.00019289588912685396,
+          "3": 0.0003994216035445586,
+          "4": 5.6551480149380495e-05,
+          "5": -2.7758554531631674e-06
+        },
+        "multipliers": [
+          1.0,
+          1.15,
+          1.15
+        ],
+        "score": 0.9656991554731519
+      }
+    },
+    {
+      "argmax_oof_balanced_accuracy": 0.9652081144734402,
+      "chosen_multipliers": [
+        0.9,
+        1.1,
+        1.0
+      ],
+      "chosen_oof_balanced_accuracy": 0.9655863791266867,
+      "folds": [
+        {
+          "best_iteration": 700,
+          "fold": 1,
+          "overfit_gap": 0.01912800429352457,
+          "per_class_recall": {
+            "GALAXY": 0.9594415598177387,
+            "QSO": 0.9738785266123181,
+            "STAR": 0.9610154125113327
+          },
+          "train_balanced_accuracy": 0.9839065039406544,
+          "valid_balanced_accuracy": 0.9647784996471298
+        },
+        {
+          "best_iteration": 700,
+          "fold": 2,
+          "overfit_gap": 0.018324407576751578,
+          "per_class_recall": {
+            "GALAXY": 0.9596402458408393,
+            "QSO": 0.9746041230953092,
+            "STAR": 0.9621637957086733
+          },
+          "train_balanced_accuracy": 0.983793795791692,
+          "valid_balanced_accuracy": 0.9654693882149404
+        },
+        {
+          "best_iteration": 700,
+          "fold": 3,
+          "overfit_gap": 0.017818169580184118,
+          "per_class_recall": {
+            "GALAXY": 0.9606336759563421,
+            "QSO": 0.9734517051517351,
+            "STAR": 0.964277079303675
+          },
+          "train_balanced_accuracy": 0.9839389897174348,
+          "valid_balanced_accuracy": 0.9661208201372506
+        },
+        {
+          "best_iteration": 700,
+          "fold": 4,
+          "overfit_gap": 0.0187545546609873,
+          "per_class_recall": {
+            "GALAXY": 0.959772703189573,
+            "QSO": 0.9735359399009732,
+            "STAR": 0.9616198247204594
+          },
+          "train_balanced_accuracy": 0.9837307105979892,
+          "valid_balanced_accuracy": 0.9649761559370019
+        },
+        {
+          "best_iteration": 700,
+          "fold": 5,
+          "overfit_gap": 0.019238374458939056,
+          "per_class_recall": {
+            "GALAXY": 0.9587925188089436,
+            "QSO": 0.9742188833873997,
+            "STAR": 0.9610758537322454
+          },
+          "train_balanced_accuracy": 0.9839341264351353,
+          "valid_balanced_accuracy": 0.9646957519761963
+        }
+      ],
+      "mean_overfit_gap": 0.018652702114077324,
+      "n_splits": 5,
+      "params": {
+        "bagging_fraction": 0.9,
+        "bagging_freq": 1,
+        "class_weight": "balanced",
+        "feature_fraction": 0.9,
+        "lambda_l1": 0.0,
+        "lambda_l2": 0.0,
+        "learning_rate": 0.04,
+        "min_child_samples": 20,
+        "n_estimators": 700,
+        "n_jobs": -1,
+        "num_leaves": 63,
+        "objective": "multiclass",
+        "random_state": 46,
+        "verbosity": -1
+      },
+      "per_class_recall_chosen": {
+        "GALAXY": 0.9571182579209494,
+        "QSO": 0.9754829567281016,
+        "STAR": 0.9641579227310091
+      },
+      "seed": 46,
+      "stable_threshold": {
+        "accepted": true,
+        "baseline_score": 0.9652081144734402,
+        "class_recall_deltas": {
+          "GALAXY": -0.002537882801737945,
+          "QSO": 0.0015451200669267529,
+          "STAR": 0.0021275566945504476
+        },
+        "fold_score_deltas": {
+          "1": 0.00038880586775047465,
+          "2": 0.00029307249591736806,
+          "3": 0.00033523788630274165,
+          "4": 0.0006007698950547535,
+          "5": 0.00027343966789128427
+        },
+        "multipliers": [
+          0.9,
+          1.1,
+          1.0
+        ],
+        "score": 0.9655863791266867
+      }
+    }
+  ],
+  "new_seeds": [
+    45,
+    46
+  ],
+  "oof_probability_path": "experiments/09_extended_seed_average_oof_probabilities.npy",
+  "per_class_recall": {
+    "GALAXY": 0.9575315248489986,
+    "QSO": 0.9744671043084093,
+    "STAR": 0.9660195348387409
+  },
+  "reference_oof_balanced_accuracy": 0.9659249816190973,
+  "stable_threshold": {
+    "accepted": true,
+    "baseline_score": 0.965681544428982,
+    "class_recall_deltas": {
+      "GALAXY": -0.002564374271484593,
+      "QSO": 0.0006487796966100356,
+      "STAR": 0.002889125284077254
+    },
+    "fold_score_deltas": {
+      "1": 0.0004629150123710568,
+      "2": 0.0003297684828182934,
+      "3": 0.00034562515274738637,
+      "4": 0.00027312638714394044,
+      "5": 0.00021111555002528704
+    },
+    "multipliers": [
+      1.0,
+      1.1,
+      1.15
+    ],
+    "score": 0.966006054665383
+  },
+  "submission_path": "submissions/09_extended_seed_average.csv",
+  "test_probability_path": "experiments/09_extended_seed_average_test_probabilities.npy",
+  "timestamp_utc": "2026-06-04T17:50:19Z"
+}

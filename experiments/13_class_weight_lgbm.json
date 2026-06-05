@@ -1,0 +1,93 @@
+{
+  "argmax_oof_balanced_accuracy": 0.9653479675818205,
+  "blend_multipliers": [
+    0.7486716574362712,
+    0.7990666907996212,
+    0.899655837834189
+  ],
+  "blend_weights": {
+    "class_weight_lgbm": 0.09999999999999998,
+    "multi_blend_12": 0.9
+  },
+  "candidate": "class_weight_lgbm",
+  "chosen_oof_balanced_accuracy": 0.9661492957452017,
+  "class_adjustment": [
+    1.0,
+    1.1,
+    1.05
+  ],
+  "current_best_score": 0.9662824834818386,
+  "delta_vs_current_best": -0.00013318773663695271,
+  "folds": [
+    {
+      "best_iteration": 900,
+      "fold": 1,
+      "valid_balanced_accuracy": 0.9659966061279607
+    },
+    {
+      "best_iteration": 900,
+      "fold": 2,
+      "valid_balanced_accuracy": 0.9646083455080104
+    },
+    {
+      "best_iteration": 900,
+      "fold": 3,
+      "valid_balanced_accuracy": 0.9645585865071512
+    },
+    {
+      "best_iteration": 900,
+      "fold": 4,
+      "valid_balanced_accuracy": 0.9656613989287909
+    },
+    {
+      "best_iteration": 899,
+      "fold": 5,
+      "valid_balanced_accuracy": 0.9659149470235544
+    }
+  ],
+  "oof_probability_path": "experiments/13_class_weight_lgbm_oof_probabilities.npy",
+  "params": {
+    "bagging_fraction": 0.9,
+    "bagging_freq": 1,
+    "feature_fraction": 0.9,
+    "lambda_l1": 0.0,
+    "lambda_l2": 0.0,
+    "learning_rate": 0.04,
+    "min_child_samples": 20,
+    "n_estimators": 900,
+    "n_jobs": -1,
+    "num_leaves": 63,
+    "objective": "multiclass",
+    "verbosity": -1
+  },
+  "per_class_recall": {
+    "GALAXY": 0.9589329235986013,
+    "QSO": 0.9736646662626022,
+    "STAR": 0.9658502973744016
+  },
+  "per_class_recall_delta_vs_reference": {
+    "GALAXY": 0.0019656670552082867,
+    "QSO": 0.0017414612909009142,
+    "STAR": -0.0030341859677964766
+  },
+  "reference_per_class_recall": {
+    "GALAXY": 0.956967256543393,
+    "QSO": 0.9719232049717013,
+    "STAR": 0.9688844833421981
+  },
+  "reference_score": 0.9659249816190973,
+  "standalone_multipliers": [
+    0.7445422890285862,
+    0.7887707961492506,
+    0.9051160911287457
+  ],
+  "standalone_oof_balanced_accuracy": 0.9658524584206448,
+  "standalone_per_class_recall": {
+    "GALAXY": 0.9577990886934407,
+    "QSO": 0.9739805195359518,
+    "STAR": 0.9657777670325419
+  },
+  "submission_path": "submissions/13_class_weight_lgbm.csv",
+  "test_probability_path": "experiments/13_class_weight_lgbm_test_probabilities.npy",
+  "timestamp_utc": "2026-06-04T22:06:02Z"
+}

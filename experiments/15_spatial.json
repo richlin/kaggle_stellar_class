@@ -1,0 +1,72 @@
+{
+  "argmax_oof_balanced_accuracy": 0.9677408682910494,
+  "chosen_multipliers": [
+    0.6,
+    1.2000000000000002,
+    1.25
+  ],
+  "cv_seeds": [
+    42,
+    43,
+    44
+  ],
+  "ks": [
+    5,
+    10,
+    25,
+    50,
+    100,
+    250
+  ],
+  "n_spatial_features": 25,
+  "params": {
+    "bagging_fraction": 0.9,
+    "bagging_freq": 1,
+    "class_weight": "balanced",
+    "feature_fraction": 0.9,
+    "learning_rate": 0.04,
+    "min_child_samples": 20,
+    "n_estimators": 900,
+    "n_jobs": -1,
+    "num_leaves": 63,
+    "objective": "multiclass",
+    "verbosity": -1
+  },
+  "per_class_recall_tuned": {
+    "GALAXY": 0.9564824626470276,
+    "QSO": 0.977215881444047,
+    "STAR": 0.9729824476572699
+  },
+  "reference_best_oof": 0.966282,
+  "smoothing": 10.0,
+  "spatial_feature_names": [
+    "nn5_frac_c0",
+    "nn5_frac_c1",
+    "nn5_frac_c2",
+    "nn10_frac_c0",
+    "nn10_frac_c1",
+    "nn10_frac_c2",
+    "nn25_frac_c0",
+    "nn25_frac_c1",
+    "nn25_frac_c2",
+    "nn50_frac_c0",
+    "nn50_frac_c1",
+    "nn50_frac_c2",
+    "nn100_frac_c0",
+    "nn100_frac_c1",
+    "nn100_frac_c2",
+    "nn250_frac_c0",
+    "nn250_frac_c1",
+    "nn250_frac_c2",
+    "nnw_frac_c0",
+    "nnw_frac_c1",
+    "nnw_frac_c2",
+    "nn_dist_c0",
+    "nn_dist_c1",
+    "nn_dist_c2",
+    "nn_density"
+  ],
+  "submission_path": "/Users/linrichuang/Github/predicting_stellar_class/submissions/15_spatial.csv",
+  "timestamp_utc": "2026-06-04T23:47:12Z",
+  "tuned_oof_balanced_accuracy": 0.9688935972494482
+}

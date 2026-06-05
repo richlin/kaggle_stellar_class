@@ -476,6 +476,42 @@ Submit if:
 
 If the OOF gain is small but model diversity is high, submit one carefully chosen candidate. Avoid repeated public leaderboard probing.
 
+## Task 7.5: Fine-Tune XGBoost, Then Re-Blend
+
+> Added 2026-06-04 after the blend showed XGBoost is the only non-LightGBM model carrying weight (0.30) yet the least tuned (one hand-picked config, fixed `n_estimators=1200`, no early stopping). LightGBM was already screened in Phase 4, so HPO concentrates on XGBoost. Detailed working plan: `~/.claude/plans/great-does-hyperparameter-tuning-lexical-diffie.md`.
+>
+> **Caution:** `04_ensemble` regressed on the public board despite a higher OOF. Hyperparameter selection must not leak, and the public-best fallback rule stays in force.
+
+**Files:**
+- Modify: `requirements.txt` (add `optuna`)
+- Create: `scripts/05_tune_xgb.py`, `tests/test_tune_xgb.py`
+- Reuse: `scripts/04_ensemble.py` (`_xgboost_frames`, blend + continuous-multiplier helpers via `importlib`), `scripts/03_tune.py` (`search_stable_multipliers`), `src/validation.py`
+- Output: `experiments/04_xgboost_tuned_*.npy`, `experiments/05_tune_xgb.json`, `submissions/05_tuned_ensemble.csv`
+
+- [ ] **Step 1: Tests first** — `objective` returns a finite float, sampled params fall within declared bounds, validated OOF/test arrays are `(577347, 3)` / `(247436, 3)` and rows sum ~1, tuned-blend submission preserves `sample_submission` id order.
+
+- [ ] **Step 2: Optuna search with early stopping**
+
+TPE sampler + `MedianPruner`, ~120 trials. Add `early_stopping_rounds=50` on `mlogloss` and raise `n_estimators` to a high cap so the tree count is data-chosen. Search space:
+
+```text
+learning_rate   log[0.01, 0.1]      reg_lambda       log[1e-2, 10]
+max_depth       int[4, 12]          reg_alpha        log[1e-3, 5]
+min_child_weight log[1, 20]         gamma            [0, 5]
+subsample       [0.6, 1.0]          colsample_bytree [0.5, 1.0]
+colsample_bylevel [0.5, 1.0]
+```
+
+Objective = `search_stable_multipliers`-tuned balanced accuracy on the **proxy** OOF.
+
+- [ ] **Step 3: Anti-leakage protocol (mandatory)**
+
+**Select** params on a 3-fold, seed=42 proxy. **Re-validate** only the winning config on full 5-fold × fresh seeds `{52, 53, 54}`, averaging OOF/test probabilities. The fresh-seed OOF is what enters the blend — never the selection OOF.
+
+- [ ] **Step 4: Re-blend and gate**
+
+Reuse `weighted_probability_blend`, `search_blend_weights`, `search_continuous_multipliers` from `scripts/04_ensemble.py`. Re-run weight search (now with tuned XGBoost) → continuous multipliers → `submissions/05_tuned_ensemble.csv`. **Adopt only if** re-blended OOF beats `0.966055` within the recall/fold guardrails and does not repeat the STAR-boundary regression; otherwise record the negative result and keep the public-best fallback.
+
 ## Task 8: Pseudo-Labeling Only After Ensemble
 
 **Files:**
@@ -523,6 +559,7 @@ Every score-producing run must have:
 3. Train cross-library learners: **XGBoost** (primary) and **`lgbm_dart`** on identical fold splits.
 4. Add **CatBoost** (graceful fallback applies to both XGBoost and CatBoost).
 5. Blend probabilities, run the continuous threshold optimizer, and submit the best evidence-backed ensemble.
-6. If the ensemble does not clear `0.97`, extend error analysis (margins on the already-known GALAXY→STAR/QSO leak).
-7. Add focused **low-redshift GALAXY/STAR boundary** features only when that analysis justifies them.
-8. Use pseudo-labeling only as a final, carefully constrained experiment.
+6. **Fine-tune XGBoost** (the under-tuned model carrying blend weight) with leakage-controlled Optuna, then re-blend (Task 7.5).
+7. If still short of `0.97`, extend error analysis (margins on the already-known GALAXY→STAR/QSO leak).
+8. Add focused **low-redshift GALAXY/STAR boundary** features only when that analysis justifies them.
+9. Use pseudo-labeling only as a final, carefully constrained experiment.
