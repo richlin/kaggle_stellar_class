@@ -1,0 +1,115 @@
+{
+  "argmax_oof_balanced_accuracy": 0.9652858451760781,
+  "candidate_selection": {
+    "accepted": false,
+    "candidate_score": 0.9656304541983382,
+    "delta": -0.00029452742075919414,
+    "reference_score": 0.9659249816190973
+  },
+  "chosen_multipliers": [
+    1.0,
+    1.15,
+    1.15
+  ],
+  "chosen_oof_balanced_accuracy": 0.9656304541983382,
+  "feature_set": "boundary_v1",
+  "folds": [
+    {
+      "best_iteration": 700,
+      "fold": 1,
+      "per_class_recall": {
+        "GALAXY": 0.9616800890113384,
+        "QSO": 0.9734517051517351,
+        "STAR": 0.961136294953158
+      },
+      "valid_balanced_accuracy": 0.9654226963720771
+    },
+    {
+      "best_iteration": 700,
+      "fold": 2,
+      "per_class_recall": {
+        "GALAXY": 0.9594945427572321,
+        "QSO": 0.9737931623202014,
+        "STAR": 0.9625264430341492
+      },
+      "valid_balanced_accuracy": 0.9652713827038609
+    },
+    {
+      "best_iteration": 700,
+      "fold": 3,
+      "per_class_recall": {
+        "GALAXY": 0.9599846349475469,
+        "QSO": 0.9729395193990353,
+        "STAR": 0.9622219535783365
+      },
+      "valid_balanced_accuracy": 0.9650487026416396
+    },
+    {
+      "best_iteration": 700,
+      "fold": 4,
+      "per_class_recall": {
+        "GALAXY": 0.9611502596164035,
+        "QSO": 0.9731944681577599,
+        "STAR": 0.9614385010577213
+      },
+      "valid_balanced_accuracy": 0.965261076277295
+    },
+    {
+      "best_iteration": 700,
+      "fold": 5,
+      "per_class_recall": {
+        "GALAXY": 0.9598124403941931,
+        "QSO": 0.9724261567355301,
+        "STAR": 0.9640374735569659
+      },
+      "valid_balanced_accuracy": 0.9654253568955631
+    }
+  ],
+  "oof_probability_path": "experiments/05_boundary_v1_oof_probabilities.npy",
+  "params": {
+    "bagging_fraction": 0.9,
+    "bagging_freq": 1,
+    "class_weight": "balanced",
+    "feature_fraction": 0.9,
+    "lambda_l1": 0.0,
+    "lambda_l2": 0.0,
+    "learning_rate": 0.04,
+    "min_child_samples": 20,
+    "n_estimators": 700,
+    "n_jobs": -1,
+    "num_leaves": 63,
+    "objective": "multiclass",
+    "verbosity": -1
+  },
+  "per_class_recall": {
+    "GALAXY": 0.9577196142842005,
+    "QSO": 0.9742280802096582,
+    "STAR": 0.9649436681011556
+  },
+  "reference_score": 0.9659249816190973,
+  "stable_threshold": {
+    "accepted": true,
+    "baseline_score": 0.9652858451760781,
+    "class_recall_deltas": {
+      "GALAXY": -0.002704779061142304,
+      "QSO": 0.0010670718694244519,
+      "STAR": 0.0026715342584980872
+    },
+    "fold_score_deltas": {
+      "1": 8.264085020470713e-05,
+      "2": 0.0005250252425064161,
+      "3": 0.0004170515568466815,
+      "4": 0.00039754789260870727,
+      "5": 0.00030077689983265543
+    },
+    "multipliers": [
+      1.0,
+      1.15,
+      1.15
+    ],
+    "score": 0.9656304541983382
+  },
+  "submission_path": "submissions/05_boundary_v1.csv",
+  "test_probability_path": "experiments/05_boundary_v1_test_probabilities.npy",
+  "timestamp_utc": "2026-06-04T17:09:24Z"
+}

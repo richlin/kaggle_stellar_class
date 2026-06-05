@@ -1,0 +1,18 @@
+{
+  "blend_multipliers": [
+    0.6,
+    1.0,
+    1.35
+  ],
+  "blend_per_class_recall": {
+    "GALAXY": 0.958381901027869,
+    "QSO": 0.9751585668797965,
+    "STAR": 0.9736714859049369
+  },
+  "blend_tuned_oof": 0.9690706512708674,
+  "blend_w_lgbm": 0.55,
+  "spatial_lgbm_tuned_oof": 0.968884,
+  "spatial_xgb_tuned_oof": 0.9687758173130895,
+  "submission_path": "/Users/linrichuang/Github/predicting_stellar_class/submissions/16_spatial_blend.csv",
+  "timestamp_utc": "2026-06-04T23:55:59Z"
+}

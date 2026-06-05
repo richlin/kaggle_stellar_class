@@ -1,0 +1,103 @@
+{
+  "argmax_oof_balanced_accuracy": 0.9658405290336716,
+  "base_probability_sets": [
+    "lgbm_seed_average_final",
+    "xgboost",
+    "catboost",
+    "lgbm_dart",
+    "boundary_v1"
+  ],
+  "candidate": "probability_stacker",
+  "candidate_selection": {
+    "accepted": false,
+    "candidate_score": 0.9659153876937271,
+    "delta": -9.59392537025483e-06,
+    "reference_score": 0.9659249816190973
+  },
+  "chosen_multipliers": [
+    0.9,
+    1.1,
+    1.0
+  ],
+  "chosen_oof_balanced_accuracy": 0.9659153876937271,
+  "folds": [
+    {
+      "fold": 1,
+      "per_class_recall": {
+        "GALAXY": 0.9587527816043234,
+        "QSO": 0.9740492551965513,
+        "STAR": 0.9638561498942279
+      },
+      "valid_balanced_accuracy": 0.9655527288983675
+    },
+    {
+      "fold": 2,
+      "per_class_recall": {
+        "GALAXY": 0.9563553035922433,
+        "QSO": 0.9746468052413675,
+        "STAR": 0.966696887277123
+      },
+      "valid_balanced_accuracy": 0.9658996653702446
+    },
+    {
+      "fold": 3,
+      "per_class_recall": {
+        "GALAXY": 0.9576533856098336,
+        "QSO": 0.9736224337359682,
+        "STAR": 0.9657882011605415
+      },
+      "valid_balanced_accuracy": 0.9656880068354478
+    },
+    {
+      "fold": 4,
+      "per_class_recall": {
+        "GALAXY": 0.9585408498463495,
+        "QSO": 0.9736213078367765,
+        "STAR": 0.9647627682079178
+      },
+      "valid_balanced_accuracy": 0.9656416419636814
+    },
+    {
+      "fold": 5,
+      "per_class_recall": {
+        "GALAXY": 0.9569381159266717,
+        "QSO": 0.9741761994194981,
+        "STAR": 0.9681474765790269
+      },
+      "valid_balanced_accuracy": 0.9664205973083989
+    }
+  ],
+  "per_class_recall": {
+    "GALAXY": 0.9558890537247007,
+    "QSO": 0.9749792988057332,
+    "STAR": 0.9668778105507471
+  },
+  "stable_threshold": {
+    "accepted": true,
+    "baseline_score": 0.9658405290336716,
+    "class_recall_deltas": {
+      "GALAXY": -0.0017590335911835675,
+      "QSO": 0.0009560963950043799,
+      "STAR": 0.0010275131763454182
+    },
+    "fold_score_deltas": {
+      "1": 0.00027942571215311407,
+      "2": 7.259222681443855e-05,
+      "3": 7.42520495982113e-05,
+      "4": -3.431516679808233e-05,
+      "5": -1.766199916786171e-05
+    },
+    "multipliers": [
+      0.9,
+      1.1,
+      1.0
+    ],
+    "score": 0.9659153876937271
+  },
+  "stack_feature_shape": [
+    577347,
+    25
+  ],
+  "submission_path": "submissions/07_probability_stacker.csv",
+  "timestamp_utc": "2026-06-04T17:24:08Z"
+}

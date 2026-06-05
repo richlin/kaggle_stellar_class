@@ -1,0 +1,39 @@
+ITER	METRIC	STATUS	DESCRIPTION
+iter-0	0.966263	baseline	12_multi_blend weights (lgbm_final/xgboost/extended_seed/boundary_v1)
+greedy-r1	0.965682	search	add extended_seed
+greedy-r2	0.965858	search	add tuned_xgb
+greedy-r3	0.965910	search	add boundary_v1
+greedy-r4	0.965908	search	add extended_seed
+greedy-r5	0.965938	search	add class_weight
+greedy-r6	0.965955	search	add boundary_v1
+greedy-r7	0.965975	search	add class_weight
+greedy-r8	0.965958	search	add extended_seed
+greedy-r9	0.965970	search	add boundary_v1
+greedy-r10	0.965973	search	add class_weight
+greedy-r11	0.965960	search	add boundary_v1
+greedy-r12	0.965964	search	add extended_seed
+greedy-r13	0.965997	search	add xgboost
+greedy-r14	0.965986	search	add extended_seed
+greedy-r15	0.965990	search	add target_encoding
+greedy-r16	0.965980	search	add boundary_v1
+greedy-r17	0.965988	search	add class_weight
+greedy-r18	0.965994	search	add extended_seed
+greedy-r19	0.965980	search	add tuned_xgb
+greedy-r20	0.966000	search	add boundary_v1
+greedy-r21	0.965991	search	add extended_seed
+greedy-r22	0.966006	search	add extended_seed
+greedy-r23	0.965997	search	add boundary_v1
+greedy-r24	0.965992	search	add tuned_xgb
+greedy-r25	0.965978	search	add extended_seed
+greedy-r26	0.965995	search	add class_weight
+greedy-r27	0.966001	search	add boundary_v1
+greedy-r28	0.965992	search	add extended_seed
+greedy-r29	0.965979	search	add class_weight
+greedy-r30	0.965995	search	add class_weight
+greedy-r31	0.965994	search	add xgboost
+greedy-r32	0.965991	search	add boundary_v1
+greedy-r33	0.966013	search	add extended_seed
+greedy-r34	0.966005	search	add extended_seed
+greedy-r35	0.966005	search	add boundary_v1
+greedy-r36	0.966016	search	add target_encoding
+greedy-best	0.966239	discard	bag={'extended_seed': 12, 'tuned_xgb': 3, 'boundary_v1': 10, 'class_weight': 7, 'xgboost': 2, 'target_encoding': 2}

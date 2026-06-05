@@ -1,0 +1,33 @@
+{
+  "candidate": "target_encoding_blend",
+  "chosen_oof_balanced_accuracy": 0.9662595764879448,
+  "delta_vs_reference": 0.0003345948688474598,
+  "multipliers": [
+    0.8,
+    1.1,
+    1.15
+  ],
+  "per_class_recall": {
+    "GALAXY": 0.9546545512345025,
+    "QSO": 0.9753122252289936,
+    "STAR": 0.9688119530003385
+  },
+  "per_class_recall_delta": {
+    "GALAXY": -0.0023127053088904947,
+    "QSO": 0.0033890202572923744,
+    "STAR": -7.253034185961127e-05
+  },
+  "reference_oof_balanced_accuracy": 0.9659249816190973,
+  "reference_per_class_recall": {
+    "GALAXY": 0.956967256543393,
+    "QSO": 0.9719232049717013,
+    "STAR": 0.9688844833421981
+  },
+  "submission_path": "submissions/11_target_encoding_blend.csv",
+  "timestamp_utc": "2026-06-04T19:37:55Z",
+  "weights": {
+    "lgbm_seed_average_final": 0.5,
+    "target_encoding": 0.1,
+    "xgboost": 0.4
+  }
+}

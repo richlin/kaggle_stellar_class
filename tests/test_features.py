@@ -31,6 +31,23 @@ EXPECTED_ENGINEERED_COLUMNS = {
     "spectral_population",
 }
 
+EXPECTED_BOUNDARY_COLUMNS = {
+    "delta_sin",
+    "delta_cos",
+    "sky_x",
+    "sky_y",
+    "sky_z",
+    "redshift_squared",
+    "log1p_redshift",
+    "low_redshift_flag",
+    "redshift_x_u_r",
+    "redshift_x_g_z",
+    "u_z_slope",
+    "blue_red_ratio",
+    "redshift_bin",
+    "spectral_population_redshift_bin",
+}
+
 
 def _train_fixture() -> pd.DataFrame:
     return pd.DataFrame(
@@ -75,8 +92,49 @@ def test_train_and_test_feature_columns_match() -> None:
     assert test_categorical_columns == categorical_columns
 
 
+def test_baseline_feature_set_excludes_boundary_columns() -> None:
+    X, _y, _categorical_columns, _encoder = build_features(_train_fixture(), feature_set="baseline")
+
+    assert EXPECTED_BOUNDARY_COLUMNS.isdisjoint(X.columns)
+
+
+def test_boundary_v1_adds_targeted_boundary_columns() -> None:
+    X, _y, categorical_columns, _encoder = build_features(_train_fixture(), feature_set="boundary_v1")
+
+    assert EXPECTED_ENGINEERED_COLUMNS.issubset(X.columns)
+    assert EXPECTED_BOUNDARY_COLUMNS.issubset(X.columns)
+    assert "redshift_bin" in categorical_columns
+    assert "spectral_population_redshift_bin" in categorical_columns
+    for column in categorical_columns:
+        assert str(X[column].dtype) == "category"
+
+
+def test_boundary_v1_train_and_test_feature_columns_match() -> None:
+    X_train, _y, categorical_columns, encoder = build_features(
+        _train_fixture(),
+        feature_set="boundary_v1",
+    )
+    X_test, y_test, test_categorical_columns, _ = build_features(
+        _test_fixture(),
+        feature_set="boundary_v1",
+        label_encoder=encoder,
+    )
+
+    assert y_test is None
+    assert X_test.columns.tolist() == X_train.columns.tolist()
+    assert test_categorical_columns == categorical_columns
+
+
 def test_feature_math_introduces_no_nan_or_infinity() -> None:
     X, _y, _categorical_columns, _encoder = build_features(_train_fixture())
+    numeric = X.select_dtypes(exclude=["category"])
+
+    assert not X.isna().any().any()
+    assert np.isfinite(numeric.to_numpy()).all()
+
+
+def test_boundary_v1_feature_math_introduces_no_nan_or_infinity() -> None:
+    X, _y, _categorical_columns, _encoder = build_features(_train_fixture(), feature_set="boundary_v1")
     numeric = X.select_dtypes(exclude=["category"])
 
     assert not X.isna().any().any()

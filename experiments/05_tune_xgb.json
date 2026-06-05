@@ -1,0 +1,79 @@
+{
+  "best_params": {
+    "colsample_bytree": 0.7186376609199426,
+    "early_stopping_rounds": 50,
+    "eval_metric": "mlogloss",
+    "gamma": 0.3974313630683448,
+    "learning_rate": 0.01793532053620138,
+    "max_depth": 7,
+    "min_child_weight": 1.4193280334856115,
+    "n_estimators": 2035,
+    "n_jobs": -1,
+    "num_class": 3,
+    "objective": "multi:softprob",
+    "reg_alpha": 0.20736445177905022,
+    "reg_lambda": 3.845913414908675,
+    "subsample": 0.9005492451885099,
+    "tree_method": "hist"
+  },
+  "blend_weights": [
+    0.6,
+    0.4
+  ],
+  "candidate": "tuned_xgb_ensemble",
+  "chosen_multipliers": [
+    0.7996797310969558,
+    1.000133736969335,
+    0.9025791821725736
+  ],
+  "chosen_oof_balanced_accuracy": 0.966062166950432,
+  "delta_vs_reference": 0.00013718533133466604,
+  "n_trials": 8,
+  "oof_probability_path": "experiments/05_tuned_xgb_oof_probabilities.npy",
+  "per_class_recall": {
+    "GALAXY": 0.9564029882377875,
+    "QSO": 0.9758244197263174,
+    "STAR": 0.9659590928871912
+  },
+  "runs": [
+    {
+      "argmax_oof_balanced_accuracy": 0.9653085627646719,
+      "folds": [
+        {
+          "best_iteration": 2034,
+          "fold": 1,
+          "valid_balanced_accuracy": 0.9653695512208151
+        },
+        {
+          "best_iteration": 2034,
+          "fold": 2,
+          "valid_balanced_accuracy": 0.9654408799865597
+        },
+        {
+          "best_iteration": 2034,
+          "fold": 3,
+          "valid_balanced_accuracy": 0.9653250323446443
+        },
+        {
+          "best_iteration": 2034,
+          "fold": 4,
+          "valid_balanced_accuracy": 0.9652283112040744
+        },
+        {
+          "best_iteration": 2034,
+          "fold": 5,
+          "valid_balanced_accuracy": 0.9651790234975405
+        }
+      ],
+      "seed": 52
+    }
+  ],
+  "screen_best_score": 0.9649650390017835,
+  "submission_path": "submissions/05_tuned_ensemble.csv",
+  "test_probability_path": "experiments/05_tuned_xgb_test_probabilities.npy",
+  "timestamp_utc": "2026-06-04T19:03:25Z",
+  "tuned_xgb_argmax_oof": 0.9653085627646719,
+  "validation_seeds": [
+    52
+  ]
+}

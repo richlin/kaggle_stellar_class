@@ -1,0 +1,8 @@
+{
+  "weights": {
+    "lgbm_final": 0.23,
+    "xgboost": 0.44,
+    "extended_seed": 0.28,
+    "boundary_v1": 0.05
+  }
+}

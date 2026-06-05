@@ -1,0 +1,96 @@
+{
+  "argmax_oof_balanced_accuracy": 0.9652065572142288,
+  "candidate": "target_encoding",
+  "chosen_multipliers": [
+    0.75,
+    0.8,
+    0.9
+  ],
+  "chosen_oof_balanced_accuracy": 0.9655302251362631,
+  "delta_vs_reference": -0.0003947564828342687,
+  "folds": [
+    {
+      "best_iteration": 700,
+      "fold": 1,
+      "per_class_recall": {
+        "GALAXY": 0.9610045565327965,
+        "QSO": 0.97357975158991,
+        "STAR": 0.9618011483831973
+      },
+      "valid_balanced_accuracy": 0.9654618188353012
+    },
+    {
+      "best_iteration": 700,
+      "fold": 2,
+      "per_class_recall": {
+        "GALAXY": 0.9588322560135636,
+        "QSO": 0.9741773016347262,
+        "STAR": 0.9628286491387126
+      },
+      "valid_balanced_accuracy": 0.965279402262334
+    },
+    {
+      "best_iteration": 700,
+      "fold": 3,
+      "per_class_recall": {
+        "GALAXY": 0.9587792730740702,
+        "QSO": 0.9738358444662598,
+        "STAR": 0.9619801740812379
+      },
+      "valid_balanced_accuracy": 0.9648650972071894
+    },
+    {
+      "best_iteration": 700,
+      "fold": 4,
+      "per_class_recall": {
+        "GALAXY": 0.9603157783193812,
+        "QSO": 0.9733652040293665,
+        "STAR": 0.962224236929586
+      },
+      "valid_balanced_accuracy": 0.9653017397594446
+    },
+    {
+      "best_iteration": 700,
+      "fold": 5,
+      "per_class_recall": {
+        "GALAXY": 0.9588852389530571,
+        "QSO": 0.9732371521256616,
+        "STAR": 0.9632517376851012
+      },
+      "valid_balanced_accuracy": 0.9651247095879399
+    }
+  ],
+  "group_columns": [
+    "spectral_type",
+    "galaxy_population",
+    "spectral_population",
+    "redshift_bin",
+    "spectral_population_redshift_bin"
+  ],
+  "oof_probability_path": "experiments/10_target_encoding_oof_probabilities.npy",
+  "params": {
+    "bagging_fraction": 0.9,
+    "bagging_freq": 1,
+    "class_weight": "balanced",
+    "feature_fraction": 0.9,
+    "lambda_l1": 0.0,
+    "lambda_l2": 0.0,
+    "learning_rate": 0.04,
+    "min_child_samples": 20,
+    "n_estimators": 700,
+    "n_jobs": -1,
+    "num_leaves": 63,
+    "objective": "multiclass",
+    "verbosity": -1
+  },
+  "per_class_recall": {
+    "GALAXY": 0.9566149199957613,
+    "QSO": 0.9736902759874683,
+    "STAR": 0.9662854794255596
+  },
+  "reference_score": 0.9659249816190973,
+  "smoothing": 20.0,
+  "submission_path": "submissions/10_target_encoding.csv",
+  "test_probability_path": "experiments/10_target_encoding_test_probabilities.npy",
+  "timestamp_utc": "2026-06-04T19:19:33Z"
+}
