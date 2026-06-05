@@ -1,0 +1,35 @@
+{
+  "argmax_oof": 0.968660281340027,
+  "base_lgbm_oof_file": "/Users/linrichuang/Github/predicting_stellar_class/experiments/15_spatial_oof_probabilities.npy",
+  "base_xgb_oof_file": "/Users/linrichuang/Github/predicting_stellar_class/experiments/16_spatial_xgb_oof_probabilities.npy",
+  "gate": "FAILED",
+  "incumbent_oof": 0.969071,
+  "meta_cv_seed": 0,
+  "meta_features": "logit_lgbm3 + logit_xgb3 + raw_numeric",
+  "meta_n_splits": 5,
+  "meta_params": {
+    "bagging_fraction": 0.8,
+    "bagging_freq": 1,
+    "class_weight": "balanced",
+    "feature_fraction": 0.8,
+    "learning_rate": 0.05,
+    "min_child_samples": 20,
+    "n_estimators": 500,
+    "n_jobs": -1,
+    "num_leaves": 31,
+    "objective": "multiclass",
+    "verbosity": -1
+  },
+  "multipliers": [
+    0.85,
+    1.0,
+    1.0
+  ],
+  "per_class_recall": {
+    "GALAXY": 0.9552903465084243,
+    "QSO": 0.9771988082941362,
+    "STAR": 0.9736593975146269
+  },
+  "timestamp_utc": "2026-06-05T11:57:09Z",
+  "tuned_oof": 0.9687161841057291
+}

@@ -1,0 +1,22 @@
+{
+  "blend_tuned_oof": 0.9690397791944213,
+  "blend_w_lgbm": 0.4,
+  "gate": "FAILED",
+  "incumbent_oof": 0.969202,
+  "large_k_values": [
+    1000,
+    5000
+  ],
+  "multipliers": [
+    0.6,
+    1.1,
+    1.6
+  ],
+  "per_class_recall": {
+    "GALAXY": 0.9624218501642471,
+    "QSO": 0.9739378366611748,
+    "STAR": 0.9695493448092452
+  },
+  "standalone_tuned_oof": 0.9688758678940635,
+  "timestamp_utc": "2026-06-05T14:34:19Z"
+}

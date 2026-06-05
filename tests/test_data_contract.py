@@ -81,3 +81,23 @@ def test_test_categorical_levels_are_seen_in_train(
 ) -> None:
     for column in CATEGORICAL_COLUMNS:
         assert set(test_df[column]).issubset(set(train_df[column]))
+
+
+def test_synthetic_categorical_columns_match_documented_formulae(
+    train_df: pd.DataFrame, test_df: pd.DataFrame
+) -> None:
+    combined = pd.concat([train_df, test_df], ignore_index=True)
+
+    spectral_type = pd.cut(
+        combined["r"] - combined["g"],
+        [-float("inf"), -1, -0.5, 0, float("inf")],
+        labels=["M", "G/K", "A/F", "O/B"],
+    ).astype(str)
+    galaxy_population = pd.cut(
+        combined["u"] - combined["r"],
+        [-float("inf"), 2.2, float("inf")],
+        labels=["Blue_Cloud", "Red_Sequence"],
+    ).astype(str)
+
+    assert spectral_type.equals(combined["spectral_type"])
+    assert galaxy_population.equals(combined["galaxy_population"])

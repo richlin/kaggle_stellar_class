@@ -1,0 +1,50 @@
+{
+  "argmax_oof": 0.9676923121994987,
+  "cv_seeds": [
+    42,
+    43,
+    44
+  ],
+  "gate": "FAILED",
+  "incumbent_oof": 0.969071,
+  "ks_phot": [
+    5,
+    10,
+    25,
+    50
+  ],
+  "max_k_phot": 50,
+  "multipliers": [
+    0.6,
+    1.1,
+    1.25
+  ],
+  "n_phot_features": 57,
+  "n_spatial_features": 25,
+  "params": {
+    "bagging_fraction": 0.9,
+    "bagging_freq": 1,
+    "class_weight": "balanced",
+    "feature_fraction": 0.9,
+    "learning_rate": 0.04,
+    "min_child_samples": 20,
+    "n_estimators": 900,
+    "n_jobs": -1,
+    "num_leaves": 63,
+    "objective": "multiclass",
+    "verbosity": -1
+  },
+  "per_class_recall": {
+    "GALAXY": 0.9580957931546042,
+    "QSO": 0.9763195410737304,
+    "STAR": 0.9723780281417727
+  },
+  "photometric_spaces": [
+    "colour_4D",
+    "magnitude_5D",
+    "sphere_colour_7D"
+  ],
+  "smoothing": 10.0,
+  "timestamp_utc": "2026-06-05T13:08:37Z",
+  "tuned_oof": 0.9689311207900358
+}

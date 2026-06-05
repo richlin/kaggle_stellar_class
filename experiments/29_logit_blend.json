@@ -1,0 +1,14 @@
+{
+  "arithmetic_blend_oof": 0.9690706512708674,
+  "arithmetic_w_lgbm": 0.55,
+  "gate": "FAILED",
+  "incumbent_oof": 0.969071,
+  "logit_blend_oof": 0.9690706004011389,
+  "logit_w_lgbm": 0.6000000000000001,
+  "multipliers": [
+    0.6,
+    0.95,
+    1.35
+  ],
+  "timestamp_utc": "2026-06-05T11:53:18Z"
+}

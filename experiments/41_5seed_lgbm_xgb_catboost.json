@@ -1,0 +1,24 @@
+{
+  "base_models": [
+    "32_spatial_5seed_lgbm",
+    "16_spatial_xgb",
+    "40_catboost_spatial"
+  ],
+  "gate": "PASSED",
+  "incumbent_oof": 0.969154,
+  "multipliers": [
+    0.6,
+    1.0,
+    1.25
+  ],
+  "per_class_recall": {
+    "GALAXY": 0.9579845289816679,
+    "QSO": 0.9756707613771203,
+    "STAR": 0.9739495188820657
+  },
+  "timestamp_utc": "2026-06-05T14:06:48Z",
+  "tuned_oof": 0.9692016030802847,
+  "w_cat": 0.1,
+  "w_lgbm5": 0.5,
+  "w_xgb": 0.4
+}

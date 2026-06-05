@@ -9,9 +9,12 @@ Kaggle competition: **predict the stellar class** (`GALAXY` / `QSO` / `STAR`) fo
 
 ## Start here
 
-- **Plan & task breakdown:** [`tasks/plan.md`](tasks/plan.md) — phased approach, acceptance criteria, verification.
+- **Current state:** [`PROGRESS.md`](PROGRESS.md) — completed work, active work, blockers, and next steps.
+- **Current strategy:** [`tasks/plan.md`](tasks/plan.md) — canonical operating plan and submission policy.
 - **Live task list:** [`tasks/todo.md`](tasks/todo.md) — check items off in the same commit as the code change.
-- **Data:** `raw_data/{train,test,sample_submission}.csv` (gitignored; download from Kaggle). See plan for schema.
+- **Leaderboard:** [`experiments/leaderboard.md`](experiments/leaderboard.md) — public scores and local/public deltas.
+- **Rationale:** [`DECISIONS.md`](DECISIONS.md) — decisions, reversals, and superseded assumptions.
+- **Data:** `raw_data/{train,test,sample_submission}.csv` (gitignored; download from Kaggle). Original/external labelled data must be staged separately and audited before modeling.
 
 ## Conventions
 
