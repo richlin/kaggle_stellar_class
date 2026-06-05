@@ -1,0 +1,33 @@
+scripts/44_original_append_train.py
+  s_0ce4a9cd09412a::t_eb8106f1d6292f 82-96,105-107,119,184-187
+scripts/43_original_append_audit.py
+  s_0ce4a9cd09412a::t_4a5434665dc6de 57,62-63,65,109-122,197-198,233-242,249-258
+tests/test_original_append.py
+  s_0ce4a9cd09412a::t_e7213a61c93d4c 40-41
+  s_0ce4a9cd09412a::t_916e10e5b14cf1 1-39,42-94
+PROGRESS.md
+  s_0ce4a9cd09412a::t_e78f144ae2a881 167-171,179
+DECISIONS.md
+  s_0ce4a9cd09412a::t_7ec77f77fb8dea 246-251
+tasks/todo.md
+  s_0ce4a9cd09412a::t_9c0b512fd8d5e6 123,125-126
+  s_0ce4a9cd09412a::t_d7f9032d460b62 127-130
+tasks/plan.md
+  s_0ce4a9cd09412a::t_64a06664fd0c47 96,101-103
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "0ee3383c649d40957c608586b1a2c771f229dd36",
+  "prompts": {},
+  "sessions": {
+    "s_0ce4a9cd09412a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e9854-c7c6-7352-83b4-007b3b2d0d0a",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    }
+  }
+}
