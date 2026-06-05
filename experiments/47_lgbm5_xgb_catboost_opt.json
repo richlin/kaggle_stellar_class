@@ -1,0 +1,23 @@
+{
+  "timestamp_utc": "2026-06-05T15:16:03Z",
+  "weights": {
+    "lgbm5": 0.4,
+    "xgb": 0.4,
+    "catboost": 0.2
+  },
+  "search": "full 4-model grid (GAL weight=0 optimal)",
+  "blend_tuned_oof": 0.9692261440808543,
+  "incumbent_oof": 0.969202,
+  "gate": "PASSED",
+  "multipliers": [
+    0.6,
+    0.95,
+    1.2000000000000002
+  ],
+  "per_class_recall": {
+    "GALAXY": 0.9576321924340362,
+    "QSO": 0.9757219808268527,
+    "STAR": 0.974324258981674
+  },
+  "notes": "GAL=0.0 in optimal; CatBoost 0.2 vs 0.1 in script 41 lifts OOF by +0.000024. Risk: script 41 (similar) regressed \u22120.00019 on public."
+}

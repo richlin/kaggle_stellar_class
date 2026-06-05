@@ -1,0 +1,23 @@
+{
+  "timestamp_utc": "2026-06-05T15:05:03Z",
+  "weights": {
+    "lgbm5": 0.45,
+    "xgb": 0.36,
+    "catboost": 0.09,
+    "galactic_lgbm": 0.1
+  },
+  "blend_tuned_oof": 0.969211239155575,
+  "incumbent_oof": 0.969202,
+  "gate": "PASSED",
+  "multipliers": [
+    0.6,
+    0.95,
+    1.25
+  ],
+  "per_class_recall": {
+    "GALAXY": 0.9583236197944262,
+    "QSO": 0.9753122252289936,
+    "STAR": 0.9739978724433055
+  },
+  "notes": "Tiny improvement (+0.000009). CatBoost blend regressed on public; galactic blend also at risk."
+}

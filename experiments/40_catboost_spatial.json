@@ -1,0 +1,37 @@
+{
+  "blend_tuned_oof": 0.9690888318518264,
+  "blend_w_cat": 0.18,
+  "blend_w_lgbm": 0.4,
+  "blend_w_xgb": 0.42,
+  "catboost_params": {
+    "depth": 6,
+    "early_stopping_rounds": 50,
+    "eval_metric": "TotalF1",
+    "iterations": 1000,
+    "l2_leaf_reg": 3.0,
+    "learning_rate": 0.05,
+    "loss_function": "MultiClass",
+    "random_seed": 42,
+    "task_type": "CPU",
+    "thread_count": -1,
+    "verbose": 0
+  },
+  "catboost_seeds": [
+    42,
+    43
+  ],
+  "catboost_standalone_oof": 0.9677812463525215,
+  "gate": "FAILED",
+  "incumbent_oof": 0.969154,
+  "multipliers": [
+    0.6,
+    0.95,
+    1.2000000000000002
+  ],
+  "per_class_recall": {
+    "GALAXY": 0.9578176327222634,
+    "QSO": 0.9755597859027001,
+    "STAR": 0.973889076930516
+  },
+  "timestamp_utc": "2026-06-05T13:59:18Z"
+}

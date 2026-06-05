@@ -27,3 +27,4 @@ experiments/*.npy
 
 # APM (managed; deployed skill files under .claude/.github are committed)
 apm_modules/
+catboost_info/

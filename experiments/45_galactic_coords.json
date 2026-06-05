@@ -1,0 +1,32 @@
+{
+  "blend_per_class_recall": {
+    "GALAXY": 0.9629781710289287,
+    "QSO": 0.9742707630844353,
+    "STAR": 0.9688844833421981
+  },
+  "blend_tuned_oof": 0.9691202078858892,
+  "blend_w_lgbm": 0.45,
+  "galactic_features": [
+    "gal_b",
+    "gal_abs_b",
+    "gal_sin_b",
+    "gal_cos_b",
+    "gal_l",
+    "gal_sin_l",
+    "gal_cos_l"
+  ],
+  "gate": "FAILED",
+  "incumbent_oof": 0.969202,
+  "multipliers": [
+    0.6,
+    1.15,
+    1.55
+  ],
+  "standalone_per_class_recall": {
+    "GALAXY": 0.9573911200593409,
+    "QSO": 0.9755853956275663,
+    "STAR": 0.9739253421014458
+  },
+  "standalone_tuned_oof": 0.9689672859294509,
+  "timestamp_utc": "2026-06-05T14:59:26Z"
+}

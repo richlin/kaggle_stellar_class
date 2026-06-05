@@ -1,0 +1,73 @@
+{
+  "all_results": [
+    {
+      "counts": {
+        "GALAXY": 156492,
+        "QSO": 51348,
+        "STAR": 39595
+      },
+      "in_band": true,
+      "mult": [
+        0.4333333333333333,
+        0.7,
+        1.0
+      ],
+      "variant": "reference"
+    },
+    {
+      "counts": {
+        "GALAXY": 156566,
+        "QSO": 51275,
+        "STAR": 39594
+      },
+      "in_band": true,
+      "mult": [
+        0.5166666666666666,
+        0.7,
+        1.0
+      ],
+      "variant": "shallower"
+    },
+    {
+      "counts": {
+        "GALAXY": 156530,
+        "QSO": 51397,
+        "STAR": 39508
+      },
+      "in_band": true,
+      "mult": [
+        0.35,
+        0.7,
+        1.0
+      ],
+      "variant": "deeper"
+    }
+  ],
+  "blend_weight_lgbm": 0.55,
+  "chosen_variant": "shallower",
+  "class_counts": {
+    "GALAXY": 156566,
+    "QSO": 51275,
+    "STAR": 39594
+  },
+  "multipliers": [
+    0.5166666666666666,
+    0.7,
+    1.0
+  ],
+  "rationale": "Final-only LOO family: no honest OOF; candidate selected by class count in public-good band",
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "submission_path": "/Users/linrichuang/Github/predicting_stellar_class/submissions/33_loo_family.csv",
+  "timestamp_utc": "2026-06-05T13:26:56Z",
+  "variants_tried": [
+    "reference",
+    "shallower",
+    "deeper"
+  ]
+}

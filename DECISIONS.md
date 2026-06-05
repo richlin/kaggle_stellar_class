@@ -1,5 +1,11 @@
 # Decisions
 
+## 2026-06-05 - Keep EDA Notebook Discovery-Oriented And Dependency-Light
+
+- **Decision:** Build the EDA as a notebook using only pinned dependencies and existing repo helpers, with sample-aware spatial diagnostics instead of model-training cells.
+- **Why:** The current score path depends on finding new signal, especially spatial and boundary structure. The notebook should make those signals inspectable without adding new package risk or hiding long training jobs in an exploratory artifact.
+- **Applies until:** The notebook becomes a production experiment runner, at which point reusable logic should move into `src/` or `scripts/`.
+
 ## 2026-06-04 — Pure Feature Builder Plus Data Wrapper
 
 - **Decision:** Put deterministic feature math in `src/features.py` and CSV/target handling in `src/data.py`.
@@ -159,3 +165,93 @@
 - **Decision:** Keep `19_loo_spatial_final.csv` / `23_loo_spatial_star_tilt.csv` as the public incumbent at `0.96970` and stop submitting variants derived only from the current `19` or `25` cached probability files.
 - **Why:** The latest public result, `26_loo_spatial_xgb_calibrated.csv = 0.96956`, regressed despite matching the `19` class mix more closely. The submission history has bracketed the easy axes: GALAXY-neutral (`20`) is slightly worse, lower-GALAXY (`22`) is worse, STAR tilt (`23`) ties, and LOO-XGBoost (`26`) is worse. The remaining `+0.00030` likely requires a new spatial signal, a better final-feature validation proxy, or a materially different model component.
 - **Applies until:** A new plan produces a candidate not reducible to class-multiplier movement on existing cached probabilities.
+
+## 2026-06-05 — Photometric Neighbourhood Features Are The Next Signal Source
+
+- **Decision:** Implement k-NN class-fraction features in three photometric spaces (colour 4D, magnitude 5D, sphere+colour 7D) as the primary OOF-lift experiment for 2026-06-05.
+- **Why:** Feature MI analysis shows photometric k-NN features have mean MI=0.301 with class labels vs spatial features' mean MI=0.174 — 73% higher. The top features are magnitude-space k-NN fractions (not colour), because magnitude clusters objects by absolute brightness. Cross-correlation with existing spatial features is only 0.60, confirming substantially independent information. Individual colour features are already in the model; the neighbourhood-level aggregation is the new signal.
+- **Applies until:** OOF result from `scripts/28_photometric_neighbours.py` is known.
+
+## 2026-06-05 — Logit Blend And 2-Model Meta-Stacker Do Not Improve On Spatial Blend
+
+- **Decision:** Do not submit logit-blend (`scripts/29_logit_blend.py`) or 2-model meta-stacker (`scripts/30_meta_stacker.py`) variants.
+- **Why:** Logit blend (geometric mean) tied arithmetic blend exactly at OOF=0.969071. The 2-model meta-stacker scored 0.968716 (−0.000355 vs incumbent). Both failures have the same root cause: with only 2 highly correlated base models (both trained on spatial features), neither the blending method nor the meta-learner can add new information. The meta-stacker regression likely occurs because the LightGBM meta-learner with averaged (multi-seed) OOF features has less discriminative power than the direct optimised blend.
+- **Applies until:** A third base model with materially different features (photometric LGBM from script 28) is available for meta-stacking (see script 34).
+
+## 2026-06-05 — Photometric Neighbourhood Features Do Not Improve OOF
+
+- **Decision:** Do not submit `submissions/28_photometric_neighbours.csv` (gate failed). Also deprioritize scripts 31, 34, 35, 37 (all depend on photometric OOF probs that hurt OOF).
+- **Why:** Full 5-fold × 3-seed result: tuned OOF `0.968931` (−0.000140 vs incumbent `0.969071`). Root cause — photometric k-NN is redundant: individual color features (u_g, g_r, r_i, i_z, u, g, r, i, z) are already STRONG class predictors in the model. Adding neighborhood aggregates of the same color signal adds no new discriminative power. This is the opposite of spatial features: (alpha, delta) as individual features are WEAK class predictors, so their k-NN class-fraction aggregation IS genuinely new information.
+- **Key learning for future sessions:** k-NN neighborhood features add value only when the underlying coordinates are weak individual predictors. Strong individual features do not benefit from neighborhood aggregation.
+- **Applies until:** A new photometric feature space is identified that is (a) weakly predictive as individual features but (b) strongly predictive as neighborhood aggregates.
+
+## 2026-06-05 — 1500-Tree Spatial LGBM As The Remaining OOF-Lift Path
+
+- **Decision:** Focus remaining session compute on `scripts/36_spatial_more_trees.py` (n_estimators=1500) and the LOO family (script 33) for public score.
+- **Why:** Single-fold comparison showed BOTH spatial-only and spatial+photometric models hit max iterations at n_estimators=900 (`best_iter=899/900`). This means the model was still improving and was capacity-constrained. Increasing to 1500 trees should provide additional lift. Expected improvement from 900→1500 trees: +0.0005 to +0.0015. Combined with 5-seed extension (+0.000083 from script 32), total expected new OOF range: 0.9697–0.9707.
+- **Applies until:** Script 36 OOF result is known.
+
+## 2026-06-05 — 1500-Tree LGBM Does Not Improve OOF; Model Was Already Converged
+
+- **Decision:** Do not pursue further tree-count increases (script 37, 38, 39). The 900-tree spatial LGBM is effectively converged.
+- **Evidence:** 1500-tree spatial LGBM standalone OOF = 0.968904 (vs 900-tree 0.968894 = +0.000010 difference). Best 3-model blend OOF = 0.969044, BELOW the 5-seed spatial blend 0.969154. Gate FAILED.
+- **Why the single-fold evidence was misleading:** The spatial-only single fold (n_est=900) showed best_iter=900 (hit max). But across the full 5-fold × 3-seed ensemble, most folds trigger early stopping well before 900 trees. The one fold that hit max had high variance and did not represent the average behaviour.
+- **Implication:** The 900-tree OOF ceiling for spatial LGBM+XGBoost blend is ~0.969154 (5-seed). Further tree-count or learning-rate experiments are not expected to improve this.
+- **Remaining open path:** CatBoost with spatial features (script 40, running) — genuinely different model family (symmetric oblivious trees, ordered boosting). If standalone OOF > 0.967 and it provides sufficient diversity, 3-model blend might reach ~0.970+.
+- **Applies until:** CatBoost OOF result is known.
+
+## 2026-06-05 — Spatial 5-Seed Is Public Incumbent; CatBoost Blend Did Not Transfer
+
+- **Decision:** Treat `submissions/32_spatial_5seed_blend.csv` as the public incumbent at `0.96977`, and do not pursue CatBoost-blend multiplier variants from `41` without new validation evidence.
+- **Why:** `32_spatial_5seed_blend.csv` improved public score from `0.96970` to `0.96977`. `41_5seed_lgbm_xgb_catboost.csv` had the best honest OOF (`0.969202`) but scored only `0.96958` public, below both `32` and the prior `19`/`23` incumbent. Near this ceiling, small OOF gains from correlated blend diversity are not reliable enough for public probing.
+- **Applies until:** A new validation proxy predicts public movement better than OOF, or a new feature/source adds materially different signal.
+
+## 2026-06-05 — Original Dataset Append Is Feasible If Categoricals Are Recreated
+
+- **Decision:** Open a new workstream to test appending the original labelled dataset only after recreating `spectral_type` and `galaxy_population`, then passing duplicate, leakage, and source-shift checks.
+- **Why:** The competition discussion formulae match local train+test exactly: `spectral_type` is a thresholded `r-g` feature and `galaxy_population` is a thresholded `u-r` feature. That removes the schema mismatch that previously made the original dataset hard to append. This is genuinely new labelled data, unlike more threshold/cache probing.
+- **Applies until:** The original dataset cannot be obtained, fails schema/leakage checks, or an honest competition-train OOF experiment shows appended data does not improve the public-incumbent path.
+
+## 2026-06-05 — Tasks Plan Is The Canonical Current Operating Plan
+
+- **Decision:** Replace `tasks/plan.md` with a current operating plan and treat `docs/superpowers/plans/` as historical sprint-plan archive.
+- **Why:** The old `tasks/plan.md` still described the bootstrap state and early LightGBM phases, while the real project state had moved to `PROGRESS.md`, `DECISIONS.md`, `experiments/leaderboard.md`, and scattered sprint plans. Future agents need one active plan to avoid executing stale instructions.
+- **Applies until:** The project changes from Kaggle score-push mode to a different objective, at which point `tasks/plan.md` should be rewritten again rather than extended indefinitely.
+
+## 2026-06-05 — Galactic Coordinate Features Add Minimal Independent Signal
+
+- **Decision:** Do not submit `submissions/46_4model_galactic_blend.csv` as a next Kaggle upload — the OOF improvement is +0.000009, too small to override the observed pattern that additional model complexity hurts public transfer.
+- **Evidence:** Galactic+spatial LGBM standalone OOF 0.968967 (+0.000073 vs spatial-only 0.968894). Best 4-model blend: 0.969211 (+0.000009 vs 3-model incumbent 0.969202). Per-class recalls confirm marginal movement. Key finding: 23.8% of GALAXY→STAR errors are at |b|>60° (where stars are rare) — these objects SHOULD have been captured by the galactic latitude feature. That they weren't captured effectively confirms the existing spatial k-NN fractions already encode most of the galactic structure information (high-|b| sky regions have high GALAXY fraction in the k-NN neighborhood, so the model already implicitly uses this signal).
+- **Why so little improvement despite strong galactic latitude signal:** The spatial k-NN class fractions at k=50..250 largely capture sky-region class distributions, which correlates with galactic latitude. Adding b directly gives the model a shortcut, but the model had already learned this pattern through the k-NN features.
+- **Applies until:** A substantially different spatial feature strategy (e.g., very wide k or entirely different coordinate decomposition) is designed specifically to capture multi-scale galactic structure not encoded by current k∈{5..250} fractions.
+
+## 2026-06-05 — OOF Ceiling Confirmed At ~0.969-0.970 For Tree Models On Current Features
+
+- **Decision:** Stop feature engineering experiments unless a qualitatively new data source (original SDSS append) or approach (neural networks) becomes available.
+- **Evidence from exhaustive experiments (all within this session):**
+  | Approach | OOF delta | Result |
+  |---|---|---|
+  | +2 seeds (3→5) | +0.000083 | Modest, transfers well |
+  | Photometric k-NN (3 spaces) | −0.000140 | Color = strong individual predictor |
+  | 1500-tree LGBM | +0.000010 | Model already converged at 900 trees |
+  | 2-model meta-stacker | −0.000355 | Needs model diversity |
+  | CatBoost diversity | +0.000048 OOF, −0.00019 public | Doesn't transfer |
+  | Large-k spatial (k=1000,5000) | −0.000162 | Approaches global prior |
+  | Galactic coordinates | +0.000073 standalone | Partially redundant with spatial k-NN |
+  | 4-model blend | +0.000009 | All diversity sources exhausted |
+- **Best honest OOF achieved:** 0.969211 (4-model LGBM5 + XGB + CatBoost + Galactic).
+- **Gap to 0.971:** 0.001789 — requires fundamentally new information.
+- **Remaining viable path:** Original data append (Tasks 46-48): train on competition train + SDSS spectroscopic catalog (same schema after categorical formula derivation), with OOF evaluated only on competition rows.
+- **Applies until:** Original SDSS dataset is located and passes the audit in `scripts/43_original_append_audit.py`.
+
+## 2026-06-05 — Original-Append Scaffolding Must Fail Closed
+
+- **Decision:** Treat the original-data audit/train scripts as ready scaffolding, but make them fail closed before any dataset run: categorical formula mismatches fail audit, exact or 6-decimal feature duplicates fail audit, and append training refuses to run unless `--original` matches the PASS audit's `original_path`.
+- **Why:** The original-data append is the only remaining high-leverage path, but it has the highest leakage/provenance risk. A stale PASS audit or a duplicate feature row could create an invalid leaderboard gain, so the guardrails need to reject ambiguous inputs before modeling starts.
+- **Applies until:** A staged original dataset passes the hardened audit and produces an append candidate; then the same checks should remain as regression coverage.
+
+## 2026-06-05 — Implement New-Signal Scaffolds Before More Model Tuning
+
+- **Decision:** Add three gated experiment tracks for the `>0.971` local OOF push: external-labelled spatial reference append, optional TabPFN logit meta-stacking, and external-catalog feature ingestion. Do not run long experiments until the required original dataset, optional package, or external catalog is actually staged.
+- **Why:** Current competition-only tree-model tuning is saturated around `0.969-0.970`. The only plausible route to `0.971` is new information or a materially different meta-learner. External labelled rows should first be used as spatial neighbours, not merely appended as training rows, because spatial k-NN features were the only large prior lift. TabPFN and external catalog features are higher-risk optional tracks and must fail closed when dependencies or data are unavailable.
+- **Applies until:** One of the new tracks produces honest competition-row OOF above `0.971`, or all three fail their acceptance gates.

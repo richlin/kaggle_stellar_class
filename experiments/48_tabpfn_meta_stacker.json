@@ -1,0 +1,6 @@
+{
+  "gate": "BLOCKED",
+  "install_hint": "uv pip install \"tabpfn\"",
+  "reason": "tabpfn is not installed. Install it in the active environment before running scripts/48_tabpfn_meta_stacker.py.",
+  "timestamp_utc": "2026-06-05T15:25:04Z"
+}

@@ -1,0 +1,27 @@
+{
+  "blend_tuned_oof": 0.9691541209370844,
+  "blend_w_lgbm": 0.6000000000000001,
+  "existing_seeds": [
+    42,
+    43,
+    44
+  ],
+  "gate": "PASSED",
+  "incumbent_oof": 0.969071,
+  "multipliers": [
+    0.6,
+    1.0,
+    1.35
+  ],
+  "new_seeds": [
+    45,
+    46
+  ],
+  "per_class_recall": {
+    "GALAXY": 0.958236197944262,
+    "QSO": 0.9752524692043059,
+    "STAR": 0.9739736956626855
+  },
+  "submission_path": "/Users/linrichuang/Github/predicting_stellar_class/submissions/32_spatial_5seed_blend.csv",
+  "timestamp_utc": "2026-06-05T13:03:08Z"
+}

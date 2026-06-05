@@ -2,6 +2,8 @@
 
 ## Completed
 
+- 2026-06-05: Added `notebooks/eda_discovery.ipynb`, a discovery-oriented EDA notebook focused on class balance, redshift ambiguity, train/test shift, spatial clustering, residual-analysis hooks, and next experiment hypotheses.
+- 2026-06-05: Added `tests/test_eda_notebook.py` and `scripts/create_eda_discovery_notebook.py` so the EDA notebook has a reproducible source and a cheap structure/syntax check.
 - 2026-06-04: Added raw-data contract coverage for train/test/sample CSV shape, ids, labels, missing values, and categorical level coverage.
 - 2026-06-04: Implemented Phase 1 shared data/feature layer:
   - `src/data.py` loads raw CSVs, builds features, and label-encodes `GALAXY` / `QSO` / `STAR`.
@@ -136,15 +138,60 @@
   - Stop multiplier-only probing from the current `19` and `25` probability caches.
   - Future plan saved in `docs/superpowers/plans/2026-06-05-score-over-097-revisit-plan.md` for the next session.
 
+- 2026-06-05: Implemented Phase 11 logit-blend and 2-model meta-stacker; both failed acceptance gate.
+  - `scripts/29_logit_blend.py`: logit (geometric-mean) blending of spatial LGBM + XGBoost OOF probs; tied arithmetic blend at exactly `0.969071`. No submission.
+  - `scripts/30_meta_stacker.py`: 2-model LightGBM meta-stacker on logit features + raw numeric; OOF `0.968716` (−0.000355). Root cause: 2 highly correlated spatial base models cannot provide enough diversity for meta-learner to add lift.
+- 2026-06-05: Implemented and ran spatial 5-seed blend; **PASSED** gate.
+  - `scripts/32_spatial_5seed_blend.py`: extended spatial LGBM from 3 seeds to 5 seeds (added seeds 45, 46), re-blended with spatial XGBoost (w_lgbm=0.60); OOF **`0.969154`** (+0.000083 vs incumbent).
+  - New best honest OOF: `0.969154`.
+  - Generated `submissions/32_spatial_5seed_blend.csv`.
+- 2026-06-05: Feature MI analysis confirmed photometric k-NN features have high independent signal (MI mean 0.301 vs spatial 0.174), but single-fold comparison showed spatial-only (0.969306) marginally outperforms spatial+photometric (0.969060) at n_estimators=900 — both models hit max trees, suggesting insufficient capacity. Full 5×3-fold result from `scripts/28_photometric_neighbours.py` still running.
+- 2026-06-05: Completed all Phase 11 and Phase 13 experiments. Summary of key results:
+  - Script 28 (photometric k-NN): FAILED gate, OOF 0.968931 (−0.000140). Photometric k-NN redundant with strong individual color features. Key learning: k-NN features only add value when individual coordinates are WEAK predictors (e.g., sky position), not when they are STRONG predictors (e.g., color).
+  - Script 33 (LOO family, shallower, 5-seed): Final-only candidate, GALAXY=156566/QSO=51275/STAR=39594 (in public-good band). `submissions/33_loo_family.csv`.
+  - Script 36 (1500-tree spatial): FAILED gate, OOF 0.969044 (only +0.000010 over 900-tree). The model is already converged at 900 trees.
+  - Script 40 (CatBoost spatial, 2-seed): Standalone 0.967781; 3-model blend 0.969089 (FAILED gate using 3-seed LGBM).
+  - Script 41 (5-seed LGBM + XGBoost + CatBoost blend): **OOF 0.969202 (PASSED, +0.000048 vs script 32)**. New best honest OOF. `submissions/41_5seed_lgbm_xgb_catboost.csv`.
+  - Script 42 (large-k spatial, k∈{1000,5000}): **FAILED gate** (OOF 0.969040, −0.000162). Large k approaches global class prior — not useful local structure.
+  - Script 43 (original append audit): `scripts/43_original_append_audit.py` implemented, waits for original data (Task 46).
+  - Script 44 (original append train): `scripts/44_original_append_train.py` implemented, waits for audit to pass.
+- 2026-06-05: Recorded public leaderboard feedback from submitted Phase 13 candidates.
+  - `submissions/32_spatial_5seed_blend.csv`: public `0.96977`, new public incumbent; improves over `19`/`23` public `0.96970` by `+0.00007`; remaining gap to exceed `0.97` is about `+0.00023`.
+  - `submissions/41_5seed_lgbm_xgb_catboost.csv`: public `0.96958`; despite best honest OOF `0.969202`, it regressed versus `32` by `-0.00019`, so CatBoost diversity did not transfer.
+  - Verified competition-discussion formulae on combined train+test (`824,782` rows): `spectral_type` is deterministic from `r-g` thresholds and `galaxy_population` is deterministic from `u-r` threshold `2.2`.
+  - Next strategic path: schema-align the original dataset by recreating those two categoricals, then test an append/augmentation candidate with strict leakage and source-shift gates.
+- 2026-06-05: Consolidated planning docs.
+  - Replaced stale bootstrap-era `tasks/plan.md` with the current operating plan.
+  - Updated `AGENTS.md` start-here routing to treat `PROGRESS.md`, `tasks/plan.md`, `tasks/todo.md`, `experiments/leaderboard.md`, and `DECISIONS.md` as the canonical orientation path.
+  - Historical sprint plans under `docs/superpowers/plans/` are now explicitly rationale/history, not current execution instructions.
+- 2026-06-05: Evaluated remaining open work and hardened the original-data append scaffold before any dataset run.
+  - Task 47 is now complete: `scripts/43_original_append_audit.py` exists and is covered by targeted tests for categorical formula mismatch detection, full-feature duplicate overlap detection, missing class-column validation, and audit/train path consistency.
+  - Patched `scripts/43_original_append_audit.py` so existing categorical columns are compared against derived formulae before overwrite, and exact/rounded full-feature overlaps against competition train+test fail the audit.
+  - Patched `scripts/44_original_append_train.py` so training refuses to run if `--original` differs from the PASS audit's `original_path`.
+  - Task 48's script scaffold exists, but execution remains blocked until Task 46 stages an original dataset and Task 47 produces an audit PASS for that same file.
+- 2026-06-05: Implemented all currently feasible local-OOF `>0.971` push scaffolds from the score strategy.
+  - `src/external_spatial.py` and `scripts/47_external_spatial_append.py`: fold-safe external-labelled spatial reference features plus original-row source-weight sweep. This is the primary next experiment once the original SDSS17-style dataset is staged and audited.
+  - `scripts/48_tabpfn_meta_stacker.py`: optional TabPFN meta-stacker over logit-transformed probability caches. Current environment is blocked because `tabpfn` is not installed; wrote `experiments/48_tabpfn_meta_stacker.json` with BLOCKED status.
+  - `src/external_catalog.py` and `scripts/49_external_catalog_features.py`: guarded id/sky external-catalog numeric feature joins with missing indicators and train-median imputation.
+  - Added targeted tests: `tests/test_external_spatial.py`, `tests/test_tabpfn_meta_stacker.py`, and `tests/test_external_catalog.py`.
+
 ## In Progress
 
 - None.
 
 ## Blockers
 
-- None.
+- Task 46: Original SDSS labeled dataset not yet located/staged. Without it, Task 48 cannot run and the 0.971 OOF target cannot be reached via data append.
+- Optional TabPFN path: `tabpfn` is not installed in the active environment.
+- External catalog path: no allowable external catalog CSV is staged.
 
 ## Next Steps
 
-- Revisit tomorrow from `docs/superpowers/plans/2026-06-05-score-over-097-revisit-plan.md`.
-- Public incumbent to beat: `0.96970`; remaining lift to exceed `0.97`: `+0.00030`.
+- Locate and stage the original SDSS spectroscopic dataset (Task 46). See `tasks/todo.md` Phase 14.
+  - Run `uv run python scripts/43_original_append_audit.py --original <path>` to audit.
+  - If PASS: run `uv run python scripts/47_external_spatial_append.py --original <path>` as the primary append experiment; `scripts/44_original_append_train.py` remains the simpler baseline append.
+- To test the optional neural stacker, install TabPFN and run `uv run python scripts/48_tabpfn_meta_stacker.py`.
+- To test external catalog features, stage an allowed catalog CSV and run `uv run python scripts/49_external_catalog_features.py --catalog <path> --join id` or `--join sky`.
+- Next public probe (if slots available): `submissions/33_loo_family.csv` (shallower LOO, 5-seed).
+- Public incumbent: `submissions/32_spatial_5seed_blend.csv` at **0.96977**; remaining gap to 0.97: **+0.00023**.
+- OOF ceiling with current features: ~0.969-0.970 for any LGBM/XGB/CatBoost combination.

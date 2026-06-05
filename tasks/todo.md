@@ -86,9 +86,65 @@ Full detail in [`docs/superpowers/plans/2026-06-04-transductive-spatial-task24.m
   - `20_loo_spatial_neutral.csv`: LOO final variant, 441 rows changed vs `16`, GALAXY count `+38`; first public-risk probe if submission slots are available.
   - `21_loo_spatial_galaxy_lean.csv`: LOO final variant, 890 rows changed vs `16`, GALAXY count `+835`; higher-upside/higher-risk public probe.
 
-## Phase 10: Revisit score over 0.97
-Full detail in [`docs/superpowers/plans/2026-06-05-score-over-097-revisit-plan.md`](../docs/superpowers/plans/2026-06-05-score-over-097-revisit-plan.md).
-- [ ] Task 25: graph label propagation over train+test spatial nodes with validation labels hidden for OOF.
-- [ ] Task 26: local photometric-neighbour features combining spatial position with colours/magnitudes.
-- [ ] Task 27: small final-only LOO LightGBM family with class-count guardrails.
-- [ ] Task 28: next-submission report before any public upload.
+## Phase 11: Logit stacking (key learnings from TabPFN-3 public notebook, 2026-06-04)
+Source: https://www.kaggle.com/code/philippsinger/tabpfn-3-stacker (reached 0.97+ with TabPFN as meta-learner).
+Core principle: convert all OOF probabilities to logits before any blending or meta-learning — logits handle near-certainty predictions geometrically rather than compressing them into [0,1].
+**Constraint:** use only non-neural base models and a non-neural meta-learner (LightGBM or logistic regression). Do not use TabPFN or any NN.
+
+- [x] Task 29: logit-blend drop-in — implemented `scripts/29_logit_blend.py`. Result: tied arithmetic blend at OOF=0.969071. FAILED gate (no improvement).
+- [x] Task 30: meta-stacking layer — implemented `scripts/30_meta_stacker.py` (2-model: spatial LGBM + spatial XGBoost). Result: OOF=0.968716, FAILED gate (−0.000355 vs incumbent). Root cause: 2 highly correlated spatial base models provide insufficient diversity for meta-learner to add lift.
+- [x] Task 31: extended spatial LGBM from 3 to 5 seeds (scripts/32_spatial_5seed_blend.py); running. Also implemented 3-model meta-stacker (scripts/34_3model_meta_stacker.py, waits for script 28) and photometric XGBoost blend (scripts/31_phot_xgb_blend.py, waits for script 28).
+- [x] **Checkpoint I:** OOF summary: logit blend FAILED (tied 0.969071), meta-stacker FAILED (0.968716), 5-seed blend PASSED (0.969154 new best). Current best candidate: `submissions/32_spatial_5seed_blend.csv`. `pytest -q` (81 pass), `ruff check .` clean, `src.validate` passes.
+
+## Phase 13: Photometric neighbourhood features (2026-06-05)
+- [x] Task P1: `tests/test_photometric_neighbours.py` — 4 leakage/shape/finiteness tests pass.
+- [x] Task P2: `scripts/28_photometric_neighbours.py` — DONE. Full 5×3-fold result: tuned OOF **0.968931 (FAILED gate, −0.000140)**. Photometric k-NN redundant with individual color features.
+  - Root cause: colour → class is already a STRONG individual predictor; neighbourhood aggregation adds no new information (unlike spatial position which is a WEAK individual predictor).
+- [x] Task P3: `scripts/31_phot_xgb_blend.py` — implemented but DEPRIORITIZED (photometric features hurt OOF; adding XGBoost won't fix this).
+- [x] Task P4: `scripts/32_spatial_5seed_blend.py` — DONE. OOF **0.969154 (PASSED, +0.000083)**. New best honest OOF. Submission generated.
+- [x] Task P5: `scripts/33_loo_family.py` — DONE. "Shallower" variant chosen (in-band: GALAXY 156566, QSO 51275, STAR 39594); final-only candidate. Submission generated.
+- [x] Task P6: `scripts/34_3model_meta_stacker.py` — DEPRIORITIZED (photometric features hurt, so 3-model meta-stacker with photometric won't help).
+- [x] Task P7: `scripts/35_loo_phot_final.py` — DEPRIORITIZED (photometric k-NN redundant).
+- [x] Task P8: `scripts/36_spatial_more_trees.py` — 1500-tree spatial LGBM. Running. Both single-fold models hit max trees at n_est=900 → capacity constraint.
+  - Also implemented: `scripts/38_spatial_5seed_1500trees.py` (chains after 36), `scripts/39_spatial_lower_lr.py` (lr=0.02, n_est=3000).
+- [x] Task P9: `experiments/next_submission_report.md` — created. Updates pending script 36 result.
+
+## Phase 14: Public feedback consolidation + original dataset append
+Sprint contract: update tracking files with public scores before running new experiments. Treat `32_spatial_5seed_blend.csv` as public incumbent (`0.96977`). Treat `41_5seed_lgbm_xgb_catboost.csv` as an OOF/public mismatch until proven otherwise. Do not submit more CatBoost-blend or multiplier-only variants without new validation evidence.
+- [x] Task 43: record public scores from Kaggle:
+  - `32_spatial_5seed_blend.csv`: public `0.96977`, current public best.
+  - `41_5seed_lgbm_xgb_catboost.csv`: public `0.96958`, regressed vs `32` despite best honest OOF.
+- [x] Task 44: verify competition-discussion categorical formulae on local train+test:
+  - `spectral_type = pd.cut(r-g, [-inf,-1,-0.5,0,inf], labels=["M","G/K","A/F","O/B"])`.
+  - `galaxy_population = pd.cut(u-r, [-inf,2.2,inf], labels=["Blue_Cloud","Red_Sequence"])`.
+  - Result: both matched all `824,782` combined train/test rows.
+- [x] Task 45: add a deterministic test for the categorical formulae so future agents do not treat these columns as mysterious external signal.
+- [ ] Task 46: locate and stage the original labelled dataset outside `raw_data/` or under a clearly named ignored path; document source, row count, columns, class mapping, and licence/competition acceptability before modeling.
+- [x] Task 47: build `scripts/43_original_append_audit.py` to recreate categoricals for original rows, align schema to competition train, check duplicate ids/features against train/test, check class distribution and feature shift, and write `experiments/43_original_append_audit.json`.
+- [ ] Task 48: only if Task 47 passes, train an appended-data candidate with validation scored solely on competition train OOF folds; accept only if OOF beats `0.969202` and class recalls do not regress, then compare public-risk diagnostics against `32`.
+  - Script scaffold exists in `scripts/44_original_append_train.py`, but execution is blocked until Task 46 locates a dataset and Task 47 produces an audit PASS for the same file path.
+- [x] Task 51: harden original-append scaffolding before any dataset run:
+  - Sprint contract: treat Task 46 as blocked until the original dataset is staged; do not train or submit without an audit PASS.
+  - Add tests for categorical formula mismatch detection, duplicate feature overlap detection, class-column validation, and audit/train path consistency.
+  - Patch only the audit/train guardrails needed for those tests.
+  - Verification: targeted tests, `uv run pytest -q`, `uv run ruff check .`, `git diff --check`.
+
+## Phase 16: Local OOF > 0.971 push
+Full detail in [`docs/superpowers/plans/2026-06-05-local-0971-score-push.md`](../docs/superpowers/plans/2026-06-05-local-0971-score-push.md).
+- [x] Task 52: implement external-labelled spatial reference append with source-weight sweep. Use audited original rows as extra labelled neighbours in fold-safe OOF spatial features; validation labels must never influence their own features.
+  - Script: `scripts/47_external_spatial_append.py`; blocked until Task 46 dataset is staged and `scripts/43_original_append_audit.py --original <path>` writes PASS.
+- [x] Task 53: implement optional TabPFN meta-stacker scaffold over probability-cache logits. If TabPFN is unavailable, write a BLOCKED experiment JSON and exit cleanly.
+  - Script: `scripts/48_tabpfn_meta_stacker.py`; current environment is BLOCKED because `tabpfn` is not installed.
+- [x] Task 54: implement external catalog feature ingestion for id/sky joins, numeric-only external features, missing indicators, and train-median imputation.
+  - Script: `scripts/49_external_catalog_features.py`; blocked until an allowable external catalog CSV is staged.
+- [x] Checkpoint K: targeted tests, full tests, ruff, and whitespace check pass. Do not run long experiments unless required input data/dependencies are available.
+
+## Phase 15: Plan consolidation
+- [x] Task 49: replace stale bootstrap-era `tasks/plan.md` with the current operating plan.
+- [x] Task 50: update `AGENTS.md` start-here routing so future agents read `PROGRESS.md`, `tasks/plan.md`, `tasks/todo.md`, `experiments/leaderboard.md`, and `DECISIONS.md` in the right order.
+
+## Phase 12: Discovery EDA Notebook
+Full detail in [`docs/superpowers/plans/2026-06-05-eda-discovery-notebook.md`](../docs/superpowers/plans/2026-06-05-eda-discovery-notebook.md).
+- [x] Task 32: create `notebooks/eda_discovery.ipynb` for score-discovery EDA: schema, class balance, numeric distributions, redshift ambiguity, color/magnitude views, categorical signal, train/test shift, spatial structure, residual hooks, and next hypotheses.
+- [x] Task 33: add notebook generation and structure checks via `scripts/create_eda_discovery_notebook.py` and `tests/test_eda_notebook.py`.
+- [x] Checkpoint J: execute all notebook code cells locally; run `uv run pytest -q`; run `uv run ruff check .`.
