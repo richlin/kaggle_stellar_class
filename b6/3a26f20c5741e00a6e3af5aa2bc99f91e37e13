@@ -1,0 +1,29 @@
+experiments/23_loo_spatial_star_tilt.json
+  s_32ba1879aff758::t_cfc90c6235d513 14
+experiments/leaderboard.md
+  s_32ba1879aff758::t_cfc90c6235d513 26
+PROGRESS.md
+  s_32ba1879aff758::t_cfc90c6235d513 126-128,140
+tasks/lessons.md
+  s_32ba1879aff758::t_cfc90c6235d513 9
+DECISIONS.md
+  s_32ba1879aff758::t_cfc90c6235d513 144-149
+experiments/candidate_recommendations.md
+  s_32ba1879aff758::t_cfc90c6235d513 14,17,19,27,35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "b63a26f20c5741e00a6e3af5aa2bc99f91e37e13",
+  "prompts": {},
+  "sessions": {
+    "s_32ba1879aff758": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e951a-0472-7e92-b35e-19942db5d9c3",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    }
+  }
+}
