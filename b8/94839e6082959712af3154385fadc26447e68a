@@ -1,0 +1,33 @@
+experiments/candidate_recommendations.md
+  s_32ba1879aff758::t_5f7d3296362a89 14,23,31-32
+DECISIONS.md
+  s_32ba1879aff758::t_5f7d3296362a89 156-161
+tasks/lessons.md
+  s_32ba1879aff758::t_5f7d3296362a89 11
+docs/superpowers/plans/2026-06-05-score-over-097-revisit-plan.md
+  s_32ba1879aff758::t_5f7d3296362a89 1-108
+experiments/leaderboard.md
+  s_32ba1879aff758::t_5f7d3296362a89 29
+tasks/todo.md
+  s_32ba1879aff758::t_232a30381bf667 88-94
+PROGRESS.md
+  s_32ba1879aff758::t_5f7d3296362a89 134-137,149-150
+experiments/26_loo_spatial_xgb_calibrated.json
+  s_32ba1879aff758::t_5f7d3296362a89 14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "b894839e6082959712af3154385fadc26447e68a",
+  "prompts": {},
+  "sessions": {
+    "s_32ba1879aff758": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e951a-0472-7e92-b35e-19942db5d9c3",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    }
+  }
+}
