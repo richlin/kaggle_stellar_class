@@ -147,3 +147,9 @@
 - **Decision:** Keep `19_loo_spatial_final.csv` as the public incumbent and submit `22_loo_spatial_mild_nongal.csv` before `24_loo_spatial_stronger_nongal.csv`.
 - **Why:** `23_loo_spatial_star_tilt.csv` scored `0.96970`, tying `19` but not improving. That rules out continuing the small STAR-tilt direction as the next best use of a submission slot. The remaining plausible axis is the lower-GALAXY/non-GALAXY movement represented by `22`; `24` is a stronger version and should wait for `22` feedback.
 - **Applies until:** Public score for `22_loo_spatial_mild_nongal.csv` is known.
+
+## 2026-06-04 — Lower-GALAXY Multiplier Direction Failed; Test Calibrated LOO XGBoost
+
+- **Decision:** Do not submit `24_loo_spatial_stronger_nongal.csv`. Submit `26_loo_spatial_xgb_calibrated.csv` next if a slot is available.
+- **Why:** `22_loo_spatial_mild_nongal.csv` scored `0.96944`, below `19`/`23` at `0.96970`, so the lower-GALAXY multiplier direction is now disproven. The next independent axis is training the XGBoost blend component on LOO spatial features as well. Raw `25` was too GALAXY-heavy, so `26` calibrates its class counts back near the public-best `19` distribution while changing a different set of rows.
+- **Applies until:** Public score for `26_loo_spatial_xgb_calibrated.csv` is known.

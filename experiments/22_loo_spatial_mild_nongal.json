@@ -11,7 +11,7 @@
     0.75,
     1.0
   ],
-  "public_score": null,
+  "public_score": 0.96944,
   "rationale": "LOO spatial final candidate multiplier variant generated after public scores showed 19/20 beat 16 and 19 beat the GALAXY-neutral 20.",
   "source_probabilities": "experiments/19_loo_spatial_blend_test_probabilities.npy",
   "submission_path": "submissions/22_loo_spatial_mild_nongal.csv",

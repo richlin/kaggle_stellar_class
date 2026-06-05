@@ -171,3 +171,26 @@ def test_apply_galaxy_overrides_only_flips_targeted_rows() -> None:
     )
 
     assert corrected.tolist() == [0, 2, 0, 1, 0]
+
+
+def test_loo_xgb_submission_preserves_id_order() -> None:
+    module_path = Path("scripts/25_loo_spatial_xgb_final.py")
+    spec = importlib.util.spec_from_file_location("loo_xgb_final_script", module_path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+
+    encoder = LabelEncoder().fit(["GALAXY", "QSO", "STAR"])
+    sample_submission = pd.DataFrame({"id": [11, 10, 12], "class": ["GALAXY", "GALAXY", "GALAXY"]})
+    probabilities = np.array(
+        [
+            [0.1, 0.1, 0.8],
+            [0.8, 0.1, 0.1],
+            [0.1, 0.8, 0.1],
+        ]
+    )
+
+    submission = module.make_submission(sample_submission, probabilities, np.ones(3), encoder)
+
+    assert submission["id"].tolist() == [11, 10, 12]
+    assert submission["class"].tolist() == ["STAR", "GALAXY", "QSO"]

@@ -126,6 +126,11 @@
 - 2026-06-04: `submissions/23_loo_spatial_star_tilt.csv` public score: `0.96970`.
   - This ties `19_loo_spatial_final.csv` and stays above `16_spatial_blend.csv`, but does not close the remaining `+0.00030` gap to `0.97`.
   - STAR tilt did not add lift, so the next probe should be `submissions/22_loo_spatial_mild_nongal.csv`, not another STAR-tilted variant.
+- 2026-06-04: `submissions/22_loo_spatial_mild_nongal.csv` public score: `0.96944`.
+  - This regressed from `19`/`23` at `0.96970`, so do not submit `24_loo_spatial_stronger_nongal.csv`.
+  - Added `scripts/25_loo_spatial_xgb_final.py` to train the XGBoost side on full-data LOO spatial features, mirroring the successful LOO LightGBM idea.
+  - Raw `25_loo_spatial_xgb_final.csv` is too GALAXY-heavy (`GALAXY=157536`, `+806` vs `16`), so it is not the next submission.
+  - Generated calibrated `submissions/26_loo_spatial_xgb_calibrated.csv`: multipliers `[0.34,0.72,1.0]`, class counts close to public-best `19`, 779 rows changed vs `16`.
 
 ## In Progress
 
@@ -137,5 +142,5 @@
 
 ## Next Steps
 
-- If Kaggle submission slots are available, submit `submissions/22_loo_spatial_mild_nongal.csv` next. Use `submissions/24_loo_spatial_stronger_nongal.csv` only if `22` improves.
+- If Kaggle submission slots are available, submit `submissions/26_loo_spatial_xgb_calibrated.csv` next.
 - Record public scores in `experiments/leaderboard.md`, `PROGRESS.md`, and `DECISIONS.md` before starting another modeling task.
