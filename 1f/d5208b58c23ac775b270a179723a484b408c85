@@ -1,0 +1,19 @@
+README.md
+  s_8712d98822220f::t_d712349b000341 1-114
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "1fd5208b58c23ac775b270a179723a484b408c85",
+  "prompts": {},
+  "sessions": {
+    "s_8712d98822220f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cac230ae-df71-4a9a-b503-9c0a1908be79",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    }
+  }
+}
