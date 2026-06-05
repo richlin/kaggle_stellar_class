@@ -243,3 +243,9 @@
 - **Gap to 0.971:** 0.001789 — requires fundamentally new information.
 - **Remaining viable path:** Original data append (Tasks 46-48): train on competition train + SDSS spectroscopic catalog (same schema after categorical formula derivation), with OOF evaluated only on competition rows.
 - **Applies until:** Original SDSS dataset is located and passes the audit in `scripts/43_original_append_audit.py`.
+
+## 2026-06-05 — Original-Append Scaffolding Must Fail Closed
+
+- **Decision:** Treat the original-data audit/train scripts as ready scaffolding, but make them fail closed before any dataset run: categorical formula mismatches fail audit, exact or 6-decimal feature duplicates fail audit, and append training refuses to run unless `--original` matches the PASS audit's `original_path`.
+- **Why:** The original-data append is the only remaining high-leverage path, but it has the highest leakage/provenance risk. A stale PASS audit or a duplicate feature row could create an invalid leaderboard gain, so the guardrails need to reject ambiguous inputs before modeling starts.
+- **Applies until:** A staged original dataset passes the hardened audit and produces an append candidate; then the same checks should remain as regression coverage.

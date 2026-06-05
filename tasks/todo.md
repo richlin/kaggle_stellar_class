@@ -120,8 +120,14 @@ Sprint contract: update tracking files with public scores before running new exp
   - Result: both matched all `824,782` combined train/test rows.
 - [x] Task 45: add a deterministic test for the categorical formulae so future agents do not treat these columns as mysterious external signal.
 - [ ] Task 46: locate and stage the original labelled dataset outside `raw_data/` or under a clearly named ignored path; document source, row count, columns, class mapping, and licence/competition acceptability before modeling.
-- [ ] Task 47: build `scripts/43_original_append_audit.py` to recreate categoricals for original rows, align schema to competition train, check duplicate ids/features against train/test, check class distribution and feature shift, and write `experiments/43_original_append_audit.json`.
+- [x] Task 47: build `scripts/43_original_append_audit.py` to recreate categoricals for original rows, align schema to competition train, check duplicate ids/features against train/test, check class distribution and feature shift, and write `experiments/43_original_append_audit.json`.
 - [ ] Task 48: only if Task 47 passes, train an appended-data candidate with validation scored solely on competition train OOF folds; accept only if OOF beats `0.969202` and class recalls do not regress, then compare public-risk diagnostics against `32`.
+  - Script scaffold exists in `scripts/44_original_append_train.py`, but execution is blocked until Task 46 locates a dataset and Task 47 produces an audit PASS for the same file path.
+- [x] Task 51: harden original-append scaffolding before any dataset run:
+  - Sprint contract: treat Task 46 as blocked until the original dataset is staged; do not train or submit without an audit PASS.
+  - Add tests for categorical formula mismatch detection, duplicate feature overlap detection, class-column validation, and audit/train path consistency.
+  - Patch only the audit/train guardrails needed for those tests.
+  - Verification: targeted tests, `uv run pytest -q`, `uv run ruff check .`, `git diff --check`.
 
 ## Phase 15: Plan consolidation
 - [x] Task 49: replace stale bootstrap-era `tasks/plan.md` with the current operating plan.

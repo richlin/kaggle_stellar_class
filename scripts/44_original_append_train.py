@@ -79,6 +79,21 @@ def _derive_categoricals(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def verify_audit_matches_original(audit: dict, original_path: str) -> None:
+    """Require the training CSV to match the audited CSV path."""
+    audited_path = audit.get("original_path")
+    if not audited_path:
+        raise ValueError("audit is missing original_path")
+
+    audited = Path(audited_path).expanduser().resolve(strict=False)
+    requested = Path(original_path).expanduser().resolve(strict=False)
+    if audited != requested:
+        raise ValueError(
+            "training original path does not match audit original_path: "
+            f"{requested} != {audited}"
+        )
+
+
 def load_and_prepare_original(path: str, encoder) -> tuple[pd.DataFrame, np.ndarray]:
     """Load the audited original dataset and build features compatible with competition."""
     df = pd.read_csv(path)
@@ -87,6 +102,9 @@ def load_and_prepare_original(path: str, encoder) -> tuple[pd.DataFrame, np.ndar
         if col in df.columns:
             df = df.rename(columns={col: "class"})
             break
+    if "class" not in df.columns:
+        raise ValueError(f"Could not find class column in {path}. Columns: {list(df.columns)}")
+
     cls_map = {}
     for v in df["class"].unique():
         vstr = str(v).upper().strip()
@@ -98,7 +116,7 @@ def load_and_prepare_original(path: str, encoder) -> tuple[pd.DataFrame, np.ndar
             cls_map[v] = "QSO"
         elif "STAR" in vstr or "STELLAR" in vstr:
             cls_map[v] = "STAR"
-    df["class"] = df["class"].map(cls_map).dropna()
+    df["class"] = df["class"].map(cls_map)
     df = df.dropna(subset=["class"])
 
     # Derive spectral_type and galaxy_population if missing
@@ -162,6 +180,11 @@ def main() -> int:
     audit = json.loads(audit_path.read_text())
     if audit.get("verdict") != "PASS":
         print(f"ERROR: audit verdict is {audit.get('verdict')} — cannot proceed")
+        return 1
+    try:
+        verify_audit_matches_original(audit, args.original)
+    except ValueError as exc:
+        print(f"ERROR: {exc}")
         return 1
     print(f"Audit PASSED: {audit.get('clean_append_rows', '?')} original rows")
 

@@ -54,13 +54,15 @@ def derive_categoricals(df: pd.DataFrame) -> pd.DataFrame:
 def check_formula_match(df: pd.DataFrame, source: str) -> dict:
     """Verify derived categoricals match existing ones if present."""
     result = {"source": source}
+    derived = derive_categoricals(df)
     for col in ["spectral_type", "galaxy_population"]:
         if col not in df.columns:
             result[f"{col}_match"] = "not_present"
             continue
-        df = derive_categoricals(df)
-        match_rate = (df[col].astype(str) == df[col].astype(str)).mean()
+        matches = df[col].astype(str) == derived[col].astype(str)
+        match_rate = matches.mean()
         result[f"{col}_match_rate"] = float(match_rate)
+        result[f"{col}_mismatches"] = int((~matches).sum())
     return result
 
 
@@ -102,6 +104,20 @@ def load_original(path: str) -> tuple[pd.DataFrame, str]:
             break
 
     return df, "loaded"
+
+
+def check_feature_duplicates(orig: pd.DataFrame, comp: pd.DataFrame, cols: list[str]) -> dict:
+    """Check whether original rows duplicate competition feature rows."""
+    exact_orig = set(map(tuple, orig[cols].to_numpy()))
+    exact_comp = set(map(tuple, comp[cols].to_numpy()))
+
+    rounded_orig = set(map(tuple, orig[cols].round(6).to_numpy()))
+    rounded_comp = set(map(tuple, comp[cols].round(6).to_numpy()))
+
+    return {
+        "exact_feature_overlap": len(exact_orig.intersection(exact_comp)),
+        "rounded_6dp_feature_overlap": len(rounded_orig.intersection(rounded_comp)),
+    }
 
 
 def check_feature_shift(orig: pd.DataFrame, comp: pd.DataFrame, cols: list[str]) -> dict:
@@ -178,6 +194,8 @@ def main() -> int:
 
     # 3. Derive categoricals and verify formula
     print("Deriving and checking categoricals ...")
+    formula_match = check_formula_match(orig, "original")
+    results["categorical_formula_match"] = formula_match
     orig = derive_categoricals(orig)
 
     # 4. Check class distribution shift
@@ -212,12 +230,32 @@ def main() -> int:
     else:
         results["coordinate_overlap_approx"] = "no_coords"
 
+    print("Checking full feature duplicates ...")
+    feature_duplicates = check_feature_duplicates(orig, comp_all, COMPETITION_COLS)
+    results["feature_duplicate_check"] = feature_duplicates
+    print(
+        "  Exact feature overlap: "
+        f"{feature_duplicates['exact_feature_overlap']}; "
+        "rounded 6dp overlap: "
+        f"{feature_duplicates['rounded_6dp_feature_overlap']}"
+    )
+
     # 7. Final verdict
     fail_conditions = []
     if results.get("id_overlap", 0) not in (0, "no_id_column"):
         fail_conditions.append(f"id_overlap={results['id_overlap']}")
     if missing_cols:
         fail_conditions.append(f"missing_cols={missing_cols}")
+    for col in ["spectral_type", "galaxy_population"]:
+        mismatches = formula_match.get(f"{col}_mismatches")
+        if mismatches:
+            fail_conditions.append(f"{col}_formula_mismatches={mismatches}")
+    if feature_duplicates["exact_feature_overlap"] > 0:
+        fail_conditions.append(f"exact_feature_overlap={feature_duplicates['exact_feature_overlap']}")
+    if feature_duplicates["rounded_6dp_feature_overlap"] > 0:
+        fail_conditions.append(
+            f"rounded_6dp_feature_overlap={feature_duplicates['rounded_6dp_feature_overlap']}"
+        )
     if max_shift > 0.5:
         fail_conditions.append(f"large_feature_shift={max_shift:.3f}")
 

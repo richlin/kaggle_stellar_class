@@ -164,6 +164,11 @@
   - Replaced stale bootstrap-era `tasks/plan.md` with the current operating plan.
   - Updated `AGENTS.md` start-here routing to treat `PROGRESS.md`, `tasks/plan.md`, `tasks/todo.md`, `experiments/leaderboard.md`, and `DECISIONS.md` as the canonical orientation path.
   - Historical sprint plans under `docs/superpowers/plans/` are now explicitly rationale/history, not current execution instructions.
+- 2026-06-05: Evaluated remaining open work and hardened the original-data append scaffold before any dataset run.
+  - Task 47 is now complete: `scripts/43_original_append_audit.py` exists and is covered by targeted tests for categorical formula mismatch detection, full-feature duplicate overlap detection, missing class-column validation, and audit/train path consistency.
+  - Patched `scripts/43_original_append_audit.py` so existing categorical columns are compared against derived formulae before overwrite, and exact/rounded full-feature overlaps against competition train+test fail the audit.
+  - Patched `scripts/44_original_append_train.py` so training refuses to run if `--original` differs from the PASS audit's `original_path`.
+  - Task 48's script scaffold exists, but execution remains blocked until Task 46 stages an original dataset and Task 47 produces an audit PASS for that same file.
 
 ## In Progress
 
@@ -171,7 +176,7 @@
 
 ## Blockers
 
-- Task 46: Original SDSS labeled dataset not yet located/staged. Without it, Tasks 47+48 cannot proceed and the 0.971 OOF target cannot be reached via data append.
+- Task 46: Original SDSS labeled dataset not yet located/staged. Without it, Task 48 cannot run and the 0.971 OOF target cannot be reached via data append.
 
 ## Next Steps
 

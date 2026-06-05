@@ -93,12 +93,14 @@ Open tasks:
 - Accept only if OOF beats `0.969202` and per-class recall remains stable.
 - Compare public-risk diagnostics against `32_spatial_5seed_blend.csv` before any upload.
 
-Relevant files already started by peer work:
+Relevant files already implemented and guarded:
 
 - `scripts/43_original_append_audit.py`
 - `scripts/44_original_append_train.py`
 
-Review these before creating new scripts. Do not duplicate them.
+Do not duplicate these scripts. The current blocker is dataset acquisition/provenance
+(Task 46), not script scaffolding. The audit must PASS for the same `--original` path
+before append training is allowed to run.
 
 ## Submission Policy
 
