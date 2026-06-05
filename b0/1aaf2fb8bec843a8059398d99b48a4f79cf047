@@ -1,0 +1,21 @@
+scripts/50_spatial_pseudolabel.py
+  s_e473c1c410a7d4::t_046e8c9ba3992c 1-226
+.gitignore
+  s_e473c1c410a7d4::t_22e02588394c3e 30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "b01aaf2fb8bec843a8059398d99b48a4f79cf047",
+  "prompts": {},
+  "sessions": {
+    "s_e473c1c410a7d4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "37b196c6-f451-4881-a670-df75ea25bea5",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    }
+  }
+}
