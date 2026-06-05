@@ -1,0 +1,52 @@
+tests/test_external_catalog.py
+  s_0ce4a9cd09412a::t_4ec8c4f56302b1 1-57
+tasks/plan.md
+  s_0ce4a9cd09412a::t_496479f7e7ddcd 90-93,103,109-116
+tasks/todo.md
+  s_0ce4a9cd09412a::t_28356bfaf56440 132-133,141
+  s_0ce4a9cd09412a::t_c03c01abc47f35 134-140
+experiments/next_submission_report.md
+  s_0ce4a9cd09412a::t_8e6cc3aff3caa1 34,38-40
+tests/test_tabpfn_meta_stacker.py
+  s_0ce4a9cd09412a::t_65dcfa21d590e7 1-59
+docs/superpowers/plans/2026-06-05-local-0971-score-push.md
+  s_0ce4a9cd09412a::t_ca723fa78e3bd1 1-50
+PROGRESS.md
+  s_0ce4a9cd09412a::t_f292d673e36478 172-176,185-186,192-194
+experiments/48_tabpfn_meta_stacker.json
+  s_0ce4a9cd09412a::t_6a024764b51e1a 1-6
+tests/test_external_spatial.py
+  s_0ce4a9cd09412a::t_ca91d3593e0db1 1-91
+src/external_catalog.py
+  s_0ce4a9cd09412a::t_ff8ee8d394c506 1-42,44-47,50-129
+  s_0ce4a9cd09412a::t_9d6a5c38e9c2f6 43,48-49
+scripts/48_tabpfn_meta_stacker.py
+  s_0ce4a9cd09412a::t_d74501038ff9ab 10,105-107
+  s_0ce4a9cd09412a::t_d18a2bf2bff67b 1-9,12-104,108-174
+  s_0ce4a9cd09412a::t_2b9ce2c93d5aa5 11
+src/external_spatial.py
+  s_0ce4a9cd09412a::t_da102ad49553c3 1-88
+scripts/49_external_catalog_features.py
+  s_0ce4a9cd09412a::t_6d64e3c5201809 1-174
+DECISIONS.md
+  s_0ce4a9cd09412a::t_bf75c677d1b268 252-257
+scripts/47_external_spatial_append.py
+  s_0ce4a9cd09412a::t_bb89045e7a06cc 35,130
+  s_0ce4a9cd09412a::t_95a9f7793ead7c 1-34,36-129,131-279
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "6e0dbefc2634234667631467a70222986e2d5296",
+  "prompts": {},
+  "sessions": {
+    "s_0ce4a9cd09412a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e9854-c7c6-7352-83b4-007b3b2d0d0a",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    }
+  }
+}
