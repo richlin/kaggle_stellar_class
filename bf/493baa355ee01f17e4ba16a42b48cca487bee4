@@ -1,0 +1,37 @@
+experiments/leaderboard.md
+  s_32ba1879aff758::t_8cbc4746f582b3 25,28-29
+scripts/25_loo_spatial_xgb_final.py
+  s_32ba1879aff758::t_aa4ad3c879b449 1-153
+experiments/26_loo_spatial_xgb_calibrated.json
+  s_32ba1879aff758::t_8b04d89b0a8a8b 1-19
+PROGRESS.md
+  s_32ba1879aff758::t_8cbc4746f582b3 129-133,145
+DECISIONS.md
+  s_32ba1879aff758::t_8cbc4746f582b3 150-155
+tasks/lessons.md
+  s_32ba1879aff758::t_8cbc4746f582b3 10
+experiments/22_loo_spatial_mild_nongal.json
+  s_32ba1879aff758::t_8cbc4746f582b3 14
+tests/test_transductive_spatial.py
+  s_32ba1879aff758::t_2deaa4c8296e96 174-196
+experiments/25_loo_spatial_xgb_final.json
+  s_32ba1879aff758::t_8871f18a9f5afa 1-31
+experiments/candidate_recommendations.md
+  s_32ba1879aff758::t_8cbc4746f582b3 14,17,23-25,33-34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "bf493baa355ee01f17e4ba16a42b48cca487bee4",
+  "prompts": {},
+  "sessions": {
+    "s_32ba1879aff758": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e951a-0472-7e92-b35e-19942db5d9c3",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    }
+  }
+}
