@@ -1,0 +1,19 @@
+{
+  "changed_vs_16_spatial_blend": 779,
+  "class_counts": {
+    "GALAXY": 156551,
+    "QSO": 51403,
+    "STAR": 39481
+  },
+  "galaxy_count_delta_vs_16": -179,
+  "multipliers": [
+    0.34,
+    0.72,
+    1.0
+  ],
+  "public_score": 0.96956,
+  "rationale": "LOO XGBoost final candidate calibrated back near the public-best 19 class mix after 22 showed lower-GALAXY multiplier movement regressed.",
+  "source_probabilities": "experiments/25_loo_spatial_xgb_blend_test_probabilities.npy",
+  "submission_path": "submissions/26_loo_spatial_xgb_calibrated.csv",
+  "timestamp_utc": "2026-06-05T01:01:25Z"
+}

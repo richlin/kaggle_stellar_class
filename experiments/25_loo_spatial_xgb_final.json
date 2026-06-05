@@ -1,0 +1,31 @@
+{
+  "blend_weight_lgbm": 0.55,
+  "multipliers": [
+    0.45,
+    0.75,
+    1.0
+  ],
+  "params": {
+    "colsample_bytree": 0.85,
+    "eval_metric": "mlogloss",
+    "learning_rate": 0.04,
+    "max_depth": 8,
+    "min_child_weight": 5,
+    "n_estimators": 900,
+    "n_jobs": -1,
+    "num_class": 3,
+    "objective": "multi:softprob",
+    "reg_alpha": 0.1,
+    "reg_lambda": 1.0,
+    "subsample": 0.85,
+    "tree_method": "hist"
+  },
+  "public_score": null,
+  "rationale": "Train the XGBoost side on leave-one-out spatial train features after public feedback confirmed the LOO LightGBM final-feature-density gain.",
+  "seeds": [
+    42,
+    43
+  ],
+  "submission_path": "/Users/linrichuang/Github/predicting_stellar_class/submissions/25_loo_spatial_xgb_final.csv",
+  "timestamp_utc": "2026-06-05T01:00:44Z"
+}

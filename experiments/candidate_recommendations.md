@@ -1,48 +1,32 @@
 # Candidate Recommendations
 
-Current public-best fallback: `submissions/12_multi_blend.csv` with public balanced accuracy `0.96711`.
+Current public-best fallback: `submissions/19_loo_spatial_final.csv` with public balanced accuracy `0.96970`.
 
 ## Current Incumbent
 
-1. `submissions/12_multi_blend.csv`
-   - Local OOF: `0.9662824834818386`.
-   - Public LB: `0.96711`.
-   - Weights: `lgbm_seed_average_final=0.23`, `xgboost=0.44`, `extended_seed_average=0.28`, `boundary_v1=0.05`.
-   - Rationale: strongest local and public candidate so far.
-   - Risk: still short of the target by about `0.00289`.
+1. `submissions/19_loo_spatial_final.csv`
+   - Local OOF: n/a; final-only LOO spatial train/test mismatch candidate.
+   - Public LB: `0.96970`.
+   - Rationale: current public best. It improves `+0.00043` over `16_spatial_blend.csv` and is only `+0.00030` short of `0.97`.
 
-## Secondary Public Results
+## Next Public Probes
 
-2. `submissions/11_target_encoding_blend.csv`
-   - Local OOF: `0.9662595764879448`.
-   - Public LB: `0.96700`.
-   - Rationale: second-best public score, but superseded by `12_multi_blend.csv`.
+No immediate public probe is recommended from the existing cached probability files. Revisit with the future plan in `docs/superpowers/plans/2026-06-05-score-over-097-revisit-plan.md`.
 
-3. `submissions/13_class_weight_lgbm.csv`
-   - Local OOF: `0.9661492957452017`.
-   - Public LB: `0.96692`.
-   - Rationale: class-adjusted training did not beat `12` locally or publicly; do not continue this line without new evidence.
+## Secondary / Not First
 
-4. `submissions/10_target_encoding.csv`
-   - Local OOF: `0.9655299670953859`.
-   - Public LB: `0.96673`.
-   - Rationale: standalone target encoding trails the blend variants.
-
-5. `submissions/09_extended_seed_average.csv`
-   - Local OOF: `0.966006054665383`.
-   - Public LB: `0.96658`.
-   - Rationale: lower-risk 5-seed LightGBM average, but weaker publicly than `12`, `11`, `13`, and `10`.
-
-## Do Not Prioritize
-
-- `submissions/04_ensemble.csv`: public score `0.96676`, worse than `03_final`.
-- `submissions/05_tuned_ensemble.csv`: local OOF `0.966062166950432`, weaker than `06_star_safe_blend` and moves more STAR rows.
-- `submissions/07_probability_stacker.csv`: local OOF `0.965914781047898`, failed local gate.
-- `submissions/08_pseudolabel.csv`: no honest OOF score and STAR count resembles the failed `04_ensemble` pattern.
-- `submissions/05_boundary_v1.csv`: local OOF `0.9656299274771866`, failed local gate.
-- `submissions/10_target_encoding.csv`: local OOF `0.9655299670953859`, failed local gate as a standalone model.
+- `submissions/20_loo_spatial_neutral.csv`: public `0.96968`, improved over `16` but trailed `19`.
+- `submissions/23_loo_spatial_star_tilt.csv`: public `0.96970`, tied `19` but did not improve; no need to continue STAR tilt without a new signal.
+- `submissions/22_loo_spatial_mild_nongal.csv`: public `0.96944`, regressed; do not submit stronger lower-GALAXY variants.
+- `submissions/24_loo_spatial_stronger_nongal.csv`: do not submit now; `22` already disproved this direction.
+- `submissions/25_loo_spatial_xgb_final.csv`: raw LOO XGBoost blend is too GALAXY-heavy; prefer calibrated `26`.
+- `submissions/26_loo_spatial_xgb_calibrated.csv`: public `0.96956`, regressed vs `19`/`23`; stop XGBoost-side LOO probing from this cache.
+- `submissions/21_loo_spatial_galaxy_lean.csv`: do not prioritize now; `19` beating `20` suggests the public set did not want more GALAXY.
+- `submissions/17_transductive_spatial.csv`: residual blend selected weight `0.0`, identical to `16`; do not submit.
+- `submissions/18_galaxy_residual.csv`: threshold search selected no flips, identical to `16`; do not submit.
+- `submissions/12_multi_blend.csv`: prior public best `0.96711`, superseded by `16`.
 
 ## Next After Public Feedback
 
-- Current public best is `0.96711`, so the remaining lift to exceed `0.97` is about `+0.00289`.
-- Continue only with candidates that add a materially new signal or a stronger validation proxy; cached blend and threshold micro-gains are likely saturated.
+- Keep `19`/`23` as the public incumbent pair at `0.96970`.
+- Next work should create a new signal or a new validation proxy, not another class-multiplier variant from `19`/`25` cached probabilities.

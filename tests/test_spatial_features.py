@@ -4,6 +4,7 @@ from __future__ import annotations
 import numpy as np
 
 from src.spatial import (
+    loo_neighbour_features,
     neighbour_features,
     oof_neighbour_features,
     radec_to_xyz,
@@ -65,4 +66,21 @@ def test_oof_features_do_not_leak_own_label():
     # row i's own feature is unchanged ...
     np.testing.assert_array_equal(base[i], flipped[i])
     # ... but the change is visible somewhere else (row i is a neighbour of others)
+    assert not np.array_equal(base, flipped)
+
+
+def test_loo_features_do_not_leak_own_label():
+    # Leave-one-out features may use every other training row, but never the
+    # row's own label. This better matches final train->test feature density.
+    xyz, y = _toy(n=600, seed=2)
+    kw = {"ks": [5, 10], "n_classes": 3, "priors": np.array([1 / 3, 1 / 3, 1 / 3]),
+          "smoothing": 1.0, "max_k": 20}
+    base, _ = loo_neighbour_features(xyz, y, **kw)
+
+    i = 11
+    y2 = y.copy()
+    y2[i] = (y2[i] + 1) % 3
+    flipped, _ = loo_neighbour_features(xyz, y2, **kw)
+
+    np.testing.assert_array_equal(base[i], flipped[i])
     assert not np.array_equal(base, flipped)

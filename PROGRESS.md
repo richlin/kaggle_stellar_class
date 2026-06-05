@@ -102,10 +102,43 @@
   - `scripts/16_spatial_xgb.py`: spatial-aware XGBoost + blend → tuned OOF **`0.969071`** (`submissions/16_spatial_blend.csv`, `0.55*spatial_lgbm + 0.45*spatial_xgb`), recalls GALAXY `0.958` / QSO `0.975` / STAR `0.974`. Best local candidate.
   - Rejected: redshift-augmented neighbours (hurt: `0.9665` vs `0.9686`); greedy blend of spatial + non-spatial models (non-spatial models too weak).
   - All gates green: `pytest -q` (67), `ruff check .`, `src.validate`.
+- 2026-06-04: `submissions/16_spatial_blend.csv` official public score: `0.96927`.
+  - New public incumbent over `12_multi_blend.csv` (`0.96711`) by `+0.00216`.
+  - Remaining lift required to exceed `0.97`: about `+0.00073`.
+- 2026-06-04: Implemented Task 24 graph/cluster and residual-correction push.
+  - Added `src/transductive_spatial.py` plus `tests/test_transductive_spatial.py` for graph probability features, OOF-safe cluster rates, probability meta-features, and submission id order.
+  - Added `loo_neighbour_features()` in `src/spatial.py` plus a leakage test proving a row's own label does not affect its LOO feature.
+  - `scripts/17_transductive_spatial.py`: graph features (`k=10,25,50,100,250`), cluster rates (`512,2048,8192`), and residual LightGBM. Residual tuned OOF `0.968377`; best blend retained residual weight `0.0`, so `17` is identical to `16` and is not a public candidate.
+  - `scripts/18_galaxy_residual.py`: binary GALAXY residual correction inside incumbent STAR/QSO prediction regions. Threshold search selected no flips; OOF unchanged at `0.969071`, so `18` is not a public candidate.
+  - Diagnostic: top residual STAR→GALAXY precision reached only about `0.78`; balanced accuracy needs roughly `>0.82` precision for STAR→GALAXY flips to pay off, so direct GALAXY overrides are not locally justified.
+  - `scripts/19_loo_spatial_final.py`: trained full-data LightGBM on leave-one-out spatial features to reduce train/test spatial-feature mismatch; generated `submissions/19_loo_spatial_final.csv`. This is final-only and has no honest OOF score.
+  - Generated LOO multiplier variants from the saved `19` probability cache:
+    - `submissions/20_loo_spatial_neutral.csv`: 441 rows changed vs `16`, GALAXY count `156768` (`+38` vs `16`).
+    - `submissions/21_loo_spatial_galaxy_lean.csv`: 890 rows changed vs `16`, GALAXY count `157565` (`+835` vs `16`).
+- 2026-06-04: Public leaderboard feedback on LOO final candidates.
+  - `submissions/19_loo_spatial_final.csv`: public `0.96970`, new public incumbent; improves `+0.00043` over `16_spatial_blend.csv` and is `+0.00030` short of `0.97`.
+  - `submissions/20_loo_spatial_neutral.csv`: public `0.96968`; improves over `16` but trails `19` by `0.00002`.
+  - Lesson: the public set rewarded the lower-GALAXY LOO variant more than the GALAXY-neutral variant, so do not submit `21_galaxy_lean` next.
+  - Generated next public probes from the saved `19` probability cache:
+    - `submissions/22_loo_spatial_mild_nongal.csv`: multipliers `[0.42,0.75,1.0]`, 578 rows changed vs `16`, GALAXY count `156287` (`-443` vs `16`).
+    - `submissions/23_loo_spatial_star_tilt.csv`: multipliers `[0.45,0.72,1.0]`, 452 rows changed vs `16`, GALAXY count `156585` (`-145` vs `16`).
+    - `submissions/24_loo_spatial_stronger_nongal.csv`: multipliers `[0.40,0.75,1.0]`, 701 rows changed vs `16`, GALAXY count `156118` (`-612` vs `16`).
+- 2026-06-04: `submissions/23_loo_spatial_star_tilt.csv` public score: `0.96970`.
+  - This ties `19_loo_spatial_final.csv` and stays above `16_spatial_blend.csv`, but does not close the remaining `+0.00030` gap to `0.97`.
+  - STAR tilt did not add lift, so the next probe should be `submissions/22_loo_spatial_mild_nongal.csv`, not another STAR-tilted variant.
+- 2026-06-04: `submissions/22_loo_spatial_mild_nongal.csv` public score: `0.96944`.
+  - This regressed from `19`/`23` at `0.96970`, so do not submit `24_loo_spatial_stronger_nongal.csv`.
+  - Added `scripts/25_loo_spatial_xgb_final.py` to train the XGBoost side on full-data LOO spatial features, mirroring the successful LOO LightGBM idea.
+  - Raw `25_loo_spatial_xgb_final.csv` is too GALAXY-heavy (`GALAXY=157536`, `+806` vs `16`), so it is not the next submission.
+  - Generated calibrated `submissions/26_loo_spatial_xgb_calibrated.csv`: multipliers `[0.34,0.72,1.0]`, class counts close to public-best `19`, 779 rows changed vs `16`.
+- 2026-06-05: `submissions/26_loo_spatial_xgb_calibrated.csv` public score: `0.96956`.
+  - This regressed from `19`/`23` at `0.96970`; current public incumbent remains `19_loo_spatial_final.csv` / `23_loo_spatial_star_tilt.csv`.
+  - Stop multiplier-only probing from the current `19` and `25` probability caches.
+  - Future plan saved in `docs/superpowers/plans/2026-06-05-score-over-097-revisit-plan.md` for the next session.
 
 ## In Progress
 
-- **Awaiting Kaggle public score for `submissions/16_spatial_blend.csv`** (the real transfer gate; user submits — see Checkpoint H).
+- None.
 
 ## Blockers
 
@@ -113,5 +146,5 @@
 
 ## Next Steps
 
-- **Submit `submissions/16_spatial_blend.csv`** (OOF `0.969071`); adopt as new incumbent over `12_multi_blend` only if public beats `0.96711`. Keep `12_multi_blend` (`0.96711`) as fallback.
-- If short of the `~0.9708` leader cluster: GALAXY recall (`0.958`) is the binding constraint — try finer / position-cell target encoding for the remaining ~`0.002` OOF (Task 24).
+- Revisit tomorrow from `docs/superpowers/plans/2026-06-05-score-over-097-revisit-plan.md`.
+- Public incumbent to beat: `0.96970`; remaining lift to exceed `0.97`: `+0.00030`.

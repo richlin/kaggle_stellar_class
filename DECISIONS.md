@@ -117,3 +117,45 @@
 - **Rejected sub-options:** adding redshift to the neighbour metric *hurt* (`0.9665` vs `0.9686` single-split) — it dilutes the pure positional signal; finer k (`5,10`) helped a single split but not full CV.
 - **Open / next:** GALAXY recall (`0.958`) is now the binding constraint; remaining gap to the `0.9708` leader cluster (~`0.002` OOF) likely needs even finer spatial encoding (position-cell target encoding) or a spatial signal we have not yet captured. **The real gate is the Kaggle public score on `16_spatial_blend.csv`** — adopt as incumbent over `12_multi_blend` only if public beats `0.96711`.
 - **Applies until:** Public score on `16_spatial_blend.csv` is known.
+
+## 2026-06-04 — Spatial Blend Is The Public Incumbent
+
+- **Decision:** Treat `submissions/16_spatial_blend.csv` as the new public-best submission.
+- **Why:** Kaggle public score is `0.96927`, improving `+0.00216` over the prior public incumbent `12_multi_blend.csv` (`0.96711`). This confirms the spatial-neighbour feature transfer and narrows the remaining gap to the target `>0.97` to about `+0.00073`.
+- **Applies until:** A later public submission beats `0.96927`.
+
+## 2026-06-04 — Reject Broad Graph/Cluster Residuals Unless Public Evidence Contradicts OOF
+
+- **Decision:** Do not submit `submissions/17_transductive_spatial.csv` or `submissions/18_galaxy_residual.csv`.
+- **Why:** `17_transductive_spatial.csv` added graph probabilities, multi-resolution cluster rates, and probability meta-features, but its residual model tuned OOF was only `0.968377`; blend search assigned residual weight `0.0`, leaving the exact `16_spatial_blend` predictions. `18_galaxy_residual.csv` trained binary GALAXY residual models inside incumbent STAR/QSO regions, but threshold search selected no flips and OOF remained `0.969071`. The residual top precision was below the balanced-accuracy break-even point for flipping STAR/QSO predictions to GALAXY.
+- **Applies until:** A new residual feature source proves it can flip GALAXY misses with enough precision to beat `16` on OOF or public leaderboard.
+
+## 2026-06-04 — Use LOO Spatial Final Variants As Public-Risk Probes
+
+- **Decision:** Keep `16_spatial_blend.csv` as the incumbent, but if submission slots are available, probe `20_loo_spatial_neutral.csv` before the higher-risk `21_loo_spatial_galaxy_lean.csv`.
+- **Why:** The top-10 leaderboard cluster above `0.9707` suggests the remaining edge may be final train/test spatial-feature density, not another honest OOF residual. Existing spatial models train on KFold-OOF spatial features while test features use all train labels. `scripts/19_loo_spatial_final.py` trains the LightGBM component on leave-one-out spatial features, then blends with the existing spatial XGBoost component. This has no honest OOF score, so it is public-risk only. `20` is near GALAXY-neutral versus `16` (`+38` GALAXY, 441 changed rows); `21` is GALAXY-leaning (`+835` GALAXY, 890 changed rows) and should only follow if a more conservative probe helps.
+- **Applies until:** Public leaderboard feedback shows whether LOO final-feature density transfers.
+
+## 2026-06-04 — LOO Spatial Transfer Is Real; Stop GALAXY-Lean Probes For Now
+
+- **Decision:** Treat `submissions/19_loo_spatial_final.csv` as the public incumbent and prioritize `23_loo_spatial_star_tilt.csv`, then `22_loo_spatial_mild_nongal.csv`, before any GALAXY-leaning variant.
+- **Why:** Public scores show `19_loo_spatial_final.csv` at `0.96970` and `20_loo_spatial_neutral.csv` at `0.96968`, both above `16_spatial_blend.csv` at `0.96927`. This confirms the final-feature-density hypothesis. It also disproves the immediate GALAXY-lean submission policy: the lower-GALAXY `19` beat the GALAXY-neutral `20`, so the next probes should stay near `19` and cautiously test more STAR/non-GALAXY movement. The remaining gap to `0.97` is only `+0.00030`.
+- **Applies until:** Public scores for `22`/`23` show whether the non-GALAXY direction continues or reverses.
+
+## 2026-06-04 — STAR Tilt Tied The Incumbent; Test Mild Non-GALAXY Next
+
+- **Decision:** Keep `19_loo_spatial_final.csv` as the public incumbent and submit `22_loo_spatial_mild_nongal.csv` before `24_loo_spatial_stronger_nongal.csv`.
+- **Why:** `23_loo_spatial_star_tilt.csv` scored `0.96970`, tying `19` but not improving. That rules out continuing the small STAR-tilt direction as the next best use of a submission slot. The remaining plausible axis is the lower-GALAXY/non-GALAXY movement represented by `22`; `24` is a stronger version and should wait for `22` feedback.
+- **Applies until:** Public score for `22_loo_spatial_mild_nongal.csv` is known.
+
+## 2026-06-04 — Lower-GALAXY Multiplier Direction Failed; Test Calibrated LOO XGBoost
+
+- **Decision:** Do not submit `24_loo_spatial_stronger_nongal.csv`. Submit `26_loo_spatial_xgb_calibrated.csv` next if a slot is available.
+- **Why:** `22_loo_spatial_mild_nongal.csv` scored `0.96944`, below `19`/`23` at `0.96970`, so the lower-GALAXY multiplier direction is now disproven. The next independent axis is training the XGBoost blend component on LOO spatial features as well. Raw `25` was too GALAXY-heavy, so `26` calibrates its class counts back near the public-best `19` distribution while changing a different set of rows.
+- **Applies until:** Public score for `26_loo_spatial_xgb_calibrated.csv` is known.
+
+## 2026-06-05 — Cache-Level Probing Is Saturated; Revisit With New Signal
+
+- **Decision:** Keep `19_loo_spatial_final.csv` / `23_loo_spatial_star_tilt.csv` as the public incumbent at `0.96970` and stop submitting variants derived only from the current `19` or `25` cached probability files.
+- **Why:** The latest public result, `26_loo_spatial_xgb_calibrated.csv = 0.96956`, regressed despite matching the `19` class mix more closely. The submission history has bracketed the easy axes: GALAXY-neutral (`20`) is slightly worse, lower-GALAXY (`22`) is worse, STAR tilt (`23`) ties, and LOO-XGBoost (`26`) is worse. The remaining `+0.00030` likely requires a new spatial signal, a better final-feature validation proxy, or a materially different model component.
+- **Applies until:** A new plan produces a candidate not reducible to class-multiplier movement on existing cached probabilities.
