@@ -1,0 +1,142 @@
+scripts/42_large_k_spatial.py
+  s_e473c1c410a7d4::t_d86153c47d0721 1-96,98-213
+  s_e473c1c410a7d4::t_2cedebf06b8d45 97
+scripts/32_spatial_5seed_blend.py
+  s_e473c1c410a7d4::t_2d1fd4bd4946f9 1-170
+tasks/plan.md
+  s_c452e70dc8d308::t_13b179d48e507f 1-163
+experiments/42_large_k_spatial.json
+  s_e473c1c410a7d4::t_7598246c780aa2 1-22
+scripts/30_meta_stacker.py
+  s_e473c1c410a7d4::t_ebf0dd1ff16bf1 1-189
+scripts/28_photometric_neighbours.py
+  s_e473c1c410a7d4::t_2cbb0dfee2fceb 1-256
+scripts/33_loo_family.py
+  s_e473c1c410a7d4::t_9bdf741e3b8cc6 1-232
+experiments/40_catboost_spatial.json
+  s_e473c1c410a7d4::t_ae31e904415a6c 1-37
+experiments/41_5seed_lgbm_xgb_catboost.json
+  s_e473c1c410a7d4::t_598e167ba43295 1-24
+scripts/37_phot_more_trees.py
+  s_e473c1c410a7d4::t_dee9aa971c3d8c 137-138,144,156
+  s_e473c1c410a7d4::t_41134432d0e2a5 108-111
+  s_e473c1c410a7d4::t_5ac63d7147740c 1-107,112-136,139-143,145-155,157-178
+scripts/34_3model_meta_stacker.py
+  s_e473c1c410a7d4::t_eab210238941a1 1-179
+experiments/45_galactic_coords.json
+  s_e473c1c410a7d4::t_76c8e310ab146e 1-32
+experiments/next_submission_report.md
+  s_e473c1c410a7d4::t_c6069001e2a9fd 1-2,6-22,24,27-31,33,38-41,43-51,53,55-63,67-71,73-74
+  s_c452e70dc8d308::t_b744e2134a3802 3-5,23,25-26,32,34-37,42,52,54,64-66,72,75
+scripts/31_phot_xgb_blend.py
+  s_e473c1c410a7d4::t_ebb95c68c8e3e8 120-121
+  s_e473c1c410a7d4::t_fcafc621ab4f7b 1-119,122-166,168-185
+  s_e473c1c410a7d4::t_54c91e50b4d29e 167
+tests/test_data_contract.py
+  s_c452e70dc8d308::t_e001624dbba615 84-103
+scripts/45_galactic_coords.py
+  s_e473c1c410a7d4::t_fa1e4bcf399201 1-32,34-108,110-176
+  s_e473c1c410a7d4::t_3ba5b9a33e5ac8 33
+  s_e473c1c410a7d4::t_1c6d7bcd6a629c 109
+requirements.txt
+  s_e473c1c410a7d4::t_98fedd2ac9b012 2-4
+scripts/44_original_append_train.py
+  s_e473c1c410a7d4::t_b0979c111e76d9 1-65,82-105,107-182,184-265
+  s_e473c1c410a7d4::t_87673293f3005b 106
+  s_e473c1c410a7d4::t_26f8dc2684e3de 66-81
+  s_e473c1c410a7d4::t_14a57f87d461e4 183
+tests/test_galactic_coords.py
+  s_e473c1c410a7d4::t_6db1c4780b7464 1,7,9,11,15-16,21-22,26-27,32-33,43-51
+  s_e473c1c410a7d4::t_59dc0168c7caef 2-6,8,10,12-14,17-20,23-25,28-31,34-42
+src/galactic.py
+  s_e473c1c410a7d4::t_a268c0a379c0d1 1-53
+scripts/29_logit_blend.py
+  s_e473c1c410a7d4::t_d0c1e4455fcbb8 1-118
+tasks/todo.md
+  s_e473c1c410a7d4::t_119004ec9185cd 97
+  s_c452e70dc8d308::t_5f6f36a92fd97c 111,130-134
+  s_c452e70dc8d308::t_e001624dbba615 121
+  s_c452e70dc8d308::t_b744e2134a3802 112-120,122-125
+  s_e203d20a359afc::t_98460ae77fd502 89-93
+  s_e473c1c410a7d4::t_fdb0e765313a28 94-96,98-100
+  s_c452e70dc8d308::t_d478e11034d99d 126-129
+  s_e473c1c410a7d4::t_111253fb34ae39 101-110
+experiments/leaderboard.md
+  s_e473c1c410a7d4::t_5337a5b3501c62 33
+  s_e473c1c410a7d4::t_7a6ee9f9aef35e 31
+  s_e473c1c410a7d4::t_76bffcf0784fba 32
+  s_e473c1c410a7d4::t_4e75634b095106 35
+  s_e473c1c410a7d4::t_daafb112aa23c2 36-37
+tests/test_photometric_neighbours.py
+  s_e473c1c410a7d4::t_fec1c7b581515e 1-79
+scripts/43_original_append_audit.py
+  s_e473c1c410a7d4::t_25db0f7c8c96a2 163
+  s_e473c1c410a7d4::t_922e4775f62a96 1-162,164-176,178-233,235-239
+  s_e473c1c410a7d4::t_b82a0e7888d9cb 234
+  s_e473c1c410a7d4::t_18d7eaebff32d7 177
+experiments/46_4model_galactic_blend.json
+  s_e473c1c410a7d4::t_7a6e0a769ef880 1-23
+PROGRESS.md
+  s_e473c1c410a7d4::t_23ea2462c5ee68 174,178-183
+  s_c452e70dc8d308::t_5f6f36a92fd97c 5-6
+  s_e473c1c410a7d4::t_89e68abf8e27f1 149-154
+  s_e473c1c410a7d4::t_cb9dc2eceb5c61 141-148,167
+  s_c452e70dc8d308::t_b744e2134a3802 158-162
+  s_e473c1c410a7d4::t_e84759bb0715d1 155-157
+  s_c452e70dc8d308::t_d478e11034d99d 163-166
+scripts/39_spatial_lower_lr.py
+  s_e473c1c410a7d4::t_dc5d04b95a5c3e 1-166
+AGENTS.md
+  s_c452e70dc8d308::t_d478e11034d99d 12-13,15-17
+scripts/40_catboost_spatial.py
+  s_e473c1c410a7d4::t_7a2a7dd7dfe356 1-185
+DECISIONS.md
+  s_c452e70dc8d308::t_d478e11034d99d 214-219
+  s_e473c1c410a7d4::t_afcecbb1b63a40 220-245
+  s_e473c1c410a7d4::t_97bc2d6d141f48 180-192
+  s_c452e70dc8d308::t_5f6f36a92fd97c 3-8
+  s_c452e70dc8d308::t_b744e2134a3802 202-213
+  s_e473c1c410a7d4::t_7e0925c36ba27d 193-201
+  s_e473c1c410a7d4::t_7d11ad1e2c5cc7 168-179
+experiments/36_spatial_more_trees.json
+  s_e473c1c410a7d4::t_4d87171b72eb63 1-19
+scripts/38_spatial_5seed_1500trees.py
+  s_e473c1c410a7d4::t_b473487f392557 1-174
+scripts/36_spatial_more_trees.py
+  s_e473c1c410a7d4::t_d5b369b7ed3aa1 1-165
+scripts/35_loo_phot_final.py
+  s_e473c1c410a7d4::t_d5962e06a788e0 185
+  s_e473c1c410a7d4::t_3dc880f79254aa 1-184,186-202
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "585dba040d0d92f2ddfef07c89f8defddd7a2ef1",
+  "prompts": {},
+  "sessions": {
+    "s_c452e70dc8d308": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e9794-689c-72e3-81e8-70a63c93f52c",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    },
+    "s_e203d20a359afc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cc2fdc96-7d91-4cd9-ad51-cd458c91b266",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    },
+    "s_e473c1c410a7d4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "37b196c6-f451-4881-a670-df75ea25bea5",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    }
+  }
+}
