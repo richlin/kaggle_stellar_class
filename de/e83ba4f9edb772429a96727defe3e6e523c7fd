@@ -1,0 +1,57 @@
+scripts/18_galaxy_residual.py
+  s_32ba1879aff758::t_3381996e96442e 1-246
+scripts/19_loo_spatial_final.py
+  s_32ba1879aff758::t_ddaecc930c365b 1-162
+experiments/18_galaxy_residual.json
+  s_32ba1879aff758::t_3e4feee2142b1d 1-48
+PROGRESS.md
+  s_32ba1879aff758::t_35e3fab8247a4e 108-118,130-131
+tests/test_spatial_features.py
+  s_32ba1879aff758::t_43bd3a3e3e6d0b 7,70-85
+experiments/candidate_recommendations.md
+  s_32ba1879aff758::t_35e3fab8247a4e 3,7-10,12,14-17,19-22,24,26-29,33-34
+src/spatial.py
+  s_32ba1879aff758::t_b76687bafd221b 117-146
+experiments/19_loo_spatial_final.json
+  s_32ba1879aff758::t_f8ed5731c01225 1-38
+experiments/21_loo_spatial_galaxy_lean.json
+  s_32ba1879aff758::t_23a224738642b7 1-18
+experiments/17_transductive_spatial.json
+  s_32ba1879aff758::t_3be4382443eb97 1-67
+experiments/20_loo_spatial_neutral.json
+  s_32ba1879aff758::t_23a224738642b7 1-18
+src/transductive_spatial.py
+  s_32ba1879aff758::t_162ef3f73cf550 1-90,92-150
+  s_32ba1879aff758::t_0b92c581a16652 91
+experiments/leaderboard.md
+  s_32ba1879aff758::t_35e3fab8247a4e 20-24
+docs/superpowers/plans/2026-06-04-transductive-spatial-task24.md
+  s_32ba1879aff758::t_e6203c0e3744f7 1-65
+tests/test_transductive_spatial.py
+  s_32ba1879aff758::t_db56a12f98ce8b 1-12,14-81,83-87,89-151
+  s_32ba1879aff758::t_f084ee753cf697 152-173
+  s_32ba1879aff758::t_0b92c581a16652 13,82,88
+scripts/17_transductive_spatial.py
+  s_32ba1879aff758::t_3636d2f50a2fa5 1-404
+DECISIONS.md
+  s_32ba1879aff758::t_35e3fab8247a4e 126-137
+tasks/todo.md
+  s_32ba1879aff758::t_35e3fab8247a4e 75,79-87
+  s_32ba1879aff758::t_e6203c0e3744f7 76-78
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "dee83ba4f9edb772429a96727defe3e6e523c7fd",
+  "prompts": {},
+  "sessions": {
+    "s_32ba1879aff758": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e951a-0472-7e92-b35e-19942db5d9c3",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    }
+  }
+}
