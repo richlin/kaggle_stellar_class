@@ -123,6 +123,9 @@
     - `submissions/22_loo_spatial_mild_nongal.csv`: multipliers `[0.42,0.75,1.0]`, 578 rows changed vs `16`, GALAXY count `156287` (`-443` vs `16`).
     - `submissions/23_loo_spatial_star_tilt.csv`: multipliers `[0.45,0.72,1.0]`, 452 rows changed vs `16`, GALAXY count `156585` (`-145` vs `16`).
     - `submissions/24_loo_spatial_stronger_nongal.csv`: multipliers `[0.40,0.75,1.0]`, 701 rows changed vs `16`, GALAXY count `156118` (`-612` vs `16`).
+- 2026-06-04: `submissions/23_loo_spatial_star_tilt.csv` public score: `0.96970`.
+  - This ties `19_loo_spatial_final.csv` and stays above `16_spatial_blend.csv`, but does not close the remaining `+0.00030` gap to `0.97`.
+  - STAR tilt did not add lift, so the next probe should be `submissions/22_loo_spatial_mild_nongal.csv`, not another STAR-tilted variant.
 
 ## In Progress
 
@@ -134,5 +137,5 @@
 
 ## Next Steps
 
-- If Kaggle submission slots are available, submit `submissions/23_loo_spatial_star_tilt.csv` first, then `submissions/22_loo_spatial_mild_nongal.csv`. Use `submissions/24_loo_spatial_stronger_nongal.csv` only if `22` improves.
+- If Kaggle submission slots are available, submit `submissions/22_loo_spatial_mild_nongal.csv` next. Use `submissions/24_loo_spatial_stronger_nongal.csv` only if `22` improves.
 - Record public scores in `experiments/leaderboard.md`, `PROGRESS.md`, and `DECISIONS.md` before starting another modeling task.

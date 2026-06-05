@@ -141,3 +141,9 @@
 - **Decision:** Treat `submissions/19_loo_spatial_final.csv` as the public incumbent and prioritize `23_loo_spatial_star_tilt.csv`, then `22_loo_spatial_mild_nongal.csv`, before any GALAXY-leaning variant.
 - **Why:** Public scores show `19_loo_spatial_final.csv` at `0.96970` and `20_loo_spatial_neutral.csv` at `0.96968`, both above `16_spatial_blend.csv` at `0.96927`. This confirms the final-feature-density hypothesis. It also disproves the immediate GALAXY-lean submission policy: the lower-GALAXY `19` beat the GALAXY-neutral `20`, so the next probes should stay near `19` and cautiously test more STAR/non-GALAXY movement. The remaining gap to `0.97` is only `+0.00030`.
 - **Applies until:** Public scores for `22`/`23` show whether the non-GALAXY direction continues or reverses.
+
+## 2026-06-04 — STAR Tilt Tied The Incumbent; Test Mild Non-GALAXY Next
+
+- **Decision:** Keep `19_loo_spatial_final.csv` as the public incumbent and submit `22_loo_spatial_mild_nongal.csv` before `24_loo_spatial_stronger_nongal.csv`.
+- **Why:** `23_loo_spatial_star_tilt.csv` scored `0.96970`, tying `19` but not improving. That rules out continuing the small STAR-tilt direction as the next best use of a submission slot. The remaining plausible axis is the lower-GALAXY/non-GALAXY movement represented by `22`; `24` is a stronger version and should wait for `22` feedback.
+- **Applies until:** Public score for `22_loo_spatial_mild_nongal.csv` is known.
