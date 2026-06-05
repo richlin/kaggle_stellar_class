@@ -1,0 +1,26 @@
+DECISIONS.md
+  s_b7e5cda8d6f86d::t_bdd3d6a2bcec95 120-125
+tasks/todo.md
+  s_b7e5cda8d6f86d::t_d974357edf76b2 75
+  s_b7e5cda8d6f86d::t_bdd3d6a2bcec95 74
+experiments/leaderboard.md
+  s_b7e5cda8d6f86d::t_bdd3d6a2bcec95 19
+PROGRESS.md
+  s_b7e5cda8d6f86d::t_bdd3d6a2bcec95 105-107,111,119
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "24f5cebe0802a821d4dc91a85278401528fc4599",
+  "prompts": {},
+  "sessions": {
+    "s_b7e5cda8d6f86d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e950e-a32a-7fe3-a08e-67520266bf0c",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    }
+  }
+}
