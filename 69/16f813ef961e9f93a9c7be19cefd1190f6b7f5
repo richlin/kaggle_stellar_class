@@ -1,0 +1,189 @@
+tests/test_probability_stacker.py
+  s_9b66cd74d48766::t_1002cfeeb6d35c 32
+  s_9b66cd74d48766::t_2eeb7d005b425e 1-31,33-60
+scripts/14_ceiling_diagnosis.py
+  s_8ba2e3e1d47b5e::t_bc7c55fff59235 1-211
+scripts/_auto/eval_blend.py
+  s_8ba2e3e1d47b5e::t_931203873b2649 1-21,23-73
+  s_8ba2e3e1d47b5e::t_d81a3800f2ee3a 22
+tests/test_spatial_features.py
+  s_8ba2e3e1d47b5e::t_796150a483911e 1-55,58-68
+  s_8ba2e3e1d47b5e::t_2df9e9888f3262 56-57
+experiments/15_spatial.json
+  s_8ba2e3e1d47b5e::t_165d4a453c0579 1,3-4,7-20,22-35,39-69,72
+DECISIONS.md
+  s_9b66cd74d48766::t_c71d2fa8439697 68-79
+  s_8ba2e3e1d47b5e::t_72432702ae1b41 104-109
+  s_9b66cd74d48766::t_1a4b77edd955e5 56-67
+  s_9b66cd74d48766::t_73da411771758c 98-103
+  s_9b66cd74d48766::t_dcd4fc734204b6 80-85
+  s_8ba2e3e1d47b5e::t_d3a551ca18c486 110-119
+  s_9b66cd74d48766::t_d6a29aa3cd0497 92-97
+  s_9b66cd74d48766::t_f9af45da57289c 86-91
+tests/test_target_encoding.py
+  s_9b66cd74d48766::t_640599dd61fa93 1-69
+scripts/06_star_safe_blend.py
+  s_9b66cd74d48766::t_02baf1144226a0 1-126
+tests/test_class_weight_lgbm.py
+  s_9b66cd74d48766::t_c88a149807aaeb 1-55
+scripts/13_class_weight_lgbm.py
+  s_9b66cd74d48766::t_8279e5d472b39e 1-232
+tests/test_star_safe_blend.py
+  s_9b66cd74d48766::t_2e111ca54dbce8 1-46
+scripts/16_spatial_xgb.py
+  s_8ba2e3e1d47b5e::t_50d190ba52a6f8 144
+  s_8ba2e3e1d47b5e::t_1db16ed47dee24 1-143,145-153
+docs/superpowers/plans/2026-06-04-score-over-097-improvement.md
+  s_8ba2e3e1d47b5e::t_cc2e01e0292284 479-514
+  s_8ba2e3e1d47b5e::t_f04522451cd5a2 562-565
+scripts/08_pseudolabel.py
+  s_9b66cd74d48766::t_5bab2e45cefa8a 1-20,22-160
+  s_9b66cd74d48766::t_dfb2cfddece642 21
+tests/test_extended_seed_average.py
+  s_9b66cd74d48766::t_ea64a3d8a23ae8 1-56
+tests/test_target_encoding_blend.py
+  s_9b66cd74d48766::t_9b78f25687c575 1-52
+scripts/05_boundary_features.py
+  s_9b66cd74d48766::t_925a25a591c576 1-239
+src/features.py
+  s_9b66cd74d48766::t_47268a711a45fe 11,13,18,54-90,93
+requirements.txt
+  s_9b66cd74d48766::t_3255a2d8f5864d 1,3-7,10,12-14,17,20-21,24,27,32,34-35
+experiments/11_target_encoding_blend.json
+  s_9b66cd74d48766::t_4650f5c40995bd 1-33
+tests/test_multi_blend.py
+  s_9b66cd74d48766::t_201c0cb5817d11 1-69
+PROGRESS.md
+  s_9b66cd74d48766::t_4de422db09e508 53-59
+  s_9b66cd74d48766::t_ae6d2aebc9e46a 70-76
+  s_9b66cd74d48766::t_8a61bb4ccaf6da 63-68
+  s_9b66cd74d48766::t_d6a29aa3cd0497 77-83
+  s_9b66cd74d48766::t_dc069f04f04b8b 41-43
+  s_9b66cd74d48766::t_b20d40ab98d91e 60-62
+  s_9b66cd74d48766::t_469a03e8e1154b 44-52
+  s_9b66cd74d48766::t_73da411771758c 84-95
+  s_8ba2e3e1d47b5e::t_35ba231897ee67 97-104,108,116-117
+  s_9b66cd74d48766::t_84f8ca3642192f 69
+experiments/leaderboard.md
+  s_9b66cd74d48766::t_ec81a38a4c085d 11-12
+  s_8ba2e3e1d47b5e::t_298e4b3fe2b818 18-19
+  s_9b66cd74d48766::t_6d805c14639c7d 8
+  s_9b66cd74d48766::t_73da411771758c 13-17
+  s_9b66cd74d48766::t_7a7e997fdc8fd6 9-10
+scripts/12_multi_blend.py
+  s_9b66cd74d48766::t_6775000a141365 1-159
+experiments/12_multi_blend.json
+  s_9b66cd74d48766::t_efb58214f4058d 1-36
+experiments/10_target_encoding.json
+  s_9b66cd74d48766::t_f2df5376e11d8d 1-96
+experiments/13_class_weight_lgbm.json
+  s_9b66cd74d48766::t_3901e8d22006b1 1-93
+scripts/_auto/config.json
+  s_8ba2e3e1d47b5e::t_08510594597b50 1-8
+experiments/16_spatial_xgb.json
+  s_8ba2e3e1d47b5e::t_d4e1dccebb3c88 4-17
+tests/test_boundary_features.py
+  s_9b66cd74d48766::t_ebe3da90273599 1-57
+experiments/09_extended_seed_average.json
+  s_9b66cd74d48766::t_d66be1b6d50f3a 1-288
+scripts/07_probability_stacker.py
+  s_9b66cd74d48766::t_62a9ba242de26d 1-68,70,72-134,136-255
+  s_9b66cd74d48766::t_1f6af3d8051bd2 69,71,135
+tests/test_tune_xgb.py
+  s_9b66cd74d48766::t_8e42e1ea3b7ad4 1-103
+tasks/todo.md
+  s_8ba2e3e1d47b5e::t_1b1ad447c88864 65-67
+  s_9b66cd74d48766::t_218015bd71581e 46-47,64
+  s_8ba2e3e1d47b5e::t_f36e43bba07502 51-54,57,61-63
+  s_9b66cd74d48766::t_c71ad6facc5439 41-42
+  s_8ba2e3e1d47b5e::t_d85affd3ce6c15 68-75
+  s_9b66cd74d48766::t_73da411771758c 45,50
+  s_9b66cd74d48766::t_d6a29aa3cd0497 49
+  s_9b66cd74d48766::t_203f2c915d7a45 40,43-44
+  s_9b66cd74d48766::t_7685302dc7cb08 48
+  s_9b66cd74d48766::t_29b1b8877d09aa 56,58-59
+  s_9b66cd74d48766::t_6574adbe49ee5d 60
+  s_9b66cd74d48766::t_304337c598f8dd 55
+experiments/05_boundary_v1.json
+  s_9b66cd74d48766::t_1e309aeff3fd59 1-115
+experiments/07_probability_stacker.json
+  s_9b66cd74d48766::t_fb9fb0432d0802 1-103
+experiments/candidate_recommendations.md
+  s_9b66cd74d48766::t_e5eebaa667cced 43
+  s_9b66cd74d48766::t_73da411771758c 3,5,9,11-12,14,18-31,33-34,36,47-48
+  s_9b66cd74d48766::t_d6a29aa3cd0497 7-8,10,15-17
+  s_9b66cd74d48766::t_5387c55493e52b 1-2,4,6,13,32,35,37-42,44-46
+scripts/10_target_encoding.py
+  s_9b66cd74d48766::t_139f2dd193c510 1-268
+tests/test_pseudolabel.py
+  s_9b66cd74d48766::t_f1b0f4a7cce606 1-53
+src/spatial.py
+  s_8ba2e3e1d47b5e::t_a1779a7be44789 1-116
+scripts/15_spatial_features.py
+  s_8ba2e3e1d47b5e::t_4ba1d67da9c7ba 1-35,37-171
+  s_8ba2e3e1d47b5e::t_5313eaa0de3e07 36
+scripts/05_tune_xgb.py
+  s_9b66cd74d48766::t_fdc6c38ec88fe2 1-26,34-77,80-287
+  s_9b66cd74d48766::t_967d16632edb5f 27-33,78-79
+tasks/lessons.md
+  s_9b66cd74d48766::t_d6a29aa3cd0497 4
+  s_8ba2e3e1d47b5e::t_6d91ba8b44b144 6-7
+  s_9b66cd74d48766::t_73da411771758c 5
+  s_9b66cd74d48766::t_e9f48d168e5750 3
+scripts/11_target_encoding_blend.py
+  s_9b66cd74d48766::t_180fe865572a13 1-145
+experiments/14_ceiling_diagnosis.json
+  s_8ba2e3e1d47b5e::t_16fc6c5e7eae03 1-19,21-53,62
+  s_8ba2e3e1d47b5e::t_e485897fbaa591 20,54-61
+experiments/06_star_safe_blend.json
+  s_9b66cd74d48766::t_896af64d44f0a8 1-33
+autoresearch_results.tsv
+  s_8ba2e3e1d47b5e::t_e3ab4fc10f1902 1-39
+tests/test_features.py
+  s_9b66cd74d48766::t_ce8e378c044092 34-50,95-127,136-137
+scripts/09_extended_seed_average.py
+  s_9b66cd74d48766::t_d6fb4c2da83cb2 1-182
+experiments/runs.jsonl
+  s_9b66cd74d48766::t_a75274ee95ba96 22
+  s_9b66cd74d48766::t_f2df5376e11d8d 23
+  s_9b66cd74d48766::t_4650f5c40995bd 24
+  s_9b66cd74d48766::t_efb58214f4058d 25
+  s_9b66cd74d48766::t_3901e8d22006b1 26
+  s_9b66cd74d48766::t_d66be1b6d50f3a 20
+  s_9b66cd74d48766::t_1e309aeff3fd59 14
+  s_9b66cd74d48766::t_fb9fb0432d0802 16
+  s_9b66cd74d48766::t_896af64d44f0a8 15
+  s_9b66cd74d48766::t_d0b9100e8b947a 17
+  s_9b66cd74d48766::t_947a7e1d40d678 18
+  s_9b66cd74d48766::t_114ef1941627bf 19
+  s_9b66cd74d48766::t_9adbaf4a24b287 21
+experiments/08_pseudolabel.json
+  s_9b66cd74d48766::t_d0b9100e8b947a 1-41
+experiments/05_tune_xgb.json
+  s_9b66cd74d48766::t_9adbaf4a24b287 1-2,4-5,11-13,17-24,28,32-33,37-39,41-42,44,46-47,49,51-52,54,56-57,59,61-62,64,66-70,72-73,76-79
+  s_9b66cd74d48766::t_a75274ee95ba96 3,6-10,14-16,25-27,29-31,34-36,40,43,45,48,50,53,55,58,60,63,65,71,74-75
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "6916f813ef961e9f93a9c7be19cefd1190f6b7f5",
+  "prompts": {},
+  "sessions": {
+    "s_8ba2e3e1d47b5e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8a324a85-1a7b-4e71-95df-115d57fbc821",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    },
+    "s_9b66cd74d48766": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019e931e-4ef3-7e82-9038-ffe2e568a5e9",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Rich Lin <linrichuang@gmail.com>"
+    }
+  }
+}
