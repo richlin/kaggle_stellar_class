@@ -71,5 +71,5 @@ Leaderboard proves 0.97+ is real (top 0.97127). Found: class is clustered in sky
 - [x] Task 22: 3-seed 5-fold LightGBM on baseline+spatial → `submissions/15_spatial.csv`, tuned OOF **0.968894** (+0.0026 over 0.966282).
 - [x] Task 23: spatial-aware XGBoost (`scripts/16_spatial_xgb.py`) + blend → `submissions/16_spatial_blend.csv`, tuned OOF **0.969071** (best). Redshift-augmented neighbours rejected (hurt).
 - [x] **Checkpoint G:** OOF 0.969071 >> 0.9663; leakage audit passes; `pytest -q` (67), `ruff check .`, `src.validate` all green.
-- [ ] **Checkpoint H (real gate):** submit `submissions/16_spatial_blend.csv` to Kaggle; accept as incumbent only if public beats 0.96711. Keep `12_multi_blend` as fallback.
-- [ ] Task 24 (toward leader cluster ~0.9708): GALAXY recall (0.958) is the wall — try finer/position-cell target encoding; remaining ~0.002 OOF gap.
+- [x] **Checkpoint H (real gate):** `submissions/16_spatial_blend.csv` public score `0.96927`; accepted as new public incumbent over `12_multi_blend` (`0.96711`).
+- [ ] Task 24 (toward leader cluster ~0.9708): GALAXY recall (0.958) is the wall — try finer/position-cell target encoding; remaining public gap is ~0.00073 to `>0.97` and ~0.0015 to the `~0.9708` leader cluster.

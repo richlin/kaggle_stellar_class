@@ -102,10 +102,13 @@
   - `scripts/16_spatial_xgb.py`: spatial-aware XGBoost + blend → tuned OOF **`0.969071`** (`submissions/16_spatial_blend.csv`, `0.55*spatial_lgbm + 0.45*spatial_xgb`), recalls GALAXY `0.958` / QSO `0.975` / STAR `0.974`. Best local candidate.
   - Rejected: redshift-augmented neighbours (hurt: `0.9665` vs `0.9686`); greedy blend of spatial + non-spatial models (non-spatial models too weak).
   - All gates green: `pytest -q` (67), `ruff check .`, `src.validate`.
+- 2026-06-04: `submissions/16_spatial_blend.csv` official public score: `0.96927`.
+  - New public incumbent over `12_multi_blend.csv` (`0.96711`) by `+0.00216`.
+  - Remaining lift required to exceed `0.97`: about `+0.00073`.
 
 ## In Progress
 
-- **Awaiting Kaggle public score for `submissions/16_spatial_blend.csv`** (the real transfer gate; user submits — see Checkpoint H).
+- None.
 
 ## Blockers
 
@@ -113,5 +116,4 @@
 
 ## Next Steps
 
-- **Submit `submissions/16_spatial_blend.csv`** (OOF `0.969071`); adopt as new incumbent over `12_multi_blend` only if public beats `0.96711`. Keep `12_multi_blend` (`0.96711`) as fallback.
-- If short of the `~0.9708` leader cluster: GALAXY recall (`0.958`) is the binding constraint — try finer / position-cell target encoding for the remaining ~`0.002` OOF (Task 24).
+- Since `16_spatial_blend.csv` is still short of the target `>0.97`, continue with Task 24: GALAXY recall (`0.958`) is the binding constraint — try finer / position-cell target encoding for the remaining gap.

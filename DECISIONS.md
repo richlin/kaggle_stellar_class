@@ -117,3 +117,9 @@
 - **Rejected sub-options:** adding redshift to the neighbour metric *hurt* (`0.9665` vs `0.9686` single-split) — it dilutes the pure positional signal; finer k (`5,10`) helped a single split but not full CV.
 - **Open / next:** GALAXY recall (`0.958`) is now the binding constraint; remaining gap to the `0.9708` leader cluster (~`0.002` OOF) likely needs even finer spatial encoding (position-cell target encoding) or a spatial signal we have not yet captured. **The real gate is the Kaggle public score on `16_spatial_blend.csv`** — adopt as incumbent over `12_multi_blend` only if public beats `0.96711`.
 - **Applies until:** Public score on `16_spatial_blend.csv` is known.
+
+## 2026-06-04 — Spatial Blend Is The Public Incumbent
+
+- **Decision:** Treat `submissions/16_spatial_blend.csv` as the new public-best submission.
+- **Why:** Kaggle public score is `0.96927`, improving `+0.00216` over the prior public incumbent `12_multi_blend.csv` (`0.96711`). This confirms the spatial-neighbour feature transfer and narrows the remaining gap to the target `>0.97` to about `+0.00073`.
+- **Applies until:** A later public submission beats `0.96927`.
