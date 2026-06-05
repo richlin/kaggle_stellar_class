@@ -129,6 +129,16 @@ Sprint contract: update tracking files with public scores before running new exp
   - Patch only the audit/train guardrails needed for those tests.
   - Verification: targeted tests, `uv run pytest -q`, `uv run ruff check .`, `git diff --check`.
 
+## Phase 16: Local OOF > 0.971 push
+Full detail in [`docs/superpowers/plans/2026-06-05-local-0971-score-push.md`](../docs/superpowers/plans/2026-06-05-local-0971-score-push.md).
+- [x] Task 52: implement external-labelled spatial reference append with source-weight sweep. Use audited original rows as extra labelled neighbours in fold-safe OOF spatial features; validation labels must never influence their own features.
+  - Script: `scripts/47_external_spatial_append.py`; blocked until Task 46 dataset is staged and `scripts/43_original_append_audit.py --original <path>` writes PASS.
+- [x] Task 53: implement optional TabPFN meta-stacker scaffold over probability-cache logits. If TabPFN is unavailable, write a BLOCKED experiment JSON and exit cleanly.
+  - Script: `scripts/48_tabpfn_meta_stacker.py`; current environment is BLOCKED because `tabpfn` is not installed.
+- [x] Task 54: implement external catalog feature ingestion for id/sky joins, numeric-only external features, missing indicators, and train-median imputation.
+  - Script: `scripts/49_external_catalog_features.py`; blocked until an allowable external catalog CSV is staged.
+- [x] Checkpoint K: targeted tests, full tests, ruff, and whitespace check pass. Do not run long experiments unless required input data/dependencies are available.
+
 ## Phase 15: Plan consolidation
 - [x] Task 49: replace stale bootstrap-era `tasks/plan.md` with the current operating plan.
 - [x] Task 50: update `AGENTS.md` start-here routing so future agents read `PROGRESS.md`, `tasks/plan.md`, `tasks/todo.md`, `experiments/leaderboard.md`, and `DECISIONS.md` in the right order.

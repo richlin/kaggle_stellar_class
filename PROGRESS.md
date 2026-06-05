@@ -169,6 +169,11 @@
   - Patched `scripts/43_original_append_audit.py` so existing categorical columns are compared against derived formulae before overwrite, and exact/rounded full-feature overlaps against competition train+test fail the audit.
   - Patched `scripts/44_original_append_train.py` so training refuses to run if `--original` differs from the PASS audit's `original_path`.
   - Task 48's script scaffold exists, but execution remains blocked until Task 46 stages an original dataset and Task 47 produces an audit PASS for that same file.
+- 2026-06-05: Implemented all currently feasible local-OOF `>0.971` push scaffolds from the score strategy.
+  - `src/external_spatial.py` and `scripts/47_external_spatial_append.py`: fold-safe external-labelled spatial reference features plus original-row source-weight sweep. This is the primary next experiment once the original SDSS17-style dataset is staged and audited.
+  - `scripts/48_tabpfn_meta_stacker.py`: optional TabPFN meta-stacker over logit-transformed probability caches. Current environment is blocked because `tabpfn` is not installed; wrote `experiments/48_tabpfn_meta_stacker.json` with BLOCKED status.
+  - `src/external_catalog.py` and `scripts/49_external_catalog_features.py`: guarded id/sky external-catalog numeric feature joins with missing indicators and train-median imputation.
+  - Added targeted tests: `tests/test_external_spatial.py`, `tests/test_tabpfn_meta_stacker.py`, and `tests/test_external_catalog.py`.
 
 ## In Progress
 
@@ -177,12 +182,16 @@
 ## Blockers
 
 - Task 46: Original SDSS labeled dataset not yet located/staged. Without it, Task 48 cannot run and the 0.971 OOF target cannot be reached via data append.
+- Optional TabPFN path: `tabpfn` is not installed in the active environment.
+- External catalog path: no allowable external catalog CSV is staged.
 
 ## Next Steps
 
 - Locate and stage the original SDSS spectroscopic dataset (Task 46). See `tasks/todo.md` Phase 14.
   - Run `uv run python scripts/43_original_append_audit.py --original <path>` to audit.
-  - If PASS: run `uv run python scripts/44_original_append_train.py --original <path>` to train.
+  - If PASS: run `uv run python scripts/47_external_spatial_append.py --original <path>` as the primary append experiment; `scripts/44_original_append_train.py` remains the simpler baseline append.
+- To test the optional neural stacker, install TabPFN and run `uv run python scripts/48_tabpfn_meta_stacker.py`.
+- To test external catalog features, stage an allowed catalog CSV and run `uv run python scripts/49_external_catalog_features.py --catalog <path> --join id` or `--join sky`.
 - Next public probe (if slots available): `submissions/33_loo_family.csv` (shallower LOO, 5-seed).
 - Public incumbent: `submissions/32_spatial_5seed_blend.csv` at **0.96977**; remaining gap to 0.97: **+0.00023**.
 - OOF ceiling with current features: ~0.969-0.970 for any LGBM/XGB/CatBoost combination.

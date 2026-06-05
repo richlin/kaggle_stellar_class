@@ -31,9 +31,13 @@
 
 **Do not submit `41` variants just because OOF improves.** The public score regressed despite best honest OOF.
 
-**Primary next workstream:** original/external-data append feasibility. The forum formulae for `spectral_type` and `galaxy_population` match local train+test exactly, so the "original" dataset can be schema-aligned before append.
+**Primary next workstream:** original/external-data append feasibility. The forum formulae for `spectral_type` and `galaxy_population` match local train+test exactly, so the "original" dataset can be schema-aligned before append. The first implementation to run is now `scripts/47_external_spatial_append.py`, because it uses audited original rows as extra labelled spatial neighbours and sweeps original-row source weights.
 
 **Secondary public-risk probe:** `33_loo_family.csv` remains plausible because public historically rewarded LOO spatial feature density, but it has no honest OOF and should be used sparingly.
+
+**Optional blocked tracks:**
+- `scripts/48_tabpfn_meta_stacker.py`: implemented, but blocked until `tabpfn` is installed.
+- `scripts/49_external_catalog_features.py`: implemented, but blocked until an allowable external catalog CSV is staged.
 
 **Do NOT submit without OOF evidence:**
 - `21_loo_spatial_galaxy_lean.csv`: too GALAXY-heavy

@@ -249,3 +249,9 @@
 - **Decision:** Treat the original-data audit/train scripts as ready scaffolding, but make them fail closed before any dataset run: categorical formula mismatches fail audit, exact or 6-decimal feature duplicates fail audit, and append training refuses to run unless `--original` matches the PASS audit's `original_path`.
 - **Why:** The original-data append is the only remaining high-leverage path, but it has the highest leakage/provenance risk. A stale PASS audit or a duplicate feature row could create an invalid leaderboard gain, so the guardrails need to reject ambiguous inputs before modeling starts.
 - **Applies until:** A staged original dataset passes the hardened audit and produces an append candidate; then the same checks should remain as regression coverage.
+
+## 2026-06-05 — Implement New-Signal Scaffolds Before More Model Tuning
+
+- **Decision:** Add three gated experiment tracks for the `>0.971` local OOF push: external-labelled spatial reference append, optional TabPFN logit meta-stacking, and external-catalog feature ingestion. Do not run long experiments until the required original dataset, optional package, or external catalog is actually staged.
+- **Why:** Current competition-only tree-model tuning is saturated around `0.969-0.970`. The only plausible route to `0.971` is new information or a materially different meta-learner. External labelled rows should first be used as spatial neighbours, not merely appended as training rows, because spatial k-NN features were the only large prior lift. TabPFN and external catalog features are higher-risk optional tracks and must fail closed when dependencies or data are unavailable.
+- **Applies until:** One of the new tracks produces honest competition-row OOF above `0.971`, or all three fail their acceptance gates.

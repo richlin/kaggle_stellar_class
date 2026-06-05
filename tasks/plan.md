@@ -87,7 +87,10 @@ Open tasks:
 - Locate and stage the original labelled dataset under a clearly named ignored path.
 - Audit source, row count, schema, class labels, duplicate ids/features, leakage risk, and
   train/test/source shift.
-- Train an append candidate only if the audit passes.
+- Train an append candidate only if the audit passes. Prefer
+  `scripts/47_external_spatial_append.py` first because it uses audited original rows as
+  extra labelled spatial neighbours and sweeps original-row source weights; keep
+  `scripts/44_original_append_train.py` as the simpler baseline append.
 - Score validation only on competition train OOF folds; original rows may be added to training
   folds but must never appear in validation folds.
 - Accept only if OOF beats `0.969202` and per-class recall remains stable.
@@ -97,10 +100,20 @@ Relevant files already implemented and guarded:
 
 - `scripts/43_original_append_audit.py`
 - `scripts/44_original_append_train.py`
+- `scripts/47_external_spatial_append.py`
 
 Do not duplicate these scripts. The current blocker is dataset acquisition/provenance
 (Task 46), not script scaffolding. The audit must PASS for the same `--original` path
 before append training is allowed to run.
+
+### Phase 16: Optional New-Signal Tracks
+
+These are implemented but blocked until inputs/dependencies exist:
+
+- `scripts/48_tabpfn_meta_stacker.py` - optional TabPFN logit meta-stacker. Current
+  environment lacks `tabpfn`, so this writes a BLOCKED ledger.
+- `scripts/49_external_catalog_features.py` - external catalog feature ingestion via id or
+  nearest-sky joins. Requires an allowable staged catalog CSV.
 
 ## Submission Policy
 
